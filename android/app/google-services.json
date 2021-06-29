@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "214644391286",
+    "firebase_url": "https://receipt-6dbc4-default-rtdb.firebaseio.com",
+    "project_id": "receipt-6dbc4",
+    "storage_bucket": "receipt-6dbc4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214644391286:android:7d3c2466ca7c97010f8e57",
+        "android_client_info": {
+          "package_name": "com.project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "214644391286-bnqrvmqo8tb9har4cl38tn0fldbetij4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2mcgunHlMlGDTWx5nb5obMAl4HGLh4cw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "214644391286-bnqrvmqo8tb9har4cl38tn0fldbetij4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214644391286:android:3129b212b1bbe7a00f8e57",
+        "android_client_info": {
+          "package_name": "com.refrigerator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "214644391286-bnqrvmqo8tb9har4cl38tn0fldbetij4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2mcgunHlMlGDTWx5nb5obMAl4HGLh4cw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "214644391286-bnqrvmqo8tb9har4cl38tn0fldbetij4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214644391286:android:dd46d21bdbe5892d0f8e57",
+        "android_client_info": {
+          "package_name": "com.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "214644391286-bnqrvmqo8tb9har4cl38tn0fldbetij4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2mcgunHlMlGDTWx5nb5obMAl4HGLh4cw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "214644391286-bnqrvmqo8tb9har4cl38tn0fldbetij4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
