@@ -3,6 +3,7 @@ import {useNavigation} from '@react-navigation/core';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {StyleSheet, Platform} from 'react-native';
+import style from '../style';
 
 Icon.loadFont();
 
@@ -15,19 +16,10 @@ const MenuButton = () => {
     <TouchableOpacity onPress={openMenu}>
       <Icon
         name={Platform.OS === 'ios' ? 'ios-menu' : 'md-menu'}
-        style={styles.menuIcon}
+        style={style.menuIcon_MenuButton}
       />
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  menuIcon: {
-    fontSize: 30,
-    marginLeft: 15,
-    marginTop: 5,
-    color : 'tomato'
-  },
-});
 
 export default MenuButton;

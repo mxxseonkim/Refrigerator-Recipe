@@ -2,20 +2,19 @@ import React, {Component} from 'react';
 import {FlatList} from 'react-native';
 import {StyleSheet, TouchableOpacity, Text, View, Image} from 'react-native';
 import {database} from './Firebase.js';
-
+import style from '../style';
 
 export default class IngreList extends Component {
-
   constructor(props) {
     super(props);
-    this.state = {data:[]};
+    this.state = {data: []};
     var ingredients;
   }
 
-  componentDidMount() {    
-    const ref = database.ref('0/'+'/ingredient');
-    
-    ref.on("value", snapshot => {
+  componentDidMount() {
+    const ref = database.ref('0/' + '/ingredient');
+
+    ref.on('value', snapshot => {
       this.setState({data: snapshot.val()});
       this.ingredients = snapshot.val();
     });
@@ -23,32 +22,16 @@ export default class IngreList extends Component {
 
   render() {
     return (
-      <View style={styles.root}>
+      <View style={style.root_IngreList}>
         <FlatList
-          data = {this.ingredients}
-          renderItem={({item})=>
-            <View style={styles.item}>
-              <Text style={styles.font}>{item}</Text>
+          data={this.ingredients}
+          renderItem={({item}) => (
+            <View style={style.item_IngreList}>
+              <Text style={style.font_IngreList}>{item}</Text>
             </View>
-          }
+          )}
         />
       </View>
     );
   }
 }
-
-
-const styles = StyleSheet.create({
-  root:{
-    flex:1,
-    padding: 16,
-  },
-  item:{
-    flex:1,
-    padding:5,
-  },
-  font:{
-    fontSize:16,
-    paddingBottom:3,
-  },
-});
