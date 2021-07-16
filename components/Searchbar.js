@@ -1,5 +1,6 @@
 import React from 'react';
 import {SearchBar} from 'react-native-elements';
+import style from '../style';
 
 export default class Searchbar extends React.Component {
   state = {
@@ -21,10 +22,10 @@ export default class Searchbar extends React.Component {
         containerStyle={{
           backgroundColor: '#eee',
           justifyContent: 'space-around',
-          borderTopWidth:0,
-          borderBottomWidth:0,
-          marginLeft:10,
-          marginRight:10,
+          borderTopWidth: 0,
+          borderBottomWidth: 0,
+          marginLeft: 10,
+          marginRight: 10,
         }}
         placeholder="궁금한 레시피를 검색하세요"
         round="true"

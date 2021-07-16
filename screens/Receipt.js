@@ -7,12 +7,13 @@ import {
   ScrollView,
   Image,
   Demensions,
-  FlatList
+  FlatList,
 } from 'react-native';
 import {database} from '../components/Firebase';
 import IngreList from '../components/IngreList';
 import StepList from '../components/StepList';
-import { Dimensions } from 'react-native';
+import {Dimensions} from 'react-native';
+import style from '../style';
 
 const charHeight = Dimensions.get('screen').height;
 const charWidth = Dimensions.get('screen').width;
@@ -20,13 +21,13 @@ const charWidth = Dimensions.get('screen').width;
 export default class Receipt extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {data:[]};
+    this.state = {data: []};
     var img;
     var name;
   }
   componentDidMount() {
     const ref = database.ref('0/');
-    ref.on("value", snapshot => {
+    ref.on('value', snapshot => {
       this.setState({data: snapshot.val()});
       this.img = snapshot.val().image;
       this.name = snapshot.val().name;
@@ -35,55 +36,18 @@ export default class Receipt extends React.Component {
   }
   render() {
     return (
-      <ScrollView style={styles.container} >
-        <View style={styles.view}>
-          <Image source={{uri: this.img}} style={styles.img}></Image>
+      <ScrollView style={style.container_Receipt}>
+        <View style={[style.view_Receipt, {width: charWidth}]}>
+          <Image source={{uri: this.img}} style={style.img_Receipt}></Image>
         </View>
-        <View style={styles.view1}>
-          <Text style={styles.itemName}>{this.name}</Text>
-          <Text style={styles.itemDiv}>●  재료 </Text>
+        <View style={style.view1_Receipt}>
+          <Text style={style.itemName_Receipt}>{this.name}</Text>
+          <Text style={style.itemDiv_Receipt}>● 재료 </Text>
           <IngreList />
-          <Text style={styles.itemDiv}>●  레시피 </Text>
+          <Text style={style.itemDiv_Receipt}>● 레시피 </Text>
           <StepList />
         </View>
       </ScrollView>
     );
   }
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#eee',
-  },
-  view: {
-    width: charWidth,
-    margin:10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  img:{
-    width:370,
-    height:200,
-    resizeMode:'cover',
-    marginRight:20,
-    justifyContent:'center',
-    alignItems:'center',
-  },
-  itemName:{
-      fontSize:40,
-      fontWeight:'bold',
-      marginBottom: 25,
-  },
-  itemDiv: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  itemIngre:{
-    fontSize:18,
-  },
-  view1:{
-    flexDirection:'column',
-    padding:20,
-  }
-});
+}
