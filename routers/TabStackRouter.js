@@ -1,45 +1,45 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import ManegeTabRouter from './ManegeTabRouter';
+import ManageTabRouter from './ManegeTabRouter';
 import MenuButton from './MenuButton';
-import Receipt from '../screens/Receipt'
-import ReceiptList from '../screens/ReceiptList'
+import RecipeList from '../screens/RecipeList'
+import RecipeInfo from '../screens/RecipeInfo'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const TabStack = createBottomTabNavigator();
 
-const ManegeStack = createStackNavigator();
-const ManegeStackScreen = ({ navigation }) => {
+const ManageStack = createStackNavigator();
+const ManageStackScreen = ({ navigation }) => {
   return (
-    <ManegeStack.Navigator>
-      <ManegeStack.Screen
-        name="Manegetab"
-        component={ManegeTabRouter}
+    <ManageStack.Navigator>
+      <ManageStack.Screen
+        name="Managetab"
+        component={ManageTabRouter}
         options={{ 
           title: "냉장고 관리",
           headerLeft: () => <MenuButton />  
         }}
       />
-    </ManegeStack.Navigator>
+    </ManageStack.Navigator>
   );
 };
 
 const RecipeStack = createStackNavigator();
 const RecipeStackScreen = ({ navigation }) => {
   return (
-    <RecipeStack.Navigator initRouteName="recipet">
+    <RecipeStack.Navigator initRouteName="RecipeList">
       <RecipeStack.Screen
-        name="receiptList"
-        component={ReceiptList}
+        name="RecipeList"
+        component={RecipeList}
         options={{ 
           title: "레시피",
           headerLeft: () => <MenuButton />
          }}
       />
       <RecipeStack.Screen
-        name="recipet"
-        component={Receipt}
+        name="RecipeInfo"
+        component={RecipeInfo}
         options={{ 
           title: "레시피",
           headerLeft: () => <MenuButton />
@@ -50,13 +50,13 @@ const RecipeStackScreen = ({ navigation }) => {
 };
 
 
-const TabStackRouter = () => {
+export default TabStackRouter = () => {
     return(
         <TabStack.Navigator
           screenOptions={({ route }) => ({
             tabBarIcon : ({ focused, color, size }) => {
               var iconName; 
-              if (route.name === 'ManegeStack') {
+              if (route.name === 'ManageStack') {
                   iconName = focused ? 'md-fast-food' : 'md-fast-food-outline';
               } else if (route.name === 'RecipeStack') {
                   iconName = focused ? 'md-receipt' : 'md-receipt-outline';
@@ -69,11 +69,8 @@ const TabStackRouter = () => {
             inactiveTintColor: 'gray',
           }}
         >
-            <TabStack.Screen name="ManegeStack" component={ManegeStackScreen} options={{ title: "냉장고 관리" }} />
+            <TabStack.Screen name="ManageStack" component={ManageStackScreen} options={{ title: "냉장고 관리" }} />
             <TabStack.Screen name="RecipeStack" component={RecipeStackScreen} options={{ title: "레시피 추천" }}/>
         </TabStack.Navigator>
     );
 };
-
-export default TabStackRouter;
-

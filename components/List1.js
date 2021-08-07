@@ -37,7 +37,7 @@ export default class Project extends Component {
   }
 
   componentDidMount() {
-    return fetch('http://192.168.0.70/recipe_db/recipe_db.php') //본인의 IP로 변경
+    return fetch('http://3.35.18.154/phpdir/db_test.php') //본인의 IP로 변경
       .then(response => response.json())
       .then(Json => {
         this.setState({
