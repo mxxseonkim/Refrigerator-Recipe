@@ -7,11 +7,12 @@ import style from '../style';
 
 Icon.loadFont();
 
-const MenuButton = () => {
+export default function MenuButton() {
   const navigation = useNavigation();
   const openMenu = () => {
     navigation.openDrawer();
   };
+  
   return (
     <TouchableOpacity onPress={openMenu}>
       <Icon
@@ -21,5 +22,3 @@ const MenuButton = () => {
     </TouchableOpacity>
   );
 };
-
-export default MenuButton;

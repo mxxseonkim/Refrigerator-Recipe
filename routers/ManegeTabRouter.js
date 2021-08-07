@@ -6,7 +6,7 @@ import FrozenScreen from '../screens/FrozenScreen';
 import RoomTemperatureScreen from '../screens/RoomTemperatureScreen';
 
 const ManegeTab = createMaterialTopTabNavigator();
-function ManegeTabRouter() {
+export default function ManegeTabRouter() {
   return (
     <ManegeTab.Navigator initRouteName="coldStorage">
       <ManegeTab.Screen
@@ -32,4 +32,3 @@ function ManegeTabRouter() {
     </ManegeTab.Navigator>
   );
 }
-export default ManegeTabRouter;

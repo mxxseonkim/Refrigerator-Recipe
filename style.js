@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
 
 const style = StyleSheet.create({
+
   //MenuButton
   menuIcon_MenuButton: {
     fontSize: 30,
@@ -9,6 +10,7 @@ const style = StyleSheet.create({
     marginTop: 5,
     color: 'tomato',
   },
+
   // list1
   testContatiner_List1: {
     flex: 0.2,
@@ -85,38 +87,39 @@ const style = StyleSheet.create({
     marginTop: 20,
     marginBottom: 25,
   },
-  //ReceiptList
-  root_ReceiptList: {
+
+  //RecipeList
+  root_RecipeList: {
     flex: 1,
     padding: 16,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  itemView_ReceiptList: {
+  itemView_RecipeList: {
     flexDirection: 'row',
     borderWidth: 0,
     borderRadius: 4,
     padding: 8,
     marginBottom: 12,
   },
-  itemImg_ReceiptList: {
+  itemImg_RecipeList: {
     width: 90,
     height: 90,
     resizeMode: 'cover',
     marginRight: 20,
   },
-  itemName_ReceiptList: {
+  itemName_RecipeList: {
     width: 220,
     height: 30,
     fontSize: 16,
     fontWeight: 'bold',
   },
-  itemMsg_ReceiptList: {
+  itemMsg_RecipeList: {
     width: 220,
     height: 60,
     fontSize: 14,
   },
-  itemLike_ReceiptList: {
+  itemLike_RecipeList: {
     textAlign: 'center',
     width: 30,
     height: 90,
@@ -124,18 +127,19 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  //Receipt
-  container_Receipt: {
+
+  //Recipe
+  container_Recipe: {
     flex: 1,
     backgroundColor: '#eee',
   },
-  view_Receipt: {
+  view_Recipe: {
     //width: charWidth,
     margin: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  img_Receipt: {
+  img_Recipe: {
     width: 370,
     height: 200,
     resizeMode: 'cover',
@@ -143,45 +147,47 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  itemName_Receipt: {
+  itemName_Recipe: {
     fontSize: 40,
     fontWeight: 'bold',
     marginBottom: 25,
   },
-  itemDiv_Receipt: {
+  itemDiv_Recipe: {
     fontSize: 20,
     fontWeight: 'bold',
   },
-  view1_Receipt: {
+  view1_Recipe: {
     flexDirection: 'column',
     padding: 20,
   },
-  //IngreList
-  root_IngreList: {
-    flex: 1,
-    padding: 16,
-  },
-  item_IngreList: {
-    flex: 1,
-    padding: 5,
-  },
-  font_IngreList: {
-    fontSize: 16,
-    paddingBottom: 3,
-  },
-  //StepList
-  root_StepList: {
-    flex: 1,
-    padding: 16,
-  },
-  item_StepList: {
-    flex: 1,
-    padding: 5,
-  },
-  font_StepList: {
-    fontSize: 16,
-    paddingBottom: 5,
-  },
+
+  // //IngreList
+  // root_IngreList: {
+  //   flex: 1,
+  //   padding: 16,
+  // },
+  // item_IngreList: {
+  //   flex: 1,
+  //   padding: 5,
+  // },
+  // font_IngreList: {
+  //   fontSize: 16,
+  //   paddingBottom: 3,
+  // },
+
+  // //StepList
+  // root_StepList: {
+  //   flex: 1,
+  //   padding: 16,
+  // },
+  // item_StepList: {
+  //   flex: 1,
+  //   padding: 5,
+  // },
+  // font_StepList: {
+  //   fontSize: 16,
+  //   paddingBottom: 5,
+  // },
 });
 
 export default style;

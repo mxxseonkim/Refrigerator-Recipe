@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {StyleSheet, SafeAreaView} from 'react-native';
+import {SafeAreaView} from 'react-native';
 import DrawerTabRouter from './routers/DrawerTabRouter';
 
-function App() {
+export default function App() {
   return (
     <NavigationContainer>
       <SafeAreaView style={{flex: 1}}>
@@ -12,5 +12,3 @@ function App() {
     </NavigationContainer>
   );
 }
-
-export default App;

@@ -16,7 +16,7 @@ const ClientStackScreen = () =>{
                 name="Client" 
                 component={ClientScreen} 
                 options={{
-                    title : "회원관리", 
+                    title : "회원 관리", 
                     headerLeft: () => <MenuButton />
                 }}/>
         </ClientStack.Navigator>
@@ -24,9 +24,11 @@ const ClientStackScreen = () =>{
 }
 
 const CustomDrawer = ({navigation}) => {
-    const goToScreen =(screenName, params) => {
+    
+    const goToScreen = (screenName, params) => {
         navigation.navigate(screenName, params);
     };
+
     return(
         <DrawerContentScrollView>
             <DrawerItem
@@ -43,7 +45,7 @@ const CustomDrawer = ({navigation}) => {
                 onPress={() => goToScreen('TabStack',{
                     screen : 'RecipeStack',
                     params : {
-                        screen : 'Recipe'
+                        screen : 'RecipeList'
                     },
                 }) }
             />
@@ -55,16 +57,14 @@ const CustomDrawer = ({navigation}) => {
     )
 };
 
-const DrawerTabRouter = () => {
-  return (
-    <Drawer.Navigator 
-        drawerContent={({navigation}) =>(
-        <CustomDrawer navigation={navigation}/>
-    )}>
-      <Drawer.Screen name="TabStack" component={TabStackRouter} />
-      <Drawer.Screen name="ClientStack" component={ClientStackScreen} />
-    </Drawer.Navigator>
-  );
+export default function DrawerTabRouter() {
+    return (
+      <Drawer.Navigator 
+          drawerContent = {({navigation}) =>(
+            <CustomDrawer navigation={navigation}/>
+      )}>
+        <Drawer.Screen name="TabStack" component={TabStackRouter} />
+        <Drawer.Screen name="ClientStack" component={ClientStackScreen} />
+      </Drawer.Navigator>
+    );
 };
-
-export default DrawerTabRouter;
