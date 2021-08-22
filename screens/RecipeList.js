@@ -3,9 +3,7 @@ import {
     TouchableOpacity,
     Text,
     View,
-    Image,
     FlatList,
-    ScrollView
 } from 'react-native';
 import style from '../style';
 import Searchbar from '../components/Searchbar.js'
@@ -13,78 +11,69 @@ import Searchbar from '../components/Searchbar.js'
 
 export default function RecipeList(props) {
 
-    /*
+    const [search, setSearch] = useState(''); // 검색 키워드
+    const [masterData, setMasterData] = useState() // 전체 데이터
+    const [filteredData, setFilteredData] = useState() // 검색 키워드에 필터링된 데이터
 
-    레시피 DB 구현 후
-    레시피 리스트 화면 구현
 
-    */
+    useState(() => { // DB에서 데이터 읽기
+        fetch(`http://3.35.18.154/phpdir/recipe_select.php`)
+        .then(response => response.json())
+        .then(responseJson =>{
+            setFilteredData(responseJson);
+            setMasterData(responseJson);
+        });
+    }, []);
 
-    const [search, setSearch] = useState('');
 
+    const filterData = (text) => { // 검색 키워드로 필터링 하는 함수
+        if(text) {
+            const newData = masterData.filter(
+                function(item) {
+                    const itemData = item.name
+                        ? item.name.toUpperCase()
+                        : ''.toUpperCase();
+                    const textData = text.toUpperCase();
+                    return itemData.indexOf(textData) > -1;
+                
+            });
+            setFilteredData(newData);
+            setSearch(text);
+        } else {
+            setFilteredData(masterData);
+            setSearch(text);
+        }
+    }
+
+
+    const renderItem = ({item}) => {
+        return (
+            <TouchableOpacity style={style.itemView_RecipeList}
+                onPress={() => {props.navigation.navigate('RecipeInfo',{
+                    data: item, title: item.name });}}>
+                <View style={{width: '80%'}}>
+                    <Text style={style.itemName_RecipeList}>{item.name}</Text>
+                </View>
+                <View style ={{width: '20%'}}>
+                    <Text style={style.itemSimilarity_RecipeList}>67%</Text>
+                </View>
+            </TouchableOpacity>
+        );
+    };
+
+    
     return (
-        <View style = {{flex: 1}}>
-            <Searchbar search={search} setSearch={setSearch}/>
-            <View style = {{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                <Text> 레시피 추천 화면 {search} </Text>
+        <View style = {style.root_RecipeList}>
+            <Searchbar  search={search} setSearch={setSearch}
+                filterData = {filterData}
+                ph = '궁금한 레시피를 검색해보셈'/>
+            <View>
+                <FlatList
+                data={filteredData}
+                renderItem={renderItem}
+                keyExtract={item => item.id}
+                />
             </View>
         </View>
     );
 }
-
-
-
-
-
-// export default class ReceiptList extends Component {
-//       constructor(props) {
-//         super(props);
-//         this.state = {data: []};
-//       }
-    
-//       componentDidMount() {
-//         const ref = firebase.ref();
-    
-//         ref.on('value', snapshot => {
-//           this.setState({data: snapshot.val()});
-//         });
-//       }
-    
-//       render() {
-//         return (
-//           <View style={style.root_ReceiptList}>
-//             <FlatList
-//               data={this.state.data}
-//               renderItem={this.renderItem}
-//               keyExtract={item => item.id}
-//             />
-//           </View>
-//         );
-//       }
-    
-//       renderItem = ({item}) => {
-//         return (
-//           <TouchableOpacity
-//             style={style.itemView_ReceiptList}
-//             onPress={() => {
-//               this.props.navigation.navigate('recipet');
-//             }}>
-//             <Image
-//               source={{uri: item.image}}
-//               style={style.itemImg_ReceiptList}></Image>
-//             <View style={{flexDirection: 'column'}}>
-//               <Text style={style.itemName_ReceiptList}>{item.name}</Text>
-//               <Text style={style.itemMsg_ReceiptList}>★ 3.5</Text>
-//             </View>
-//             <View style={style.itemLike_ReceiptList}>
-//               <Text>찜</Text>
-//             </View>
-//           </TouchableOpacity>
-//         );
-//       };
-//     }
-
-
-
-
-
