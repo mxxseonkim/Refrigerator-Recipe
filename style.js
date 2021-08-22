@@ -91,61 +91,48 @@ const style = StyleSheet.create({
   //RecipeList
   root_RecipeList: {
     flex: 1,
-    padding: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 5,
   },
   itemView_RecipeList: {
+    flex: 1,
     flexDirection: 'row',
-    borderWidth: 0,
-    borderRadius: 4,
-    padding: 8,
-    marginBottom: 12,
-  },
-  itemImg_RecipeList: {
-    width: 90,
-    height: 90,
-    resizeMode: 'cover',
-    marginRight: 20,
+    marginLeft: 25,
+    marginRight: 25,
+    marginTop: 20,
   },
   itemName_RecipeList: {
-    width: 220,
-    height: 30,
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: 'bold',
   },
-  itemMsg_RecipeList: {
-    width: 220,
-    height: 60,
-    fontSize: 14,
-  },
-  itemLike_RecipeList: {
-    textAlign: 'center',
-    width: 30,
-    height: 90,
-    fontSize: 14,
-    justifyContent: 'center',
-    alignItems: 'center',
+  itemSimilarity_RecipeList: {
+    textAlign: 'right',
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: 'tomato'
   },
 
-  //Recipe
-  container_Recipe: {
+  //RecipeInfo
+  root_RecipeInfo: {
     flex: 1,
-    backgroundColor: '#eee',
+    padding: 20,
   },
-  view_Recipe: {
-    //width: charWidth,
-    margin: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+  video_RecipeInfo: {
+    width: '100%',
+    height: 210,
   },
-  img_Recipe: {
-    width: 370,
-    height: 200,
-    resizeMode: 'cover',
-    marginRight: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+  subheading_RecipeInfo: {
+    flex: 1,
+    marginTop: 30,
+    fontSize: 18,
+    fontWeight: 'bold'
+  },
+  content_RecipeInfo: {
+    flex: 1,
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight:20,
+    fontSize: 16,
+    lineHeight: 30,
   },
   itemName_Recipe: {
     fontSize: 40,
@@ -160,34 +147,6 @@ const style = StyleSheet.create({
     flexDirection: 'column',
     padding: 20,
   },
-
-  // //IngreList
-  // root_IngreList: {
-  //   flex: 1,
-  //   padding: 16,
-  // },
-  // item_IngreList: {
-  //   flex: 1,
-  //   padding: 5,
-  // },
-  // font_IngreList: {
-  //   fontSize: 16,
-  //   paddingBottom: 3,
-  // },
-
-  // //StepList
-  // root_StepList: {
-  //   flex: 1,
-  //   padding: 16,
-  // },
-  // item_StepList: {
-  //   flex: 1,
-  //   padding: 5,
-  // },
-  // font_StepList: {
-  //   fontSize: 16,
-  //   paddingBottom: 5,
-  // },
 });
 
 export default style;
