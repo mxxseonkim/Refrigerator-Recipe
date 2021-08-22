@@ -41,7 +41,7 @@ for num, url in enumerate(urls):
     # 순서
     stepBox = driver.find_element_by_xpath('.//div[@class="view_step"]')
     stepList = stepBox.find_elements_by_xpath('.//div[@class="media-body"]')
-    stepList = [step.text for step in stepList]
+    stepList = [step.text.replace("\n","") for step in stepList]
     steps = ""
     for step in stepList:
         steps = steps + "\t" + step
