@@ -12,12 +12,23 @@ import style from '../style';
 
 export default function RecipeInfo(props) {
 
-    /*
-
-    레시피 DB 구현 후
-    레시피 정보 화면 구현
-
-    */
+    constructor(){
+        super()
+        this.state={
+            data: [],
+            //레시피 DB 저장되는 배열(json파일)
+        };
+    }
+    
+        jsonData()=>{
+        fetch(`http://3.35.18.154/phpdir/recipe_select.php`)
+        .then(response=>response.json())
+        .then(responseJson=>{
+            this.setState({
+                data: responseJson,
+            })
+        });
+    }
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
