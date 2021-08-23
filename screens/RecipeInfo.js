@@ -1,35 +1,28 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import {
-    TouchableOpacity,
-    Text,
-    View,
-    Image,
-    FlatList,
-    ScrollView
+  TouchableOpacity,
+  Text,
+  View,
+  Image,
+  FlatList,
+  ScrollView,
 } from 'react-native';
 import style from '../style';
 
-
 export default function RecipeInfo(props) {
-
-    /*
+  /*
 
     레시피 DB 구현 후
     레시피 정보 화면 구현
 
     */
 
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>레시피 정보 화면</Text>
-        </View>
-    );
+  return (
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Text>레시피 정보 화면</Text>
+    </View>
+  );
 }
-
-
-
-
-
 
 // export default class Receipt extends React.Component {
 //   constructor(props) {
@@ -65,26 +58,22 @@ export default function RecipeInfo(props) {
 //   }
 // }
 
-
-
-
-
 // export default class IngreList extends Component {
 //     constructor(props) {
 //       super(props);
 //       this.state = {data: []};
 //       var ingredients;
 //     }
-  
+
 //     componentDidMount() {
 //       const ref = database.ref('0/' + '/ingredient');
-  
+
 //       ref.on('value', snapshot => {
 //         this.setState({data: snapshot.val()});
 //         this.ingredients = snapshot.val();
 //       });
 //     }
-  
+
 //     render() {
 //       return (
 //         <View style={style.root_IngreList}>
@@ -100,10 +89,6 @@ export default function RecipeInfo(props) {
 //       );
 //     }
 //   }
-
-
-
-
 
 // export default class StepList extends Component {
 //   constructor(props) {

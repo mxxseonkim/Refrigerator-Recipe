@@ -2,7 +2,27 @@ import React, {Component} from 'react';
 import {StyleSheet} from 'react-native';
 
 const style = StyleSheet.create({
-
+  //HeaderButton
+  CheckIcon_CheckButton: {
+    fontSize: 30,
+    marginRight: 15,
+    marginTop: 5,
+    color: 'tomato',
+  },
+  testContatiner_HeaderButton: {
+    flex: 0.13,
+  },
+  container_HeaderButton: {
+    flex: 0.75,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerIcon_HeaderButton: {
+    fontSize: 30,
+    marginRight: 15,
+    marginTop: 5,
+    color: 'tomato',
+  },
   //MenuButton
   menuIcon_MenuButton: {
     fontSize: 30,
@@ -10,7 +30,6 @@ const style = StyleSheet.create({
     marginTop: 5,
     color: 'tomato',
   },
-
   // list1
   testContatiner_List1: {
     flex: 0.2,
@@ -29,6 +48,12 @@ const style = StyleSheet.create({
     alignItems: 'center',
     shadowColor: '#222',
     elevation: 3,
+  },
+  checkBox_List1: {
+    flex: 0.05,
+    paddingRight: 15,
+    margin: 10,
+    justifyContent: 'center',
   },
   PressView_List1: {
     flexDirection: 'row',
@@ -51,6 +76,11 @@ const style = StyleSheet.create({
     borderWidth: 1,
     width: 200,
   },
+  text_List1: {
+    height: 40,
+    margin: 12,
+    width: 200,
+  },
   flatlist_List1: {
     flex: 6,
     padding: 0,
@@ -71,6 +101,7 @@ const style = StyleSheet.create({
     padding: 20,
     margin: 10,
     resizeMode: 'cover',
+    backgroundColor: 'red',
     //marginRight:20,
   },
   itemName_List1: {
@@ -84,8 +115,9 @@ const style = StyleSheet.create({
   },
   datePickerStyle_List: {
     width: 150,
-    marginTop: 20,
-    marginBottom: 25,
+    marginTop: 10,
+    marginBottom: 10,
+    margin: 20,
   },
 
   //RecipeList

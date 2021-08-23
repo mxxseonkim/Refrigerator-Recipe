@@ -3,7 +3,6 @@ import {SearchBar} from 'react-native-elements';
 import style from '../style';
 
 export default class Searchbar extends React.Component {
-
   render() {
     return (
       <SearchBar
