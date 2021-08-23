@@ -17,9 +17,9 @@ export default class Searchbar extends React.Component {
           marginLeft: 10,
           marginRight: 10,
         }}
-        placeholder="궁금한 레시피를 검색하세요"
+        placeholder={this.props.ph}
         round="true"
-        onChangeText={this.props.setSearch}
+        onChangeText={(text) => this.props.filterData(text)}
         value={this.props.search}
       />
     );

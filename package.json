@@ -32,7 +32,9 @@
     "react-native-screens": "3.3.0",
     "react-native-tab-view": "2.16.0",
     "react-native-vector-icons": "8.1.0",
+    "react-native-youtube": "2.0.2",
     "react-redux": "7.2.4",
+    "react-youtube": "7.13.1",
     "redux": "4.1.0"
   },
   "devDependencies": {
