@@ -31,7 +31,7 @@ const Video = props => {
     <YouTube
       style={style.video_RecipeInfo}
       videoId={props.videoId}
-      apiKey="AIzaSyAj1NnPodY7a71p-lO9NPEADMjIN87N3l0"
+      apiKey="" // 카카오톡 단톡 게시글에 있음
       play={false}
       fullscreen={false}
       loop={false}
