@@ -3054,6 +3054,11 @@
   "resolved" "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz"
   "version" "4.0.0"
 
+"escape-string-regexp@2.0.0":
+  "integrity" "sha512-UpzcLCXolUWcNu5HtVMHYdXJjArjsF9C0aNnquZYY4uW/Vu0miy5YoWvbV345HauVvcAUnpRuhMMcqTcGOY2+w=="
+  "resolved" "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-2.0.0.tgz"
+  "version" "2.0.0"
+
 "escodegen@^2.0.0":
   "integrity" "sha512-mmHKys/C8BFUGI+MAWNcSYoORYLMdPzjrknd2Vc+bUsjN5bXcr8EhrNB+UTqfL1y3I9c4fw2ihgtMPQLBRiQxw=="
   "resolved" "https://registry.npmjs.org/escodegen/-/escodegen-2.0.0.tgz"
@@ -3258,6 +3263,11 @@
   "integrity" "sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ=="
   "resolved" "https://registry.npmjs.org/event-target-shim/-/event-target-shim-5.0.1.tgz"
   "version" "5.0.1"
+
+"events@^3.2.0":
+  "integrity" "sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q=="
+  "resolved" "https://registry.npmjs.org/events/-/events-3.3.0.tgz"
+  "version" "3.3.0"
 
 "exec-sh@^0.3.2":
   "integrity" "sha512-nQn+hI3yp+oD0huYhKwvYI32+JFeq+XkNcD1GAo3Y/MjxsfVGmrrzrnzjWiNY6f+pUCP440fThsFh5gZrRAU/w=="
@@ -3878,7 +3888,7 @@
   "resolved" "https://registry.npmjs.org/interpret/-/interpret-1.4.0.tgz"
   "version" "1.4.0"
 
-"invariant@^2.2.4":
+"invariant@^2.2.4", "invariant@2.2.4":
   "integrity" "sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA=="
   "resolved" "https://registry.npmjs.org/invariant/-/invariant-2.2.4.tgz"
   "version" "2.2.4"
@@ -6027,11 +6037,7 @@
     "kleur" "^3.0.3"
     "sisteransi" "^1.0.5"
 
-<<<<<<< HEAD
-"prop-types@^15.5.7", "prop-types@^15.7.2":
-=======
-"prop-types@^15.5.0", "prop-types@^15.7.2", "prop-types@15.7.2":
->>>>>>> a1a10e19ecb8c0f46626b757180e43de02b712b9
+"prop-types@^15.5.0", "prop-types@^15.5.7", "prop-types@^15.7.2", "prop-types@15.7.2":
   "integrity" "sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ=="
   "resolved" "https://registry.npmjs.org/prop-types/-/prop-types-15.7.2.tgz"
   "version" "15.7.2"
@@ -6237,6 +6243,21 @@
     "prop-types" "^15.7.2"
     "yargs" "^16.1.1"
 
+"react-native-webview@^11.13.0", "react-native-webview@>=7.0.0":
+  "integrity" "sha512-jjQAKWv8JzRmcn76fMe4lXD84AAeR7kn43kAmUe1GX312BMLaP+RbKlgpYAlNuOBXL0YirItGKDrpaD0bNROOA=="
+  "resolved" "https://registry.npmjs.org/react-native-webview/-/react-native-webview-11.13.0.tgz"
+  "version" "11.13.0"
+  dependencies:
+    "escape-string-regexp" "2.0.0"
+    "invariant" "2.2.4"
+
+"react-native-youtube-iframe@^1.4.2":
+  "integrity" "sha512-QsXn1WRXi9JHb5yCyPMpZXw87GA0iovGyKqbFc1ElwM7UrIIFZiE4GEMF+/E0Fs1Ol89n0PT37KiL8TTm9xVbA=="
+  "resolved" "https://registry.npmjs.org/react-native-youtube-iframe/-/react-native-youtube-iframe-1.4.2.tgz"
+  "version" "1.4.2"
+  dependencies:
+    "events" "^3.2.0"
+
 "react-native-youtube@2.0.2":
   "integrity" "sha512-tyoGG8mqv0q2327BUYCXBmloUO8twFTOsGdwYvj0tiINAwtxNid8bS0KxnjViH3f/HmBqATDbPwhHpNXpOCsLA=="
   "resolved" "https://registry.npmjs.org/react-native-youtube/-/react-native-youtube-2.0.2.tgz"
@@ -6244,7 +6265,7 @@
   dependencies:
     "prop-types" "^15.5.0"
 
-"react-native@*","react-native@>=0.20.0", "react-native@>=0.42.0", "react-native@>=0.57", "react-native@>=0.60", "react-native@>=0.64.0-rc.0 || 0.0.0-*", "react-native@0.64.1":
+"react-native@*", "react-native@>=0.20.0", "react-native@>=0.42.0", "react-native@>=0.57", "react-native@>=0.60", "react-native@>=0.64.0-rc.0 || 0.0.0-*", "react-native@0.64.1":
   "integrity" "sha512-jvSj+hNAfwvhaSmxd5KHJ5HidtG0pDXzoH6DaqNpU74g3CmAiA8vuk58B5yx/DYuffGq6PeMniAcwuh3Xp4biQ=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.64.1.tgz"
   "version" "0.64.1"
@@ -6326,7 +6347,7 @@
     "prop-types" "15.7.2"
     "youtube-player" "5.5.2"
 
-"react@*", "react@^16.0.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0", "react@^16.8.3 || ^17", "react@>=0.14.1", "react@>=16.0", "react@16 || 17", "react@17.0.1":
+"react@*", "react@^16.0.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0", "react@^16.8.3 || ^17", "react@>=0.14.1", "react@>=16.0", "react@>=16.8.6", "react@16 || 17", "react@17.0.1":
   "integrity" "sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.1.tgz"
   "version" "17.0.1"
