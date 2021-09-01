@@ -1,3 +1,5 @@
+// ------------------------------ 이전 코드 ---------------------------
+
 // import * as React from 'react';
 // import {NavigationContainer} from '@react-navigation/native';
 // import {SafeAreaView} from 'react-native';
@@ -12,13 +14,16 @@
 //     </NavigationContainer>
 //   );
 // }
+
+// -------------------------- 로그인 코드 -------------------------------
+
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {StyleSheet, SafeAreaView} from 'react-native';
 // import DrawerTabRouter from './routers/DrawerTabRouter';
-import RegisterScreen from './screens/RegisterScreen';
-import LogoutScreen from './screens/LogoutScreen';
-import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './components/RegisterScreen';
+import LogoutScreen from './components/LogoutScreen';
+import LoginScreen from './components/LoginScreen';
 // import SplashScreen from './components/SplashScreen';
 
 import 'react-native-gesture-handler';

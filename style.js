@@ -147,10 +147,6 @@ const style = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
-  video_RecipeInfo: {
-    width: '100%',
-    height: 210,
-  },
   subheading_RecipeInfo: {
     flex: 1,
     marginTop: 30,
@@ -164,20 +160,7 @@ const style = StyleSheet.create({
     marginRight: 20,
     fontSize: 16,
     lineHeight: 30,
-  },
-  itemName_Recipe: {
-    fontSize: 40,
-    fontWeight: 'bold',
-    marginBottom: 25,
-  },
-  itemDiv_Recipe: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  view1_Recipe: {
-    flexDirection: 'column',
-    padding: 20,
-  },
+  }
 });
 
 export default style;
