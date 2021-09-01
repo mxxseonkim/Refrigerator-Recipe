@@ -1,7 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import DatePicker from 'react-native-datepicker';
 import RNPickerSelect from 'react-native-picker-select';
 import CheckBox from 'react-native-check-box';
+import Searchbar from '../components/Searchbar.js';
+import RBSheet from 'react-native-raw-bottom-sheet';
 import {
   ActivityIndicator,
   Pressable,
@@ -12,25 +14,45 @@ import {
   FlatList,
   TouchableOpacity,
   Image,
+  ScrollView,
   Alert,
 } from 'react-native';
 import style from '../style';
 
 export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
-  var [data, onSetData] = useState([]);
-  var [isLodaing, setIsLoding] = useState(true);
-  var [modalVisible, setModalVisible] = useState(false);
-  var [text, setText] = useState(null);
-  var [number, setNumber] = useState(null);
-  var [date, setDate] = useState('2021-01-01');
-  var [type, setType] = useState(null);
-  var [type_value, setTypeValue] = useState(null);
-  var [no, setNO] = useState(null);
+  const [data, onSetData] = useState([]);
+  const [isLodaing, setIsLoding] = useState(true);
+  const [text, setText] = useState(null);
+  const [number, setNumber] = useState(null);
+  const [date, setDate] = useState('2021-01-01');
+  const [type, setType] = useState(null);
+  const [type_value, setTypeValue] = useState(null);
+  const [no, setNO] = useState(null);
+  const [search, setSearch] = useState(''); // 검색 키워드
+  const [filteredData, setFilteredData] = useState(); // 검색 키워드에 필터링된 데이터
+  const refRBSheet = useRef();
 
-  useEffect(() => {
-    getData();
-  }, [Chk, Chk1]);
-  //
+  //-------------------Data C/R/U/D ----------------------------------------
+
+  const DataSet = require('../routers/DataSet');
+
+  //onSelect
+  useEffect(async () => {
+    setIsLoding(true);
+    let dataObj = {
+      qry: "SELECT * FROM test WHERE f_type = '" + count + "'",
+    };
+    let json = await DataSet.getData(dataObj);
+    if (json !== false) {
+      onSetData(json);
+      setFilteredData(json);
+    } else {
+      onSetData([]);
+      setFilteredData([]);
+    }
+    //console.log(data);
+    setIsLoding(false);
+  }, [Chk]);
 
   const onUpdate = () => {
     let dataObj = {
@@ -44,7 +66,7 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
         ' WHERE no =' +
         no,
     };
-    setData(dataObj);
+    DataSet.setData(dataObj);
     onSlctChk(!Chk);
   };
 
@@ -70,46 +92,34 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
     console.log(checkArr);
     console.log(dataObj.qry);
     if (checkArr !== []) {
-      setData(dataObj);
+      DataSet.setData(dataObj);
+    }
+    onSlctChk(!Chk);
+  };
+
+  //--------------------------------------------------------------------------
+
+  //------------------ 검색 키워드로 필터링 하는 함수 --------------------------
+  const filterData = text => {
+    if (text) {
+      const newData = data.filter(function (item) {
+        const itemData = item.f_name
+          ? item.f_name.toUpperCase()
+          : ''.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setFilteredData(newData);
+      setSearch(text);
+    } else {
+      setFilteredData(data);
+      setSearch(text);
     }
   };
 
-  const setData = async dataObj => {
-    console.log(dataObj.qry);
-    return fetch(`http://3.35.18.154/phpdir/ref_set.php`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(dataObj),
-    }).catch(error => {
-      console.error(error);
-    });
-  };
+  //--------------------------------------------------------------------------
 
-  const getData = async () => {
-    let dataObj = {
-      qry: "SELECT * FROM test WHERE f_type = '" + count + "'",
-    };
-    console.log(dataObj.qry);
-    return fetch('http://3.35.18.154/phpdir/ref_get.php', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(dataObj),
-    })
-      .then(response => response.json())
-      .then(Json => {
-        if (Json !== 'false') {
-          onSetData(Json);
-        } else {
-          onSetData([]);
-        }
-      })
-      .catch(error => {
-        console.error(error);
-      })
-      .finally(() => {
-        setIsLoding(false);
-      });
-  };
+  //---------------------- UI 값 변경 함수 -------------------------------------
 
   const onSetNo = _no => {
     setNO(_no);
@@ -153,6 +163,10 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
     setTypeValue(_value);
   };
 
+  //--------------------------------------------------------------------------
+
+  //---------------------- UI 부분 --------------------------------------------
+
   const renderItem = ({item}) => {
     return (
       <View>
@@ -164,7 +178,10 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
               isChecked={item.f_checked === '0' ? false : true}
             />
             <View style={{flexDirection: 'row'}}>
-              <Image style={style.itemImg_List1}></Image>
+              <Image
+                style={style.itemImg_List1}
+                //source={require('C:Users/dohyun/Refrigerator-Recipe/imageSrc/noimage.jpg')}
+              ></Image>
               <View style={{flexDirection: 'column'}}>
                 <View style={{flexDirection: 'row'}}>
                   <Text style={style.itemName_List1}>{item.f_name}</Text>
@@ -178,7 +195,7 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
           <TouchableOpacity
             style={style.itemView_List1}
             onPress={() => {
-              setModalVisible(true);
+              refRBSheet.current.open();
               setText(item.f_name);
               onSetNumber(item.f_vol);
               onSetDate(item.f_ref);
@@ -196,33 +213,57 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
               </View>
             </View>
 
-            <Modal
-              animationType="fade"
-              transparent={true}
-              visible={modalVisible}
-              onRequestClose={() => {
-                Alert.alert('Modal has been closed.');
-                setModalVisible(!modalVisible);
+            <RBSheet
+              ref={refRBSheet}
+              closeOnDragDown={true}
+              closeOnPressMask={false}
+              height={300}
+              keyboardAvoidingViewEnabled={false}
+              dragFromTopOnly={true}
+              animationType={'slide'}
+              customStyles={{
+                wrapper: {
+                  backgroundColor: 'rgba(0,0,0,0.5)',
+                },
+                container: {
+                  justifyContent: 'space-around',
+                  borderTopWidth: 0,
+                  borderBottomWidth: 0,
+                  borderTopLeftRadius: 20,
+                  borderTopRightRadius: 20,
+                },
+                draggableIcon: {
+                  backgroundColor: '#000',
+                },
               }}>
-              <View style={style.testContatiner_List1}></View>
-              <View style={style.container_List1}>
-                <View style={style.modalView_List1}>
-                  <View style={{flex: 5}}>
-                    <View style={{flexDirection: 'column'}}>
-                      <Text>식재료명 : </Text>
+              <ScrollView>
+                <View style={{flex: 1, justifyContent: 'center'}}>
+                  <View style={{flexDirection: 'row'}}>
+                    <View style={style.textView_List1}>
+                      <Text style={style.text_List1}>식재료명</Text>
+                    </View>
+                    <View style={style.textView2_List1}>
                       <Text style={style.text_List1}>{text}</Text>
                     </View>
-                    <View style={{flexDirection: 'column'}}>
-                      <Text>용량 : </Text>
+                  </View>
+                  <View style={{flexDirection: 'row'}}>
+                    <View style={style.textView_List1}>
+                      <Text style={style.text_List1}>용량(g)</Text>
+                    </View>
+                    <View style={{width: '80%'}}>
                       <TextInput
-                        style={style.input_List1}
+                        style={[style.text_List1, style.input_List1]}
                         onChangeText={onSetNumber}
                         value={number}
                         placeholder="입력해주세요"
                       />
                     </View>
-                    <View style={{flexDirection: 'column'}}>
-                      <Text>유통기한 : </Text>
+                  </View>
+                  <View style={{flexDirection: 'row'}}>
+                    <View style={style.textView_List1}>
+                      <Text style={style.text_List1}>유통기한</Text>
+                    </View>
+                    <View style={{width: '80%'}}>
                       <DatePicker
                         style={style.datePickerStyle_List}
                         date={date} // Initial date from state
@@ -234,8 +275,12 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
                         onDateChange={onSetDate}
                       />
                     </View>
-                    <View style={{flexDirection: 'column'}}>
-                      <Text>분류 선택 : </Text>
+                  </View>
+                  <View style={{flexDirection: 'row'}}>
+                    <View style={style.textView_List1}>
+                      <Text style={style.text_List1}>분류선택</Text>
+                    </View>
+                    <View style={{width: '60%'}}>
                       <RNPickerSelect
                         style={{inputAndroid: {color: 'black'}}}
                         onValueChange={value => {
@@ -253,7 +298,11 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
                         value={type_value}
                         items={[
                           {label: '냉장', value: 'cold', inputLabel: '냉장'},
-                          {label: '냉동', value: 'frozen', inputLabel: '냉동'},
+                          {
+                            label: '냉동',
+                            value: 'frozen',
+                            inputLabel: '냉동',
+                          },
                           {
                             label: '조미료',
                             value: 'condi',
@@ -263,30 +312,28 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
                         ]}></RNPickerSelect>
                     </View>
                   </View>
-                  <View style={style.PressView_List1}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                    }}>
                     <Pressable
                       style={style.button_List1}
                       onPress={() => {
-                        setModalVisible(!modalVisible);
-                        //console.log(text);
-                        //console.log(number);
-                        //console.log(date);
-                        //console.log(type);
-                        //console.log(no);
+                        refRBSheet.current.close();
                         onUpdate();
                       }}>
                       <Text style={style.textStyle_List1}>변경</Text>
                     </Pressable>
                     <Pressable
                       style={style.button_List1}
-                      onPress={() => setModalVisible(!modalVisible)}>
+                      onPress={() => refRBSheet.current.close()}>
                       <Text style={style.textStyle_List1}>취소</Text>
                     </Pressable>
                   </View>
                 </View>
-              </View>
-              <View style={style.testContatiner}></View>
-            </Modal>
+              </ScrollView>
+            </RBSheet>
           </TouchableOpacity>
         )}
       </View>
@@ -295,6 +342,12 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
 
   return (
     <View style={{flex: 1}}>
+      <Searchbar
+        search={search}
+        setSearch={setSearch}
+        filterData={filterData}
+        ph="궁금한 재료를 검색해보셈"
+      />
       {isLodaing ? (
         <View
           style={{
@@ -307,13 +360,13 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
       ) : (
         <View style={style.flatlist_List1}>
           <FlatList
-            data={data}
+            data={filteredData}
             keyExtractor={item => item.no}
             renderItem={renderItem}
           />
           {Chk1 && (
             <TouchableOpacity
-              style={style.button_List1}
+              style={style.button2_List1}
               onPress={() => {
                 onDelete();
                 onDeltChk(!Chk1);
@@ -326,3 +379,5 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
     </View>
   );
 }
+
+//--------------------------------------------------------------------------
