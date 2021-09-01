@@ -128,7 +128,7 @@ function RegisterScreen({navigation}) {
               alignItems: 'center',
             }}>
             <Image
-              source={require('C:/Users/Administrator/react-native/Refrigerator-recipe/Refrigerator-Recipe/imageSrc/register.jpg')}
+              //source={require('C:/Users/Administrator/react-native/Refrigerator-recipe/Refrigerator-Recipe/imageSrc/register.jpg')}
               style={{
                 height: wp(20),
                 resizeMode: 'contain',
