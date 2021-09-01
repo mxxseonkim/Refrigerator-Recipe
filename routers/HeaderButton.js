@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import DatePicker from 'react-native-datepicker';
 import RNPickerSelect from 'react-native-picker-select';
+import RBSheet from 'react-native-raw-bottom-sheet';
 import {
   Platform,
   Pressable,
@@ -11,19 +12,21 @@ import {
   Modal,
   TouchableOpacity,
   Alert,
+  ScrollView,
 } from 'react-native';
 import style from '../style';
 
 Icon.loadFont();
 
 export default function HeaderButton({onSlctChk, Chk}) {
-  var [modalVisible, setModalVisible] = useState(false);
   var [text, setText] = useState(null);
   var [number, setNumber] = useState(null);
   var [startDate, setStartDate] = useState('2021-01-01');
   var [endDate, setEndDate] = useState('2021-01-01');
   var [type, setType] = useState('1');
   var [type_value, setTypeValue] = useState(null);
+  const DataSet = require('./DataSet');
+  const refRBSheet = useRef();
 
   const onSetText = _text => {
     setText(_text);
@@ -46,11 +49,6 @@ export default function HeaderButton({onSlctChk, Chk}) {
   };
 
   const onInsert = () => {
-    setData();
-    onSlctChk(!Chk);
-  };
-
-  const setData = async () => {
     let dataObj = {
       qry:
         'INSERT INTO test (f_name, f_vol, f_ref, f_last, f_type) VALUES ("' +
@@ -65,14 +63,13 @@ export default function HeaderButton({onSlctChk, Chk}) {
         type +
         '")',
     };
-    console.log(dataObj.qry);
-    return fetch(`http://3.35.18.154/phpdir/ref_set.php`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(dataObj),
-    }).catch(error => {
-      console.error(error);
-    });
+    DataSet.setData(dataObj);
+    onSetText(null);
+    onSetNumber(null);
+    onSetStartDate('2021-01-01');
+    onSetEndDate('2021-01-01');
+    onSetType('1');
+    onSlctChk(!Chk);
   };
 
   const onSetType = _type => {
@@ -94,7 +91,7 @@ export default function HeaderButton({onSlctChk, Chk}) {
   return (
     <TouchableOpacity
       onPress={() => {
-        setModalVisible(true);
+        refRBSheet.current.open();
       }}>
       <Icon
         name={
@@ -102,38 +99,63 @@ export default function HeaderButton({onSlctChk, Chk}) {
         }
         style={style.headerIcon_HeaderButton}
       />
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-          setModalVisible(!modalVisible);
+
+      <RBSheet
+        ref={refRBSheet}
+        closeOnDragDown={true}
+        closeOnPressMask={false}
+        height={360}
+        keyboardAvoidingViewEnabled={false}
+        dragFromTopOnly={true}
+        animationType={'slide'}
+        customStyles={{
+          wrapper: {
+            backgroundColor: 'rgba(0,0,0,0.5)',
+          },
+          container: {
+            justifyContent: 'space-around',
+            borderTopWidth: 0,
+            borderBottomWidth: 0,
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+          },
+          draggableIcon: {
+            backgroundColor: '#000',
+          },
         }}>
-        <View style={style.testContatiner_HeaderButton}></View>
-        <View style={style.container_HeaderButton}>
-          <View style={style.modalView_List1}>
-            <View style={{flex: 5}}>
-              <View style={{flexDirection: 'column'}}>
-                <Text>식재료명 : </Text>
+        <ScrollView>
+          <View style={{flex: 1, justifyContent: 'center'}}>
+            <View style={{flexDirection: 'row'}}>
+              <View style={style.textView_List1}>
+                <Text style={style.text_List1}>식재료명</Text>
+              </View>
+              <View style={{width: '80%'}}>
                 <TextInput
-                  style={style.input_List1}
+                  style={[style.text_List1, style.input_List1]}
                   onChangeText={onSetText}
                   value={text}
                   placeholder="입력해주세요"
                 />
               </View>
-              <View style={{flexDirection: 'column'}}>
-                <Text>용량 : </Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <View style={style.textView_List1}>
+                <Text style={style.text_List1}>용량(g)</Text>
+              </View>
+              <View style={{width: '80%'}}>
                 <TextInput
-                  style={style.input_List1}
+                  style={[style.text_List1, style.input_List1]}
                   onChangeText={onSetNumber}
                   value={number}
                   placeholder="입력해주세요"
                 />
               </View>
-              <View style={{flexDirection: 'column'}}>
-                <Text>구매일자 : </Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <View style={style.textView_List1}>
+                <Text style={style.text_List1}>구매일자</Text>
+              </View>
+              <View style={{width: '80%'}}>
                 <DatePicker
                   style={style.datePickerStyle_List}
                   date={startDate} // Initial date from state
@@ -145,8 +167,12 @@ export default function HeaderButton({onSlctChk, Chk}) {
                   onDateChange={onSetStartDate}
                 />
               </View>
-              <View style={{flexDirection: 'column'}}>
-                <Text>유통기한 : </Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <View style={style.textView_List1}>
+                <Text style={style.text_List1}>유통기한</Text>
+              </View>
+              <View style={{width: '80%'}}>
                 <DatePicker
                   style={style.datePickerStyle_List}
                   date={endDate} // Initial date from state
@@ -158,8 +184,12 @@ export default function HeaderButton({onSlctChk, Chk}) {
                   onDateChange={onSetEndDate}
                 />
               </View>
-              <View style={{flexDirection: 'column'}}>
-                <Text>분류 선택 : </Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <View style={style.textView_List1}>
+                <Text style={style.text_List1}>분류선택</Text>
+              </View>
+              <View style={{width: '60%'}}>
                 <RNPickerSelect
                   style={{inputAndroid: {color: 'black'}}}
                   onValueChange={value => {
@@ -177,36 +207,42 @@ export default function HeaderButton({onSlctChk, Chk}) {
                   value={type_value}
                   items={[
                     {label: '냉장', value: 'cold', inputLabel: '냉장'},
-                    {label: '냉동', value: 'frozen', inputLabel: '냉동'},
-                    {label: '조미료', value: 'condi', inputLabel: '조미료'},
+                    {
+                      label: '냉동',
+                      value: 'frozen',
+                      inputLabel: '냉동',
+                    },
+                    {
+                      label: '조미료',
+                      value: 'condi',
+                      inputLabel: '조미료',
+                    },
                     {label: '실온', value: 'room', inputLabel: '실온'},
                   ]}></RNPickerSelect>
               </View>
             </View>
-            <View style={style.PressView_List1}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+              }}>
               <Pressable
                 style={style.button_List1}
                 onPress={() => {
-                  setModalVisible(!modalVisible);
-                  console.log(text);
-                  console.log(number);
-                  console.log(startDate);
-                  console.log(endDate);
-                  console.log(type);
+                  refRBSheet.current.close();
                   onInsert();
                 }}>
                 <Text style={style.textStyle_List1}>추가</Text>
               </Pressable>
               <Pressable
                 style={style.button_List1}
-                onPress={() => setModalVisible(!modalVisible)}>
+                onPress={() => refRBSheet.current.close()}>
                 <Text style={style.textStyle_List1}>취소</Text>
               </Pressable>
             </View>
           </View>
-        </View>
-        <View style={style.testContatiner}></View>
-      </Modal>
+        </ScrollView>
+      </RBSheet>
     </TouchableOpacity>
   );
 }

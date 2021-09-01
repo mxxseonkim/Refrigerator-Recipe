@@ -1,18 +1,23 @@
-import * as React from 'react';
-import { Text, View } from 'react-native';
+import React from 'react';
+import {
+  View,
+  Button,
+  TextInput,
+  ScrollView,
+  Text,
+  Pressable,
+} from 'react-native';
+import style from '../style';
 
 export default function ClientScreen() {
-
-    /*
-
-    회원 화면 구현
-
-    */
-
-    return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>회원 화면</Text>
-        </View>
-    );
-
+  return (
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+      <Text>회원관리</Text>
+    </View>
+  );
 }
