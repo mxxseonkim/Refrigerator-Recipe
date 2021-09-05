@@ -11,7 +11,7 @@ function LogoutScreen({navigation}) {
             <View style={{flex: 2}}>
                 <View style={styles.logoArea}>
                     <Image
-                        source = {require('C:/Users/Administrator/react-native/Refrigerator-recipe/Refrigerator-Recipe/imageSrc/logout.jpg')}
+                        source = {require('../imageSrc/logout.jpg')}
                         style = {{width: wp(60), resizeMode: 'contain'}}
                     />
                 </View>

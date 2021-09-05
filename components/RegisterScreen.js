@@ -128,7 +128,7 @@ import {
                 alignItems: 'center',
               }}>
               <Image
-                source={require('C:/Users/Administrator/react-native/Refrigerator-recipe/Refrigerator-Recipe/imageSrc/register.jpg')}
+                source={require('../imageSrc/register.jpg')}
                 style={{
                   height: wp(20),
                   resizeMode: 'contain',
@@ -176,7 +176,7 @@ import {
         <View style={styles.topArea}>
           <View style={styles.titleArea}>
             <Image
-              source={require('C:/Users/Administrator/react-native/Refrigerator-recipe/Refrigerator-Recipe/imageSrc/register.jpg')}
+              source={require('../imageSrc/register.jpg')}
               style={{width: wp(40), resizeMode: 'contain'}}
             />
           </View>

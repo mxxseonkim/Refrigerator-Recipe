@@ -16,7 +16,7 @@ const [errortext, setErrortext] = useState('');
             <View style={styles.topArea}>
                 <View style={styles.titleArea}>
                     <Image
-                        source={require('C:/Users/Administrator/react-native/Refrigerator-recipe/Refrigerator-Recipe/imageSrc/login3.jpg')}
+                        source={require('../imageSrc/login3.jpg')}
                         style={{ width: wp(30), resizeMode: 'contain'}}
                     />
                 </View>
