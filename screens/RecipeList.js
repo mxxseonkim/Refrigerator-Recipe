@@ -43,6 +43,7 @@ export default function RecipeList(props) {
         onPress={() => {
           props.navigation.navigate('RecipeInfo', {
             data: item,
+            id: item.id,
             title: item.name,
           });
         }}>

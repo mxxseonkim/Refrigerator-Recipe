@@ -3,7 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import ManageTabRouter from './ManageTabRouter';
 import MenuButton from './MenuButton';
-import BookMark from './BookMark';
+import BookMark from '../components/BookMark';
 import RecipeList from '../screens/RecipeList';
 import RecipeInfo from '../screens/RecipeInfo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -72,7 +72,7 @@ const RecipeStackScreen = ({navigation}) => {
         options={({route}) => ({
           title: route.params.title,
           headerLeft: () => <MenuButton />,
-          headerRight: () => <BookMark />,
+          headerRight: () => <BookMark recipeId={route.params.id}/>,
         })}
       />
     </RecipeStack.Navigator>
