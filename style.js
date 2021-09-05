@@ -30,6 +30,13 @@ const style = StyleSheet.create({
     marginTop: 5,
     color: 'tomato',
   },
+  //BookMark
+  bookmarkIcon_BookMark: {
+    fontSize: 30,
+    marginRight: 15,
+    marginTop: 5,
+    color: mark ? 'tomato' : 'gray',
+  },
   // list1
   checkBox_List1: {
     flex: 0.05,
