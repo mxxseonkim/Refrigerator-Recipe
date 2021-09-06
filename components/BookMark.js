@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {StyleSheet, Platform} from 'react-native';
-import style from '../style';
 
 Icon.loadFont();
 
@@ -22,11 +21,15 @@ export default function Bookmark(props){
   }
 
   return (
-    <TouchableOpacity
-      onPress={clickBookmark}>
+    <TouchableOpacity onPress={clickBookmark}>
       <Icon
         name={Platform.OS === 'ios' ? 'ios-bookmark' : 'md-bookmark'}
-        style={style.bookmarkIcon_BookMark}
+        style={{
+          fontSize: 30,
+          marginRight: 15,
+          marginTop: 5,
+          color: mark ? 'tomato' : 'gray',
+        }}
       />
     </TouchableOpacity>
   );
