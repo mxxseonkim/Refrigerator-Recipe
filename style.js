@@ -31,35 +31,20 @@ const style = StyleSheet.create({
     color: 'tomato',
   },
   // list1
-  testContatiner_List1: {
-    flex: 0.2,
-  },
-  container_List1: {
-    flex: 0.66,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalView_List1: {
-    margin: 10,
-    backgroundColor: '#eee',
-    borderRadius: 10,
-    padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#222',
-    elevation: 3,
-  },
   checkBox_List1: {
     flex: 0.05,
     paddingRight: 15,
     margin: 10,
     justifyContent: 'center',
   },
-  PressView_List1: {
-    flexDirection: 'row',
-    flex: 0.7,
-  },
   button_List1: {
+    padding: 10,
+    margin: 5,
+    width: '45%',
+    borderRadius: 10,
+    backgroundColor: 'tomato',
+  },
+  button2_List1: {
     padding: 10,
     margin: 5,
     borderRadius: 10,
@@ -70,16 +55,29 @@ const style = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  textView_List1: {
+    width: '20%',
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+    padding: 5,
+    textAlign: 'center',
+    margin: 10,
+  },
+  textView2_List1: {
+    width: '80%',
+    padding: 5,
+    margin: 10,
+  },
   input_List1: {
     height: 40,
-    margin: 12,
-    borderWidth: 1,
-    width: 200,
+    margin: 7,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+    width: '80%',
   },
   text_List1: {
-    height: 40,
-    margin: 12,
-    width: 200,
+    fontSize: 17,
+    fontWeight: 'bold',
   },
   flatlist_List1: {
     flex: 6,
@@ -101,7 +99,7 @@ const style = StyleSheet.create({
     padding: 20,
     margin: 10,
     resizeMode: 'cover',
-    backgroundColor: 'red',
+    backgroundColor: 'white',
     //marginRight:20,
   },
   itemName_List1: {
@@ -114,12 +112,13 @@ const style = StyleSheet.create({
     fontSize: 14,
   },
   datePickerStyle_List: {
-    width: 150,
+    width: '60%',
     marginTop: 10,
     marginBottom: 10,
     margin: 20,
+    fontSize: 17,
+    fontWeight: 'bold',
   },
-
   //RecipeList
   root_RecipeList: {
     flex: 1,
@@ -140,7 +139,7 @@ const style = StyleSheet.create({
     textAlign: 'right',
     fontSize: 17,
     fontWeight: 'bold',
-    color: 'tomato'
+    color: 'tomato',
   },
 
   //RecipeInfo
@@ -152,13 +151,13 @@ const style = StyleSheet.create({
     flex: 1,
     marginTop: 30,
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   content_RecipeInfo: {
     flex: 1,
     marginTop: 20,
     marginLeft: 20,
-    marginRight:20,
+    marginRight: 20,
     fontSize: 16,
     lineHeight: 30,
   }
