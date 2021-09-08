@@ -29,4 +29,5 @@ const setData = async dataObj => {
 module.exports = {
   getData,
   setData,
+  logininfo: null,
 };
