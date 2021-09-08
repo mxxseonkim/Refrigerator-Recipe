@@ -20,6 +20,7 @@ import {
   Modal,
   ScrollView,
   Pressable,
+  Alert,
 } from 'react-native';
 
 function RegisterScreen({navigation}) {
@@ -34,12 +35,42 @@ function RegisterScreen({navigation}) {
   const [errortext2, setErrortext2] = useState('');
   const [isRegistraionSuccess, setIsRegistraionSuccess] = useState(true);
 
+  const [useridCheck, setUseridCheck] = useState('');
+  const [ischecked, setIschecked] = useState(false);
+  //아이디 중복체크 결과값 저장 변수
+
   const idInputRef = createRef();
   const passwordInputRef = createRef();
   const passwordchkInputRef = createRef();
   const nameInputRef = createRef();
   const emailInputRef = createRef();
   const nickInputRef = createRef();
+
+  var id_rule = /^([a-z0-9_]){5,25}$/; // id 5~25자
+  var password_rule = /^(?=.*[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+  var email_rule =
+    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+  var name_rule = /^[ㄱ-힣a-zA-Z]/gi;
+  var nick_rule = /^[ㄱ-힣a-zA-Z0-9]/gi;
+
+  const DataSet = require('../routers/DataSet');
+
+  const IdOverlabCheck = async () => {
+    setIschecked(true);
+    let ID_overlab_check = {
+      qry: 'SELECT * FROM member where mem_userid="' + userId + '"',
+      //아이디 중복 체크 쿼리
+    };
+    let result = await DataSet.overlabCheck(ID_overlab_check);
+    console.log(Number(result));
+    if (Number(result)) {
+      //중복된 아이디가 있을 때
+      setUseridCheck(false);
+    } else {
+      //중복된 아이디가 없을 때
+      setUseridCheck(true);
+    }
+  };
 
   const handleSubmitButton = () => {
     setErrortext('');
@@ -48,9 +79,17 @@ function RegisterScreen({navigation}) {
       alert('아이디를 입력해주세요');
       return;
     }
+    if (!id_rule.test(userId)) {
+      alert('아이디를 형식에 맞게 입력해주세요.');
+      return false;
+    }
     if (!userPassword) {
       alert('비밀번호를 입력해주세요');
       return;
+    }
+    if (!password_rule.test(userPassword)) {
+      alert('비밀번호를 형식에 맞게 입력해주세요.');
+      return false;
     }
     if (userPasswordchk != userPassword) {
       alert('비밀번호가 일치하지 않습니다');
@@ -60,14 +99,34 @@ function RegisterScreen({navigation}) {
       alert('이름을 입력해주세요');
       return;
     }
+    if (!name_rule.test(userName)) {
+      alert('이름을 형식에 맞게 입력해주세요.');
+      return false;
+    }
     if (!userNick) {
       alert('닉네임을 입력해주세요');
       return;
+    }
+    if (!nick_rule.test(userNick)) {
+      alert('닉네임을 형식에 맞게 입력해주세요.');
+      return false;
     }
     if (!userEmail) {
       alert('이메일을 입력해주세요');
       return;
     }
+    if (!email_rule.test(userEmail)) {
+      alert('이메일을 형식에 맞게 입력해주세요.');
+      return false;
+    }
+    if (Boolean(useridCheck)) {
+      Alert.alert(
+        '경고',
+        '중복된 아이디가 존재합니다. 아이디를 다시 입력해주세요.',
+      );
+      return;
+    }
+
     //Show Loader
     setLoading(true);
 
@@ -77,7 +136,16 @@ function RegisterScreen({navigation}) {
       user_password: userPassword,
       user_realname: userName,
       user_nickname: userNick,
+      user_profilcontent: 'NULL',
+      user_icon: 'NULL',
+      user_photo: 'NULL',
     };
+
+    //data 변수에 더 추가해야할 것 -> 자기소개, 아이콘
+
+    DataSet.memberCreate(data);
+    //멤버 DB insert & 냉장고 테이블 생성
+    console.log('성공');
 
     setIsRegistraionSuccess(true);
     // var formBody = [];
@@ -198,11 +266,13 @@ function RegisterScreen({navigation}) {
         </View>
       </View>
       <View style={{justifyContent: 'center'}}>
-        {true ? (
-          <Text style={styles.TextValidation}>사용 가능한 아이디입니다.</Text>
-        ) : (
-          <Text style={styles.TextValidation}>중복된 아이디입니다.</Text>
-        )}
+        {ischecked ? (
+          useridCheck ? (
+            <Text style={styles.TextValidation}>사용 가능한 아이디입니다.</Text>
+          ) : (
+            <Text style={styles.TextValidation}>중복된 아이디입니다.</Text>
+          )
+        ) : null}
       </View>
       <View style={styles.formArea}>
         <TextInput

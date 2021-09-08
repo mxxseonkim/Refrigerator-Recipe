@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
+  Alert,
 } from 'react-native';
 
 function LoginScreen({navigation}) {
@@ -19,10 +20,24 @@ function LoginScreen({navigation}) {
   const [userPassword, setUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errortext, setErrortext] = useState('');
+  const [userCheck, setUserCheck] = useState('');
   const idInputRef = createRef();
   const passwordInputRef = createRef();
 
-  const handleSubmitButton = () => {
+  const DataSet = require('../routers/DataSet');
+  const memberID = require('../Global');
+
+  const handleSubmitButton = async () => {
+    let login_check = {
+      qry:
+        "SELECT * FROM `member` WHERE mem_userid = '" +
+        userId +
+        "' and mem_password = '" +
+        userPassword +
+        "'",
+    };
+    let result = await DataSet.overlabCheck(login_check);
+
     if (!userId) {
       alert('아이디를 입력해주세요');
       return;
@@ -31,8 +46,20 @@ function LoginScreen({navigation}) {
       alert('비밀번호를 입력해주세요');
       return;
     }
+
+    if (Number(result)) {
+      //로그인 성공
+      memberID.userID = userId;
+      setUserCheck('true');
+    } else {
+      //로그인 실패
+      Alert.alert('경고', '아이디 및 비밀번호를 다시 확인해주세요.');
+      setUserCheck('false');
+    }
+
     navigation.navigate('DrawerTab');
   };
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.topArea}>
@@ -75,7 +102,6 @@ function LoginScreen({navigation}) {
           underlineColorAndroid="#f000"
           blurOnSubmit={false}
         />
-        <Text style={styles.TextValidation}>유효하지 않은 아이디입니다.</Text>
       </View>
       <View style={{flex: 0.75}}>
         <View style={styles.btnArea}>
@@ -130,6 +156,7 @@ const styles = StyleSheet.create({
   formArea: {
     justifyContent: 'center',
     flex: 1.5,
+    paddingBottom: hp(3),
   },
   textFormTop: {
     borderWidth: 2,
