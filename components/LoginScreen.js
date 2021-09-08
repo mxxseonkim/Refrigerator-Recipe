@@ -1,28 +1,40 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, createRef, useEffect} from 'react';
 import {
     widthPercentageToDP as wp,
     heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import 'react-native-gesture-handler';
-import { StyleSheet, View, Text, Image, TouchableOpacity, TextInput} from 'react-native';
+import { StyleSheet, View, Text, Image, TouchableOpacity, TextInput, ScrollView} from 'react-native';
 
 function LoginScreen({navigation}) {
   const [userId, setUserId] = useState('');
 const [userPassword, setUserPassword] = useState('');
 const [loading, setLoading] = useState(false);
 const [errortext, setErrortext] = useState('');
+const passwordInputRef = createRef();
+
+const handleSubmitButton = () => {
+  if (!userId) {
+    alert('아이디를 입력해주세요');
+    return;
+  } 
+  if (!userPassword) {
+    alert('비밀번호를 입력해주세요');
+    return;
+  }
+}
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <View style={styles.topArea}>
                 <View style={styles.titleArea}>
                     <Image
-                        source={require('C:/Users/Administrator/react-native/Refrigerator-recipe/Refrigerator-Recipe/imageSrc/login3.jpg')}
-                        style={{ width: wp(30), resizeMode: 'contain'}}
+                        source={require('C:/Users/Administrator/react-native/Refrigerator-recipe/Refrigerator-Recipe/imageSrc/login.jpg')}
+                        style={{ width: wp(35), resizeMode: 'contain'}}
                     />
                 </View>
                 <View style={styles.TextArea}>
-                    <Text style={styles.Text}>냉장고를 부탁해 앱을 이용하기 위해</Text>
-                    <Text style={styles.Text}>로그인이 필요해요</Text>
+                    <Text style={[styles.Text, {paddingLeft: wp(1)}]}>앱을 이용하기 위해</Text>
+                    <Text style={[styles.Text, {paddingLeft: wp(1)}]}>로그인이 필요해요</Text>
                 </View>
             </View>
             <View style={styles.formArea}>
@@ -30,23 +42,35 @@ const [errortext, setErrortext] = useState('');
                 placeholder={'아이디'}
                 onChangeText={(userId) => setUserId(userId)}
                 autoCapitalize="none"
+                ref={passwordInputRef}
                 returnKeyType="next"
                 onSubmitEditing={() =>
                   passwordInputRef.current && passwordInputRef.current.focus()}
                 underlineColorAndroid="#f000"
                 blurOnSubmit={false}/>
-                <TextInput style={styles.textFormBottom} placeholder={'비밀번호'}/>
+                <TextInput style={styles.textFormBottom} placeholder={'비밀번호'}
+                onChangeText={(userPassword) => setUserPassword(userPassword)}
+                autoCapitalize="none"
+                returnKeyType="next"
+                underlineColorAndroid="#f000"
+                blurOnSubmit={false}
+                />
                 <Text style={styles.TextValidation}>유효하지 않은 아이디입니다.</Text>
             </View>
             <View style={{flex: 0.75}}>
                 <View style={styles.btnArea}>
-                    <TouchableOpacity style={styles.btn}>
+                    <TouchableOpacity style={styles.btn} onPress={handleSubmitButton}>
                         <Text style={(styles.Text, {color: 'white'})}>로그인</Text>
                     </TouchableOpacity>
                 </View>
+                <Text
+                  style={styles.TextRegister}
+                  onPress={() => navigation.navigate('Register')}>
+                  처음이시라면, 회원가입이 필요해요
+                  </Text>
             </View>
             <View style={{flex: 3}}/>
-        </View>
+        </ScrollView>
     )
     
 };
@@ -60,13 +84,13 @@ const styles = StyleSheet.create({
       paddingRight: wp(7),
     },
     topArea: {
-      flex: 1.3,
+      flex: 1.0,
       paddingTop: wp(2),
     },
     titleArea: {
       flex: 0.7,
       justifyContent: 'center',
-      paddingTop: wp(7),
+      //paddingTop: wp(7),
     },
     TextArea: {
       flex: 0.3,
@@ -81,6 +105,7 @@ const styles = StyleSheet.create({
       fontSize: wp('4%'),
       color: 'red',
       paddingTop: wp(2),
+      paddingBottom: hp(1),
     },
   
     formArea: {
@@ -122,6 +147,12 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: 'black',
+    },
+    TextRegister: {
+      fontSize: wp('4%'),
+      color: 'grey',
+      textDecorationLine: 'underline',
+      paddingTop: wp(2),
     },
   });
   export default LoginScreen;
