@@ -42,7 +42,7 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
     setIsLoding(true);
     let dataObj = {
       qry:
-        'SELECT * FROM ' + memberID.userID + "WHERE f_type = '" + count + "'",
+        'SELECT * FROM ' + memberID.userID + " WHERE f_type = '" + count + "'",
     };
     let json = await DataSet.getData(dataObj);
     if (json !== false) {

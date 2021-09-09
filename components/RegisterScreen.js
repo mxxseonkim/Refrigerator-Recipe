@@ -5,8 +5,8 @@ import {
 } from 'react-native-responsive-screen';
 
 import 'react-native-gesture-handler';
+import Loader from './Loader';
 /// import RNPickerSelect from 'react-native-picker-select';
-// import Loader from './Components/Loader';
 
 import {
   StyleSheet,
@@ -19,7 +19,6 @@ import {
   Keyboard,
   Modal,
   ScrollView,
-  Pressable,
   Alert,
 } from 'react-native';
 
@@ -31,9 +30,7 @@ function RegisterScreen({navigation}) {
   const [userPasswordchk, setUserPasswordchk] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [loading, setLoading] = useState(false);
-  const [errortext, setErrortext] = useState('');
-  const [errortext2, setErrortext2] = useState('');
-  const [isRegistraionSuccess, setIsRegistraionSuccess] = useState(true);
+  const [isRegistraionSuccess, setIsRegistraionSuccess] = useState(false);
 
   const [useridCheck, setUseridCheck] = useState('');
   const [ischecked, setIschecked] = useState(false);
@@ -56,25 +53,26 @@ function RegisterScreen({navigation}) {
   const DataSet = require('../routers/DataSet');
 
   const IdOverlabCheck = async () => {
+    if (userId === '') {
+      return;
+    }
     setIschecked(true);
     let ID_overlab_check = {
       qry: 'SELECT * FROM member where mem_userid="' + userId + '"',
       //아이디 중복 체크 쿼리
     };
     let result = await DataSet.overlabCheck(ID_overlab_check);
-    console.log(Number(result));
+    //console.log(Number(result));
     if (Number(result)) {
       //중복된 아이디가 있을 때
-      setUseridCheck(false);
+      setUseridCheck(true);
     } else {
       //중복된 아이디가 없을 때
-      setUseridCheck(true);
+      setUseridCheck(false);
     }
   };
 
   const handleSubmitButton = () => {
-    setErrortext('');
-
     if (!userId) {
       alert('아이디를 입력해주세요');
       return;
@@ -119,6 +117,9 @@ function RegisterScreen({navigation}) {
       alert('이메일을 형식에 맞게 입력해주세요.');
       return false;
     }
+
+    console.log(useridCheck);
+
     if (Boolean(useridCheck)) {
       Alert.alert(
         '경고',
@@ -127,7 +128,6 @@ function RegisterScreen({navigation}) {
       return;
     }
 
-    //Show Loader
     setLoading(true);
 
     var data = {
@@ -147,42 +147,9 @@ function RegisterScreen({navigation}) {
     //멤버 DB insert & 냉장고 테이블 생성
     console.log('성공');
 
-    setIsRegistraionSuccess(true);
-    // var formBody = [];
-    // for (var key in dataToSend) {
-    //   var encodedKey = encodeURIComponent(key);
-    //   var encodedValue = encodeURIComponent(dataToSend[key]);
-    //   formBody.push(encodedKey + '=' + encodedValue);
-    // }
-    // formBody = formBody.join('&');
+    setLoading(false);
 
-    // fetch('http://localhost:3001/api/user/register', {
-    //   method: 'POST',
-    //   body: formBody,
-    //   headers: {
-    //     //Header Defination
-    //     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-    //   },
-    // })
-    //   .then((response) => response.json())
-    //   .then((responseJson) => {
-    //     //Hide Loader
-    //     setLoading(false);
-    //     setErrortext2('');
-    //     console.log(responseJson);
-    //     // If server response message same as Data Matched
-    //     if (responseJson.status === 'success') {
-    //       setIsRegistraionSuccess(true);
-    //       console.log('Registration Successful. Please Login to proceed');
-    //     } else if (responseJson.status === 'duplicate') {
-    //       setErrortext2('이미 존재하는 아이디입니다.');
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     //Hide Loader
-    //     setLoading(false);
-    //     console.error(error);
-    //   });
+    setIsRegistraionSuccess(true);
   };
 
   if (isRegistraionSuccess) {
@@ -203,7 +170,6 @@ function RegisterScreen({navigation}) {
                 height: hp(30),
                 resizeMode: 'contain',
                 alignSelf: 'center',
-                //backgroundColor: 'red',
               }}
             />
           </View>
@@ -234,7 +200,7 @@ function RegisterScreen({navigation}) {
   }
   return (
     <ScrollView style={styles.container}>
-      {/* <Loader loading={loading} /> */}
+      <Loader loading={loading} />
       <View style={styles.topArea}>
         <View style={styles.titleArea}>
           <Image
@@ -259,7 +225,7 @@ function RegisterScreen({navigation}) {
             blurOnSubmit={false}
           />
           <View style={styles.idCheck}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={IdOverlabCheck}>
               <Text style={{color: 'white'}}>중복 체크</Text>
             </TouchableOpacity>
           </View>
@@ -268,9 +234,9 @@ function RegisterScreen({navigation}) {
       <View style={{justifyContent: 'center'}}>
         {ischecked ? (
           useridCheck ? (
-            <Text style={styles.TextValidation}>사용 가능한 아이디입니다.</Text>
-          ) : (
             <Text style={styles.TextValidation}>중복된 아이디입니다.</Text>
+          ) : (
+            <Text style={styles.TextValidation}>사용 가능한 아이디입니다.</Text>
           )
         ) : null}
       </View>
@@ -341,12 +307,6 @@ function RegisterScreen({navigation}) {
           ref={emailInputRef}
           //blurOnSubmit={false}
         />
-      </View>
-
-      <View style={{flex: 0.7, justifyContent: 'center'}}>
-        {errortext2 !== '' ? (
-          <Text style={styles.TextValidation}>{errortext2}</Text>
-        ) : null}
       </View>
 
       <View style={{flex: 0.75}}>

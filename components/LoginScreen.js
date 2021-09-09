@@ -4,6 +4,8 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import 'react-native-gesture-handler';
+import Loader from './Loader';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   StyleSheet,
   View,
@@ -18,16 +20,25 @@ import {
 function LoginScreen({navigation}) {
   const [userId, setUserId] = useState('');
   const [userPassword, setUserPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [errortext, setErrortext] = useState('');
-  const [userCheck, setUserCheck] = useState('');
   const idInputRef = createRef();
+  const [loading, setLoading] = useState(false);
   const passwordInputRef = createRef();
 
   const DataSet = require('../routers/DataSet');
   const memberID = require('../Global');
 
   const handleSubmitButton = async () => {
+    if (!userId) {
+      alert('아이디를 입력해주세요');
+      return;
+    }
+    if (!userPassword) {
+      alert('비밀번호를 입력해주세요');
+      return;
+    }
+
+    setLoading(true);
+
     let login_check = {
       qry:
         "SELECT * FROM `member` WHERE mem_userid = '" +
@@ -38,30 +49,22 @@ function LoginScreen({navigation}) {
     };
     let result = await DataSet.overlabCheck(login_check);
 
-    if (!userId) {
-      alert('아이디를 입력해주세요');
-      return;
-    }
-    if (!userPassword) {
-      alert('비밀번호를 입력해주세요');
-      return;
-    }
+    setLoading(false);
 
     if (Number(result)) {
       //로그인 성공
       memberID.userID = userId;
-      setUserCheck('true');
+      await AsyncStorage.setItem('user_id', userId);
+      navigation.navigate('DrawerTab');
     } else {
       //로그인 실패
       Alert.alert('경고', '아이디 및 비밀번호를 다시 확인해주세요.');
-      setUserCheck('false');
     }
-
-    navigation.navigate('DrawerTab');
   };
 
   return (
     <ScrollView style={styles.container}>
+      <Loader loading={loading} />
       <View style={styles.topArea}>
         <View style={styles.titleArea}>
           <Image

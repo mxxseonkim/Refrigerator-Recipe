@@ -25,6 +25,7 @@ const setData = async dataObj => {
     console.error(error);
   }
 };
+
 const memberCreate = async dataObj => {
   try {
     const response = await fetch(`http://3.35.18.154/phpdir/mem_insert.php`, {
@@ -46,7 +47,7 @@ const overlabCheck = async dataObj => {
       body: JSON.stringify(dataObj),
     });
     const json = await response.text();
-    console.log(json);
+    //console.log(json);
     return json;
   } catch (error) {
     console.error(error);
