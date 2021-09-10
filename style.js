@@ -160,6 +160,51 @@ const style = StyleSheet.create({
     marginRight: 20,
     fontSize: 16,
     lineHeight: 30,
+  },
+  
+  //ClientScreen
+  profile_ClientScreen: {
+    height: 210,
+    flexDirection: 'row',
+    backgroundColor: 'lightgrey',
+    padding: 30,
+    paddingTop: 40,    
+  },
+  pic_ClientScreen: {
+    height: 140,
+    width: 140,
+    marginRight: 20,
+    borderRadius: 100,
+  },
+  nickname_ClientScreen: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  text_ClientScreen: {
+    fontSize: 14,
+  },
+  menuItem_ClientScreen: {
+    flex: 1,
+    alignItems: 'center',
+    flexDirection: 'row',
+    padding: 10,
+  },
+  menuItemIcon_ClientScreen: {
+    height: 30,
+    width: 30,
+    marginRight: 15,
+  },
+  menuItemText_ClientScreen: {
+    fontSize: 15,
+    fontWeight: 'bold',
+  },
+  menuList_ClientScreen: {
+    flex: 1,
+    // backgroundColor: 'skyblue',
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: 10,
   }
 });
 
