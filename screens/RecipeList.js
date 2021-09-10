@@ -41,10 +41,7 @@ export default function RecipeList(props) {
       <TouchableOpacity
         style={style.itemView_RecipeList}
         onPress={() => {
-          props.navigation.navigate('RecipeInfo', {
-            data: item,
-            title: item.name,
-          });
+          props.navigation.navigate('RecipeInfo', {data: item});
         }}>
         <View style={{width: '80%'}}>
           <Text style={style.itemName_RecipeList}>{item.name}</Text>
