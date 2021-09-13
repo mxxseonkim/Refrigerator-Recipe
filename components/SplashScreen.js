@@ -27,7 +27,7 @@ const SplashScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <Image
-        source={{uri: 'http://3.35.18.154/img/onion.png'}}
+        source={{uri: 'http://3.35.18.154/img/logout.jpg'}}
         style={{
           width: wp(55),
           height: hp(40),
@@ -58,4 +58,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 80,
   },
+
 });
+

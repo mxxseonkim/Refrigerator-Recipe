@@ -1,22 +1,3 @@
-// ------------------------------ 이전 코드 ---------------------------
-
-// import * as React from 'react';
-// import {NavigationContainer} from '@react-navigation/native';
-// import {SafeAreaView} from 'react-native';
-// import DrawerTabRouter from './routers/DrawerTabRouter';
-
-// export default function App() {
-//   return (
-//     <NavigationContainer>
-//       <SafeAreaView style={{flex: 1}}>
-//         <DrawerTabRouter />
-//       </SafeAreaView>
-//     </NavigationContainer>
-//   );
-// }
-
-// -------------------------- 로그인 코드 -------------------------------
-
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native';
@@ -53,6 +34,7 @@ const Auth = () => {
 export default function App() {
   return (
     <NavigationContainer>
+      <SafeAreaView style={{flex: 1}}>
         <AppStack.Navigator initialRouteName="SplashScreen">
           <AppStack.Screen
             name="SplashScreen"
@@ -71,6 +53,7 @@ export default function App() {
             component={DrawerTabRouter}
           />
         </AppStack.Navigator>
+      </SafeAreaView>
     </NavigationContainer>
   );
-};
+}

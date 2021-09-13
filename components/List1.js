@@ -180,8 +180,7 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
             <View style={{flexDirection: 'row'}}>
               <Image
                 style={style.itemImg_List1}
-                //source={require('C:Users/dohyun/Refrigerator-Recipe/imageSrc/noimage.jpg')}
-              ></Image>
+                source={{uri: 'http://3.35.18.154/img/eggfry.jpg'}}></Image>
               <View style={{flexDirection: 'column'}}>
                 <View style={{flexDirection: 'row'}}>
                   <Text style={style.itemName_List1}>{item.f_name}</Text>
@@ -203,7 +202,9 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
               onSetNo(item.no);
             }}>
             <View style={{flexDirection: 'row'}}>
-              <Image style={style.itemImg_List1}></Image>
+              <Image
+                style={style.itemImg_List1}
+                source={{uri: 'http://3.35.18.154/img/eggfry.jpg'}}></Image>
               <View style={{flexDirection: 'column'}}>
                 <View style={{flexDirection: 'row'}}>
                   <Text style={style.itemName_List1}>{item.f_name}</Text>
