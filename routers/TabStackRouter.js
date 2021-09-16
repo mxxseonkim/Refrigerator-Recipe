@@ -55,7 +55,9 @@ const ManageStackScreen = ({navigation}) => {
 };
 
 const RecipeStack = createStackNavigator();
-const RecipeStackScreen = ({navigation}) => {
+const RecipeStackScreen = ({navigation, route}) => {
+  const [mark, setMark] = useState(null);
+  
   return (
     <RecipeStack.Navigator initRouteName="RecipeList">
       <RecipeStack.Screen
@@ -68,11 +70,11 @@ const RecipeStackScreen = ({navigation}) => {
       />
       <RecipeStack.Screen
         name="RecipeInfo"
-        component={RecipeInfo}
+        children={({route}) => <RecipeInfo mark={mark} data={route.params.data}/>}
         options={({route}) => ({
-          title: route.params.title,
+          title: route.params.data.name,
           headerLeft: () => <MenuButton />,
-          headerRight: () => <BookMark />,
+          headerRight: () => <BookMark recipeId={route.params.data.id} mark={mark} setMark={setMark}/> 
         })}
       />
     </RecipeStack.Navigator>

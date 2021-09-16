@@ -11,6 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const SplashScreen = ({navigation}) => {
   //State for ActivityIndicator animation
   const [animating, setAnimating] = useState(true);
+  const memberID = require('../Global');
 
   useEffect(() => {
     setTimeout(async () => {
@@ -19,7 +20,9 @@ const SplashScreen = ({navigation}) => {
       //If not then send for Authentication
       //else send to Home Screen
       const value = await AsyncStorage.getItem('user_id');
-      console.log(value);
+      if (value !== null) {
+        memberID.userID = value;
+      }
       navigation.replace(value === null ? 'Auth' : 'DrawerTab');
     }, 3000);
   }, []);
