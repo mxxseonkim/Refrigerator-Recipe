@@ -19,7 +19,7 @@ export default class Searchbar extends React.Component {
         }}
         placeholder={this.props.ph}
         round="true"
-        onChangeText={(text) => this.props.filterData(text)}
+        onChangeText={text => this.props.filterData(text)}
         value={this.props.search}
       />
     );

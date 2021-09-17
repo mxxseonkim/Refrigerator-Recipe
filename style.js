@@ -68,6 +68,19 @@ const style = StyleSheet.create({
     padding: 5,
     margin: 10,
   },
+  textView3_List1: {
+    width: '30%',
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+    padding: 5,
+    textAlign: 'center',
+    margin: 10,
+  },
+  textView4_List1: {
+    width: '70%',
+    padding: 5,
+    margin: 10,
+  },
   input_List1: {
     height: 40,
     margin: 7,
@@ -78,6 +91,11 @@ const style = StyleSheet.create({
   text_List1: {
     fontSize: 17,
     fontWeight: 'bold',
+  },
+  text1_List1: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: 'red',
   },
   flatlist_List1: {
     flex: 6,
@@ -98,6 +116,33 @@ const style = StyleSheet.create({
     height: 70,
     padding: 20,
     margin: 10,
+    resizeMode: 'cover',
+    backgroundColor: 'white',
+    //marginRight:20,
+  },
+  itemImg2_List1: {
+    width: 85,
+    height: 85,
+    padding: 20,
+    margin: 10,
+    borderWidth: 1,
+    borderColor: 'black',
+    resizeMode: 'cover',
+    backgroundColor: 'white',
+    //marginRight:20,
+  },
+  itemImg3_List1: {
+    width: 85,
+    height: 85,
+    padding: 20,
+    margin: 10,
+    resizeMode: 'cover',
+    backgroundColor: 'white',
+    //marginRight:20,
+  },
+  itemImg4_List1: {
+    width: 30,
+    height: 30,
     resizeMode: 'cover',
     backgroundColor: 'white',
     //marginRight:20,
@@ -161,14 +206,14 @@ const style = StyleSheet.create({
     fontSize: 16,
     lineHeight: 30,
   },
-  
+
   //ClientScreen
   profile_ClientScreen: {
     height: 210,
     flexDirection: 'row',
     backgroundColor: 'lightgrey',
     padding: 30,
-    paddingTop: 40,    
+    paddingTop: 40,
   },
   pic_ClientScreen: {
     height: 140,
@@ -205,7 +250,7 @@ const style = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     marginTop: 10,
-  }
+  },
 });
 
 export default style;

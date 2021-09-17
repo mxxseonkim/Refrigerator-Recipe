@@ -12,6 +12,7 @@ import {
   View,
   Text,
   Modal,
+  Image,
   TouchableOpacity,
   Alert,
   ScrollView,
@@ -21,14 +22,18 @@ import style from '../style';
 Icon.loadFont();
 
 export default function HeaderButton({onSlctChk, Chk}) {
-  var [text, setText] = useState(null);
-  var [number, setNumber] = useState(null);
-  var [startDate, setStartDate] = useState('2021-01-01');
-  var [endDate, setEndDate] = useState('2021-01-01');
-  var [type, setType] = useState('1');
-  var [type_value, setTypeValue] = useState(null);
+  const [text, setText] = useState(null);
+  const [number, setNumber] = useState(null);
+  const [startDate, setStartDate] = useState('2021-01-01');
+  const [endDate, setEndDate] = useState('2021-01-01');
+  const [saveType, setSaveType] = useState('1');
+  const [saveType_value, setSaveTypeValue] = useState(null);
+  const [divType, setDivType] = useState('1');
+  const [divType_value, setDivTypeValue] = useState(null);
   const DataSet = require('./DataSet');
   const refRBSheet = useRef();
+
+  const memberID = require('../Global');
 
   const onSetText = _text => {
     setText(_text);
@@ -53,7 +58,9 @@ export default function HeaderButton({onSlctChk, Chk}) {
   const onInsert = () => {
     let dataObj = {
       qry:
-        'INSERT INTO test (f_name, f_vol, f_ref, f_last, f_type) VALUES ("' +
+        'INSERT INTO ' +
+        memberID.userID +
+        ' (f_name, f_vol, f_ref, f_last, f_type, f_checked) VALUES ("' +
         text +
         '", "' +
         number +
@@ -62,32 +69,51 @@ export default function HeaderButton({onSlctChk, Chk}) {
         '", "' +
         endDate +
         '", "' +
-        type +
-        '")',
+        saveType +
+        '", "0")',
     };
     DataSet.setData(dataObj);
     onSetText(null);
     onSetNumber(null);
     onSetStartDate('2021-01-01');
     onSetEndDate('2021-01-01');
-    onSetType('1');
+    onSetSaveType('1');
+    onSetDivType('1');
     onSlctChk(!Chk);
   };
 
-  const onSetType = _type => {
+  const onSetSaveType = _saveType => {
     var _value = null;
-    if (_type === '1') {
+    if (_saveType === '1') {
       _value = 'cold';
-    } else if (_type === '2') {
+    } else if (_saveType === '2') {
       _value = 'frozen';
-    } else if (_type === '3') {
+    } else if (_saveType === '3') {
       _value = 'condi';
-    } else if (_type === '4') {
+    } else if (_saveType === '4') {
       _value = 'room';
     }
-    setType(_type);
-    setTypeValue(_value);
-    //console.log(type);
+    setSaveType(_saveType);
+    setSaveTypeValue(_value);
+  };
+
+  const onSetDivType = _divType => {
+    var _value = null;
+    if (_divType === '1') {
+      _value = 'grain';
+    } else if (_divType === '2') {
+      _value = 'meat';
+    } else if (_divType === '3') {
+      _value = 'vegetable';
+    } else if (_divType === '4') {
+      _value = 'fat';
+    } else if (_divType === '5') {
+      _value = 'milk';
+    } else if (_divType === '6') {
+      _value = 'fruit';
+    }
+    setDivType(_divType);
+    setDivTypeValue(_value);
   };
 
   return (
@@ -106,7 +132,7 @@ export default function HeaderButton({onSlctChk, Chk}) {
         ref={refRBSheet}
         closeOnDragDown={true}
         closeOnPressMask={false}
-        height={360}
+        height={420}
         keyboardAvoidingViewEnabled={false}
         dragFromTopOnly={true}
         animationType={'slide'}
@@ -128,34 +154,52 @@ export default function HeaderButton({onSlctChk, Chk}) {
         <ScrollView>
           <View style={{flex: 1, justifyContent: 'center'}}>
             <View style={{flexDirection: 'row'}}>
-              <View style={style.textView_List1}>
-                <Text style={style.text_List1}>식재료명</Text>
+              <View style={{width: '70%'}}>
+                <View style={{flexDirection: 'row'}}>
+                  <View style={[style.textView3_List1, {flexDirection: 'row'}]}>
+                    <Text style={style.text_List1}>식재료명</Text>
+                    <Text style={style.text1_List1}> *</Text>
+                  </View>
+                  <View style={{width: '70%'}}>
+                    <TextInput
+                      style={[style.text_List1, style.input_List1]}
+                      onChangeText={onSetText}
+                      value={text}
+                      placeholder="입력해주세요"
+                    />
+                  </View>
+                </View>
+                <View style={{flexDirection: 'row'}}>
+                  <View style={[style.textView3_List1, {flexDirection: 'row'}]}>
+                    <Text style={style.text_List1}>용량(g)</Text>
+                    <Text style={style.text1_List1}> *</Text>
+                  </View>
+                  <View style={{width: '70%'}}>
+                    <TextInput
+                      style={[style.text_List1, style.input_List1]}
+                      onChangeText={onSetNumber}
+                      value={number}
+                      placeholder="입력해주세요"
+                    />
+                  </View>
+                </View>
               </View>
-              <View style={{width: '80%'}}>
-                <TextInput
-                  style={[style.text_List1, style.input_List1]}
-                  onChangeText={onSetText}
-                  value={text}
-                  placeholder="입력해주세요"
-                />
+              <View
+                style={{
+                  width: '30%',
+                  //backgroundColor: 'red'
+                }}>
+                <Image
+                  style={style.itemImg3_List1}
+                  source={{
+                    uri: 'http://3.35.18.154/img/add-image.png',
+                  }}></Image>
               </View>
             </View>
             <View style={{flexDirection: 'row'}}>
-              <View style={style.textView_List1}>
-                <Text style={style.text_List1}>용량(g)</Text>
-              </View>
-              <View style={{width: '80%'}}>
-                <TextInput
-                  style={[style.text_List1, style.input_List1]}
-                  onChangeText={onSetNumber}
-                  value={number}
-                  placeholder="입력해주세요"
-                />
-              </View>
-            </View>
-            <View style={{flexDirection: 'row'}}>
-              <View style={style.textView_List1}>
+              <View style={[style.textView_List1, {flexDirection: 'row'}]}>
                 <Text style={style.text_List1}>구매일자</Text>
+                <Text style={style.text1_List1}> *</Text>
               </View>
               <View style={{width: '80%'}}>
                 <DatePicker
@@ -188,25 +232,26 @@ export default function HeaderButton({onSlctChk, Chk}) {
               </View>
             </View>
             <View style={{flexDirection: 'row'}}>
-              <View style={style.textView_List1}>
-                <Text style={style.text_List1}>분류선택</Text>
+              <View style={[style.textView_List1, {flexDirection: 'row'}]}>
+                <Text style={style.text_List1}>보관선택</Text>
+                <Text style={style.text1_List1}> *</Text>
               </View>
               <View style={{width: '60%'}}>
                 <RNPickerSelect
                   style={{inputAndroid: {color: 'black'}}}
                   onValueChange={value => {
                     if (value === 'cold') {
-                      onSetType('1'); // 비동기 처리 됨..
+                      onSetSaveType('1'); // 비동기 처리 됨..
                     } else if (value === 'frozen') {
-                      onSetType('2');
+                      onSetSaveType('2');
                     } else if (value === 'condi') {
-                      onSetType('3');
+                      onSetSaveType('3');
                     } else if (value === 'room') {
-                      onSetType('4');
+                      onSetSaveType('4');
                     }
                   }}
                   placeholder={{}}
-                  value={type_value}
+                  value={saveType_value}
                   items={[
                     {label: '냉장', value: 'cold', inputLabel: '냉장'},
                     {
@@ -220,6 +265,41 @@ export default function HeaderButton({onSlctChk, Chk}) {
                       inputLabel: '조미료',
                     },
                     {label: '실온', value: 'room', inputLabel: '실온'},
+                  ]}></RNPickerSelect>
+              </View>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+              <View style={[style.textView_List1, {flexDirection: 'row'}]}>
+                <Text style={style.text_List1}>분류선택</Text>
+                <Text style={style.text1_List1}> *</Text>
+              </View>
+              <View style={{width: '60%'}}>
+                <RNPickerSelect
+                  style={{inputAndroid: {color: 'black'}}}
+                  onValueChange={value => {
+                    if (value === 'grain') {
+                      onSetDivType('1'); // 비동기 처리 됨..
+                    } else if (value === 'meat') {
+                      onSetDivType('2');
+                    } else if (value === 'vegetable') {
+                      onSetDivType('3');
+                    } else if (value === 'fat') {
+                      onSetDivType('4');
+                    } else if (value === 'milk') {
+                      onSetDivType('4');
+                    } else if (value === 'fruit') {
+                      onSetDivType('4');
+                    }
+                  }}
+                  placeholder={{}}
+                  value={divType_value}
+                  items={[
+                    {label: '곡류', value: 'grain', inputLabel: '곡류'},
+                    {label: '어육류', value: 'meat', inputLabel: '어육류'},
+                    {label: '채소류', value: 'vegetable', inputLabel: '채소류'},
+                    {label: '지방류', value: 'fat', inputLabel: '지방류'},
+                    {label: '유제품류', value: 'milk', inputLabel: '유제품류'},
+                    {label: '과일류', value: 'fruit', inputLabel: '과일류'},
                   ]}></RNPickerSelect>
               </View>
             </View>

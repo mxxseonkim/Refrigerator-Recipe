@@ -25,8 +25,10 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
   const [text, setText] = useState(null);
   const [number, setNumber] = useState(null);
   const [date, setDate] = useState('2021-01-01');
-  const [type, setType] = useState(null);
-  const [type_value, setTypeValue] = useState(null);
+  const [saveType, setSaveType] = useState(null);
+  const [saveType_value, setSaveTypeValue] = useState(null);
+  const [divType, setDivType] = useState(null);
+  const [divType_value, setDivTypeValue] = useState(null);
   const [no, setNO] = useState(null);
   const [search, setSearch] = useState(''); // 검색 키워드
   const [filteredData, setFilteredData] = useState(); // 검색 키워드에 필터링된 데이터
@@ -59,12 +61,14 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
   const onUpdate = () => {
     let dataObj = {
       qry:
-        'UPDATE test SET f_ref = "' +
+        'UPDATE ' +
+        memberID.userID +
+        ' SET f_ref = "' +
         date +
         '", f_vol ="' +
         number +
         '", f_type =' +
-        type +
+        saveType +
         ' WHERE no =' +
         no,
     };
@@ -74,7 +78,7 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
 
   const onDelete = () => {
     let dataObj = {
-      qry: 'DELETE FROM test WHERE no IN ("',
+      qry: 'DELETE FROM ' + memberID.userID + ' WHERE no IN ("',
     };
     var checkArr = [];
     for (var i = 0, j = 0; i < data.length; i++) {
@@ -150,19 +154,38 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
     onSetData(_data);
   };
 
-  const onSetType = _type => {
+  const onSetSaveType = _saveType => {
     var _value = null;
-    if (_type === '1') {
+    if (_saveType === '1') {
       _value = 'cold';
-    } else if (_type === '2') {
+    } else if (_saveType === '2') {
       _value = 'frozen';
-    } else if (_type === '3') {
+    } else if (_saveType === '3') {
       _value = 'condi';
-    } else if (_type === '4') {
+    } else if (_saveType === '4') {
       _value = 'room';
     }
-    setType(_type);
-    setTypeValue(_value);
+    setSaveType(_saveType);
+    setSaveTypeValue(_value);
+  };
+
+  const onSetDivType = _divType => {
+    var _value = null;
+    if (_divType === '1') {
+      _value = '곡류';
+    } else if (_divType === '2') {
+      _value = '어육류';
+    } else if (_divType === '3') {
+      _value = '채소류';
+    } else if (_divType === '4') {
+      _value = '지방류';
+    } else if (_divType === '5') {
+      _value = '유제품류';
+    } else if (_divType === '6') {
+      _value = '과일류';
+    }
+    setDivType(_divType);
+    setDivTypeValue(_value);
   };
 
   //--------------------------------------------------------------------------
@@ -200,27 +223,41 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
               setText(item.f_name);
               onSetNumber(item.f_vol);
               onSetDate(item.f_ref);
-              onSetType(item.f_type);
+              onSetSaveType(item.f_type);
+              onSetDivType('2');
               onSetNo(item.no);
             }}>
             <View style={{flexDirection: 'row'}}>
-              <Image
-                style={style.itemImg_List1}
-                source={{uri: 'http://3.35.18.154/img/eggfry.jpg'}}></Image>
-              <View style={{flexDirection: 'column'}}>
+              <View style={{width: '25%'}}>
+                <Image
+                  style={style.itemImg_List1}
+                  source={{uri: 'http://3.35.18.154/img/eggfry.jpg'}}></Image>
+              </View>
+              <View style={{flexDirection: 'column', width: '55%'}}>
                 <View style={{flexDirection: 'row'}}>
                   <Text style={style.itemName_List1}>{item.f_name}</Text>
                   <Text style={style.itemMsg_List1}>{item.f_vol}g</Text>
                 </View>
                 <Text style={style.itemMsg_List1}>{item.f_last}</Text>
               </View>
+              <View
+                style={{
+                  width: '20%',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                <Image
+                  style={style.itemImg4_List1}
+                  source={{
+                    uri: 'http://3.35.18.154/img/caution.png',
+                  }}></Image>
+              </View>
             </View>
-
             <RBSheet
               ref={refRBSheet}
               closeOnDragDown={true}
               closeOnPressMask={false}
-              height={300}
+              height={360}
               keyboardAvoidingViewEnabled={false}
               dragFromTopOnly={true}
               animationType={'slide'}
@@ -242,24 +279,39 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
               <ScrollView>
                 <View style={{flex: 1, justifyContent: 'center'}}>
                   <View style={{flexDirection: 'row'}}>
-                    <View style={style.textView_List1}>
-                      <Text style={style.text_List1}>식재료명</Text>
+                    <View style={{width: '70%'}}>
+                      <View style={{flexDirection: 'row'}}>
+                        <View style={style.textView3_List1}>
+                          <Text style={style.text_List1}>식재료명</Text>
+                        </View>
+                        <View style={style.textView4_List1}>
+                          <Text style={style.text_List1}>{text}</Text>
+                        </View>
+                      </View>
+                      <View style={{flexDirection: 'row'}}>
+                        <View style={style.textView3_List1}>
+                          <Text style={style.text_List1}>용량(g)</Text>
+                        </View>
+                        <View style={{width: '70%'}}>
+                          <TextInput
+                            style={[style.text_List1, style.input_List1]}
+                            onChangeText={onSetNumber}
+                            value={number}
+                            placeholder="입력해주세요"
+                          />
+                        </View>
+                      </View>
                     </View>
-                    <View style={style.textView2_List1}>
-                      <Text style={style.text_List1}>{text}</Text>
-                    </View>
-                  </View>
-                  <View style={{flexDirection: 'row'}}>
-                    <View style={style.textView_List1}>
-                      <Text style={style.text_List1}>용량(g)</Text>
-                    </View>
-                    <View style={{width: '80%'}}>
-                      <TextInput
-                        style={[style.text_List1, style.input_List1]}
-                        onChangeText={onSetNumber}
-                        value={number}
-                        placeholder="입력해주세요"
-                      />
+                    <View
+                      style={{
+                        width: '30%',
+                        //backgroundColor: 'red'
+                      }}>
+                      <Image
+                        style={style.itemImg2_List1}
+                        source={{
+                          uri: 'http://3.35.18.154/img/eggfry.jpg',
+                        }}></Image>
                     </View>
                   </View>
                   <View style={{flexDirection: 'row'}}>
@@ -281,24 +333,24 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
                   </View>
                   <View style={{flexDirection: 'row'}}>
                     <View style={style.textView_List1}>
-                      <Text style={style.text_List1}>분류선택</Text>
+                      <Text style={style.text_List1}>보관선택</Text>
                     </View>
                     <View style={{width: '60%'}}>
                       <RNPickerSelect
                         style={{inputAndroid: {color: 'black'}}}
                         onValueChange={value => {
                           if (value === 'cold') {
-                            onSetType('1'); // 비동기 처리 됨..
+                            onSetSaveType('1'); // 비동기 처리 됨..
                           } else if (value === 'frozen') {
-                            onSetType('2');
+                            onSetSaveType('2');
                           } else if (value === 'condi') {
-                            onSetType('3');
+                            onSetSaveType('3');
                           } else if (value === 'room') {
-                            onSetType('4');
+                            onSetSaveType('4');
                           }
                         }}
                         placeholder={{}}
-                        value={type_value}
+                        value={saveType_value}
                         items={[
                           {label: '냉장', value: 'cold', inputLabel: '냉장'},
                           {
@@ -313,6 +365,14 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
                           },
                           {label: '실온', value: 'room', inputLabel: '실온'},
                         ]}></RNPickerSelect>
+                    </View>
+                  </View>
+                  <View style={{flexDirection: 'row'}}>
+                    <View style={style.textView_List1}>
+                      <Text style={style.text_List1}>분류</Text>
+                    </View>
+                    <View style={style.textView4_List1}>
+                      <Text style={{fontSize: 17}}>{divType_value}</Text>
                     </View>
                   </View>
                   <View
