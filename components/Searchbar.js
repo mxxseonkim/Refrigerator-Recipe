@@ -1,27 +1,21 @@
 import React from 'react';
 import {SearchBar} from 'react-native-elements';
-import style from '../style';
+import style from '../global/style';
 
-export default class Searchbar extends React.Component {
-  render() {
-    return (
-      <SearchBar
-        inputContainerStyle={{backgroundColor: '#fff'}}
-        leftIconContainerStyle={{backgroundColor: '#fff'}}
-        inputStyle={{backgroundColor: '#fff'}}
-        containerStyle={{
-          backgroundColor: '(0, 0, 0, 1.0)',
-          justifyContent: 'space-around',
-          borderTopWidth: 0,
-          borderBottomWidth: 0,
-          marginLeft: 10,
-          marginRight: 10,
-        }}
-        placeholder={this.props.ph}
-        round="true"
-        onChangeText={text => this.props.filterData(text)}
-        value={this.props.search}
-      />
-    );
-  }
+export default function Searchbar(props) {
+  //---------------------------- UI 부분 ----------------------------------------
+  return (
+    <SearchBar
+      inputContainerStyle={{backgroundColor: '#fff'}}
+      leftIconContainerStyle={{backgroundColor: '#fff'}}
+      inputStyle={{backgroundColor: '#fff'}}
+      containerStyle={style.searchbar_Searchbar}
+      // 부모에게서 ph, filterData(), search props로 부여받음
+      placeholder={props.ph}
+      round="true"
+      //입력된 text 부모 컴포넌트에서 filterData() 실행
+      onChangeText={text => props.filterData(text)}
+      value={props.search}
+    />
+  );
 }
