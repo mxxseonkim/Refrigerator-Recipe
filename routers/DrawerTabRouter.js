@@ -8,7 +8,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import TabStackRouter from './TabStackRouter';
 import ClientScreen from '../screens/ClientScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import LoginScreen from '/Users/xiu0327/new_update/Refrigerator-Recipe/components/LoginScreen.js';
 import MenuButton from './MenuButton';
 import { Alert } from 'react-native';
 
