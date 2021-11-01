@@ -22,6 +22,8 @@ import {
   Alert,
 } from 'react-native';
 
+import style from '../style';
+
 function RegisterScreen({navigation}) {
   const [userName, setUserName] = useState('');
   const [userNick, setUserNick] = useState('');
@@ -38,7 +40,6 @@ function RegisterScreen({navigation}) {
 
   const [isUniqueID, setIsUniqueID] = useState(false);
   //중복 체크 버튼을 눌렀는지, 안 눌렀는지
-
   const idInputRef = createRef();
   const passwordInputRef = createRef();
   const passwordchkInputRef = createRef();
@@ -56,7 +57,6 @@ function RegisterScreen({navigation}) {
   const DataSet = require('../routers/DataSet');
 
   const IdOverlabCheck = async () => {
-    
     setIsUniqueID(true);
 
     if (userId === '') {
@@ -168,7 +168,7 @@ function RegisterScreen({navigation}) {
 
   if (isRegistraionSuccess) {
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView style={style.container_RegisterScreen}>
         <View style={{flex: 1}}>
           <View
             style={{
@@ -198,9 +198,9 @@ function RegisterScreen({navigation}) {
             </Text>
           </View>
           <View style={{flex: 0.75, paddingTop: hp(5)}}>
-            <View style={styles.btnArea}>
+            <View style={style.btnArea_RegisterScreen}>
               <TouchableOpacity
-                style={styles.btn2}
+                style={style.btn2_RegisterScreen}
                 onPress={() => navigation.navigate('Login')}>
                 <Text style={{color: 'white', fontSize: wp('4%')}}>
                   로그인 화면으로
@@ -213,32 +213,32 @@ function RegisterScreen({navigation}) {
     );
   }
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={style.container_RegisterScreen}>
       <Loader loading={loading} />
-      <View style={styles.topArea}>
-        <View style={styles.titleArea}>
+      <View style={style.topArea_RegisterScreen}>
+        <View style={style.titleArea_RegisterScreen}>
           <Image
             source={{uri: 'http://54.180.126.3/img/register.jpg'}}
             style={{width: wp(50), height: hp(10), resizeMode: 'contain'}}
           />
         </View>
-        <View style={styles.TextArea}>
-          <Text style={styles.Text}>냉장고 관리, 레시피 추천</Text>
-          <Text style={styles.Text}>냉부해를 사용해보세요 📘</Text>
+        <View style={style.TextArea_RegisterScreen}>
+          <Text style={style.Text_RegisterScreen}>냉장고 관리, 레시피 추천</Text>
+          <Text style={style.Text_RegisterScreen}>냉부해를 사용해보세요 📘</Text>
         </View>
       </View>
 
-      <View style={styles.formArea}>
+      <View style={style.formArea_RegisterScreen}>
         <View style={{flexDirection: 'row'}}>
           <TextInput
-            style={styles.textFormAlone}
+            style={style.textFormAlone_RegisterScreen}
             placeholder={'아이디(5자 이상, 영문, 숫자)'}
             onChangeText={userId => setUserId(userId)}
             ref={idInputRef}
             returnKeyType="next"
             blurOnSubmit={false}
           />
-          <View style={styles.idCheck}>
+          <View style={style.idCheck_RegisterScreen}>
             <TouchableOpacity onPress={IdOverlabCheck}>
               <Text style={{color: 'white'}}>중복 체크</Text>
             </TouchableOpacity>
@@ -248,15 +248,15 @@ function RegisterScreen({navigation}) {
       <View style={{justifyContent: 'center'}}>
         {ischecked ? (
           useridCheck ? (
-            <Text style={styles.TextValidation}>중복된 아이디입니다.</Text>
+            <Text style={style.TextValidation_RegisterScreen}>중복된 아이디입니다.</Text>
           ) : (
-            <Text style={styles.TextValidation}>사용 가능한 아이디입니다.</Text>
+            <Text style={style.TextValidation_RegisterScreen}>사용 가능한 아이디입니다.</Text>
           )
         ) : null}
       </View>
-      <View style={styles.formArea}>
+      <View style={style.formArea_RegisterScreen}>
         <TextInput
-          style={styles.textFormTop}
+          style={style.textFormTop_RegisterScreen}
           secureTextEntry={true}
           placeholder={'비밀번호(8자 이상)'}
           onChangeText={userPassword => setUserPassword(userPassword)}
@@ -268,7 +268,7 @@ function RegisterScreen({navigation}) {
           blurOnSubmit={false}
         />
         <TextInput
-          style={styles.textFormBottom}
+          style={style.textFormBottom_RegisterScreen}
           secureTextEntry={true}
           placeholder={'비밀번호 확인'}
           onChangeText={userPasswordchk => setUserPasswordchk(userPasswordchk)}
@@ -283,15 +283,15 @@ function RegisterScreen({navigation}) {
 
       <View style={{justifyContent: 'center'}}>
         {userPassword !== userPasswordchk ? (
-          <Text style={styles.TextValidation}>
+          <Text style={style.TextValidation_RegisterScreen}>
             비밀번호가 일치하지 않습니다.
           </Text>
         ) : null}
       </View>
 
-      <View style={styles.formArea2}>
+      <View style={style.formArea2_RegisterScreen}>
         <TextInput
-          style={styles.textFormTop}
+          style={style.textFormTop_RegisterScreen}
           placeholder={'이름'}
           onChangeText={userName => setUserName(userName)}
           ref={nameInputRef}
@@ -302,7 +302,7 @@ function RegisterScreen({navigation}) {
           blurOnSubmit={false}
         />
         <TextInput
-          style={styles.textFormMiddle}
+          style={style.textFormMiddle_RegisterScreen}
           placeholder={'닉네임'}
           onChangeText={userNick => setUserNick(userNick)}
           ref={nickInputRef}
@@ -313,7 +313,7 @@ function RegisterScreen({navigation}) {
           blurOnSubmit={false}
         />
         <TextInput
-          style={styles.textFormBottom}
+          style={style.textFormBottom_RegisterScreen}
           placeholder={'이메일'}
           keyboardType="email-address"
           returnKeyType="send"
@@ -324,8 +324,8 @@ function RegisterScreen({navigation}) {
       </View>
 
       <View style={{flex: 0.75}}>
-        <View style={styles.btnArea}>
-          <TouchableOpacity style={styles.btn} onPress={handleSubmitButton}>
+        <View style={style.btnArea_RegisterScreen}>
+          <TouchableOpacity style={style.btn_RegisterScreen} onPress={handleSubmitButton}>
             <Text style={{color: 'white', fontSize: wp('4%')}}>회원가입</Text>
           </TouchableOpacity>
         </View>
@@ -334,162 +334,5 @@ function RegisterScreen({navigation}) {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    // flex: 1, //전체의 공간을 차지한다는 의미
-    flexDirection: 'column',
-    backgroundColor: 'white',
-    paddingLeft: wp(7),
-    paddingRight: wp(7),
-  },
-  topArea: {
-    //flex: 0.5,
-    paddingTop: wp(1),
-  },
-  titleArea: {
-    //flex: 0.1,
-    justifyContent: 'center',
-    paddingBottom: wp(3),
-  },
-  TextArea: {
-    // flex: 0.5,
-    justifyContent: 'center',
-    //paddingTop: hp(),
-  },
-
-  Text: {
-    fontSize: wp('5%'),
-    //paddingTop: wp(),
-  },
-  TextValidation: {
-    fontSize: wp('4%'),
-    color: 'red',
-    marginBottom: hp(-3),
-    paddingTop: hp(1),
-    paddingBottom: hp(1),
-  },
-
-  formArea: {
-    justifyContent: 'center',
-    paddingTop: wp(5),
-    paddingBottom: wp(1),
-    // backgroundColor: 'red',
-    marginBottom: hp(-1),
-  },
-
-  formArea2: {
-    //flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    // backgroundColor: 'red',
-    paddingTop: wp(5),
-    paddingBottom: hp(5),
-    marginBottom: hp(-1),
-    // alignSelf: 'stretch',
-  },
-
-  textFormAlone: {
-    borderWidth: 2,
-    borderBottomWidth: 2,
-    borderColor: 'black',
-    borderTopLeftRadius: 7,
-    borderTopRightRadius: 0,
-    borderBottomRightRadius: 0,
-    borderBottomLeftRadius: 7,
-    width: '77%',
-    height: hp(6),
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
-
-  idCheck: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 2,
-    borderBottomWidth: 2,
-    borderColor: 'black',
-    backgroundColor: 'black',
-    borderTopLeftRadius: 0,
-    borderTopRightRadius: 7,
-    borderBottomRightRadius: 7,
-    borderBottomLeftRadius: 0,
-    width: '23%',
-    height: hp(6),
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
-
-  textFormTop: {
-    borderWidth: 2,
-    borderBottomWidth: 1,
-    borderColor: 'black',
-    borderTopLeftRadius: 7,
-    borderTopRightRadius: 7,
-    width: '100%',
-    height: hp(6),
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
-  textFormMiddle: {
-    borderWidth: 2,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: 'black',
-    width: '100%',
-    height: hp(6),
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
-  textFormBottom: {
-    borderWidth: 2,
-    borderTopWidth: 1,
-    borderColor: 'black',
-    borderBottomRightRadius: 7,
-    borderBottomLeftRadius: 7,
-    width: '100%',
-    height: hp(6),
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
-  btnArea: {
-    height: hp(8),
-    // backgroundColor: 'orange',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingBottom: hp(1.5),
-  },
-  btn: {
-    flex: 1,
-    width: '100%',
-    borderRadius: 7,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black',
-  },
-  btn2: {
-    flex: 1,
-    width: '40%',
-    borderRadius: 7,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black',
-  },
-  inputIOS: {
-    borderWidth: 2,
-    borderTopWidth: 1,
-    borderColor: 'black',
-    borderBottomRightRadius: 7,
-    borderBottomLeftRadius: 7,
-    width: '100%',
-    height: hp(6),
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
-  scrollContainer: {
-    flex: 1,
-    paddingHorizontal: 15,
-  },
-});
 
 export default RegisterScreen;

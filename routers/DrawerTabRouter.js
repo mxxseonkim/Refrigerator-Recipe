@@ -4,28 +4,19 @@ import {
   DrawerContentScrollView,
   DrawerItem,
 } from '@react-navigation/drawer';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import TabStackRouter from './TabStackRouter';
 import ClientScreen from '../screens/ClientScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginScreen from '/Users/xiu0327/new_update/Refrigerator-Recipe/components/LoginScreen.js';
 import MenuButton from './MenuButton';
+import { Alert } from 'react-native';
 
 const Drawer = createDrawerNavigator();
 
 const ClientStack = createStackNavigator();
 
 const LogoutStack = createStackNavigator();
-
-// function confirmModal() {
-//   confirm("로그아웃 하시겠습니까?");
-//   if(confirm){
-//     () => goToScreen('Login')
-//   }
-//   else{
-
-//   }
-// };
 
 const ClientStackScreen = () => {
   return (
@@ -42,7 +33,7 @@ const ClientStackScreen = () => {
   );
 };
 
-const CustomDrawer = ({navigation}) => {
+const CustomDrawer = ({ navigation }) => {
   const goToScreen = (screenName, params) => {
     navigation.navigate(screenName, params);
   };
@@ -79,6 +70,7 @@ const CustomDrawer = ({navigation}) => {
           screen: 'Login',
         })
       }}/>
+
     </DrawerContentScrollView>
   );
 };
@@ -86,12 +78,12 @@ const CustomDrawer = ({navigation}) => {
 export default function DrawerTabRouter() {
   return (
     <Drawer.Navigator
-      drawerContent={({navigation}) => (
+      drawerContent={({ navigation }) => (
         <CustomDrawer navigation={navigation} />
       )}>
       <Drawer.Screen name="TabStack" component={TabStackRouter} />
       <Drawer.Screen name="ClientStack" component={ClientStackScreen} />
-  
+      
     </Drawer.Navigator>
   );
 }
