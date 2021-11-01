@@ -42,7 +42,7 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
     setIsLoding(true);
     let dataObj = {
       qry:
-        'SELECT * FROM ' + memberID.userID + " WHERE f_type = '" + count + "'",
+        'SELECT * FROM ' + memberID.userID + " WHERE ingredient_type = '" + count + "'",
     };
     let json = await DataSet.getData(dataObj);
     if (json !== false) {
@@ -59,11 +59,11 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
   const onUpdate = () => {
     let dataObj = {
       qry:
-        'UPDATE test SET f_ref = "' +
+        'UPDATE '+ memberID.userID +' SET ingredient_buyDate = "' +
         date +
-        '", f_vol ="' +
+        '", ingredient_vol ="' +
         number +
-        '", f_type =' +
+        '", ingredient_type =' +
         type +
         ' WHERE no =' +
         no,
@@ -74,11 +74,11 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
 
   const onDelete = () => {
     let dataObj = {
-      qry: 'DELETE FROM test WHERE no IN ("',
+      qry: 'DELETE FROM '+ memberID.userID +' WHERE no IN ("',
     };
     var checkArr = [];
     for (var i = 0, j = 0; i < data.length; i++) {
-      if (data[i].f_checked === '1') {
+      if (data[i].ingredient_delChecked === '1') {
         checkArr[j] = data[i].no;
         j++;
       }
@@ -105,8 +105,8 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
   const filterData = text => {
     if (text) {
       const newData = data.filter(function (item) {
-        const itemData = item.f_name
-          ? item.f_name.toUpperCase()
+        const itemData = item.ingredient_name
+          ? item.ingredient_name.toUpperCase()
           : ''.toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
@@ -139,10 +139,10 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
     var _data = data.map(element => {
       var _element = element;
       if (_element.no === _no) {
-        if (_element.f_checked === '1') {
-          _element.f_checked = '0';
+        if (_element.ingredient_delChecked === '1') {
+          _element.ingredient_delChecked = '0';
         } else {
-          _element.f_checked = '1';
+          _element.ingredient_delChecked = '1';
         }
       }
       return _element;
@@ -177,7 +177,7 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
             <CheckBox
               style={style.checkBox_List1}
               onClick={() => checkThisBox(item.no)}
-              isChecked={item.f_checked === '0' ? false : true}
+              isChecked={item.ingredient_delChecked === '0' ? false : true}
             />
             <View style={{flexDirection: 'row'}}>
               <Image
@@ -185,10 +185,10 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
                 source={{uri: 'http://3.35.18.154/img/eggfry.jpg'}}></Image>
               <View style={{flexDirection: 'column'}}>
                 <View style={{flexDirection: 'row'}}>
-                  <Text style={style.itemName_List1}>{item.f_name}</Text>
-                  <Text style={style.itemMsg_List1}>{item.f_vol}g</Text>
+                  <Text style={style.itemName_List1}>{item.ingredient_name}</Text>
+                  <Text style={style.itemMsg_List1}>{item.ingredient_vol}g</Text>
                 </View>
-                <Text style={style.itemMsg_List1}>{item.f_last}</Text>
+                <Text style={style.itemMsg_List1}>{item.ingredient_expiryDate}</Text>
               </View>
             </View>
           </View>
@@ -197,10 +197,10 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
             style={style.itemView_List1}
             onPress={() => {
               refRBSheet.current.open();
-              setText(item.f_name);
-              onSetNumber(item.f_vol);
-              onSetDate(item.f_ref);
-              onSetType(item.f_type);
+              setText(item.ingredient_name);
+              onSetNumber(item.ingredient_vol);
+              onSetDate(item.ingredient_buyDate);
+              onSetType(item.ingredient_type);
               onSetNo(item.no);
             }}>
             <View style={{flexDirection: 'row'}}>
@@ -209,10 +209,10 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
                 source={{uri: 'http://3.35.18.154/img/eggfry.jpg'}}></Image>
               <View style={{flexDirection: 'column'}}>
                 <View style={{flexDirection: 'row'}}>
-                  <Text style={style.itemName_List1}>{item.f_name}</Text>
-                  <Text style={style.itemMsg_List1}>{item.f_vol}g</Text>
+                  <Text style={style.itemName_List1}>{item.ingredient_name}</Text>
+                  <Text style={style.itemMsg_List1}>{item.ingredient_vol}g</Text>
                 </View>
-                <Text style={style.itemMsg_List1}>{item.f_last}</Text>
+                <Text style={style.itemMsg_List1}>{item.ingredient_expiryDate}</Text>
               </View>
             </View>
 
@@ -382,5 +382,3 @@ export default function List1({count, Chk, Chk1, onDeltChk, onSlctChk}) {
     </View>
   );
 }
-
-//--------------------------------------------------------------------------

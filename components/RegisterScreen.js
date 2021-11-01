@@ -36,6 +36,9 @@ function RegisterScreen({navigation}) {
   const [ischecked, setIschecked] = useState(false);
   //아이디 중복체크 결과값 저장 변수
 
+  const [isUniqueID, setIsUniqueID] = useState(false);
+  //중복 체크 버튼을 눌렀는지, 안 눌렀는지
+
   const idInputRef = createRef();
   const passwordInputRef = createRef();
   const passwordchkInputRef = createRef();
@@ -53,12 +56,15 @@ function RegisterScreen({navigation}) {
   const DataSet = require('../routers/DataSet');
 
   const IdOverlabCheck = async () => {
+    
+    setIsUniqueID(true);
+
     if (userId === '') {
       return;
     }
     setIschecked(true);
     let ID_overlab_check = {
-      qry: 'SELECT * FROM member where mem_userid="' + userId + '"',
+      qry: 'SELECT * FROM member where user_id="' + userId + '"',
       //아이디 중복 체크 쿼리
     };
     let result = await DataSet.overlabCheck(ID_overlab_check);
@@ -73,6 +79,10 @@ function RegisterScreen({navigation}) {
   };
 
   const handleSubmitButton = () => {
+    if(!isUniqueID){
+      alert('아이디 중복 확인을 해주세요.');
+      return;
+    }
     if (!userId) {
       alert('아이디를 입력해주세요');
       return;
@@ -130,21 +140,25 @@ function RegisterScreen({navigation}) {
 
     setLoading(true);
 
-    var data = {
-      user_id: userId,
-      user_email: userEmail,
-      user_password: userPassword,
-      user_realname: userName,
-      user_nickname: userNick,
-      user_profilcontent: 'NULL',
-      user_icon: 'NULL',
-      user_photo: 'NULL',
+
+    let userData = {
+      qry: 'INSERT INTO `member` (`user_id`, `user_pw`, `user_name`, `user_nickname`, `user_email`, `user_bookmark`) VALUES ('
+      +userId+', '
+      +userPassword+', '
+      +userName+', '
+      +userNick+', '
+      +userEmail+', NULL)',
     };
 
-    //data 변수에 더 추가해야할 것 -> 자기소개, 아이콘
+    let newRef = {
+      qry: 'CREATE TABLE '+userId+'(no int AUTO_INCREMENT,ingredient_name varchar(100),ingredient_vol int,ingredient_buyDate varchar(100),ingredient_expiryDate varchar(100),ingredient_type varchar(100),ingredient_imgPath(500),ingredient_delChecked tinyint(1),primary key (`no`))',
+    }
+    
+    DataSet.setData(userData);
+    //멤버 DB insert
+    DataSet.setData(newRef);
+    //냉장고 생성
 
-    DataSet.memberCreate(data);
-    //멤버 DB insert & 냉장고 테이블 생성
     console.log('성공');
 
     setLoading(false);
@@ -164,7 +178,7 @@ function RegisterScreen({navigation}) {
               paddingRight: wp(1.5),
             }}>
             <Image
-              source={{uri: 'http://3.35.18.154/img/checked.png'}}
+              source={{uri: 'http://54.180.126.3/img/checked.png'}}
               style={{
                 width: wp(30),
                 height: hp(30),
@@ -204,7 +218,7 @@ function RegisterScreen({navigation}) {
       <View style={styles.topArea}>
         <View style={styles.titleArea}>
           <Image
-            source={{uri: 'http://3.35.18.154/img/register.jpg'}}
+            source={{uri: 'http://54.180.126.3/img/register.jpg'}}
             style={{width: wp(50), height: hp(10), resizeMode: 'contain'}}
           />
         </View>

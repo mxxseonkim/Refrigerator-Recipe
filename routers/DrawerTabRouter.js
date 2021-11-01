@@ -7,11 +7,25 @@ import {
 import {createStackNavigator} from '@react-navigation/stack';
 import TabStackRouter from './TabStackRouter';
 import ClientScreen from '../screens/ClientScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoginScreen from '/Users/xiu0327/new_update/Refrigerator-Recipe/components/LoginScreen.js';
 import MenuButton from './MenuButton';
 
 const Drawer = createDrawerNavigator();
 
 const ClientStack = createStackNavigator();
+
+const LogoutStack = createStackNavigator();
+
+// function confirmModal() {
+//   confirm("로그아웃 하시겠습니까?");
+//   if(confirm){
+//     () => goToScreen('Login')
+//   }
+//   else{
+
+//   }
+// };
 
 const ClientStackScreen = () => {
   return (
@@ -55,6 +69,16 @@ const CustomDrawer = ({navigation}) => {
         }
       />
       <DrawerItem label="회원 관리" onPress={() => goToScreen('ClientStack')} />
+      <DrawerItem label="로그아웃" onPress={async () => {
+        try {
+          await AsyncStorage.removeItem('user_id')
+        } catch(e) {
+          console.log(e);
+        }
+        goToScreen('Auth', {
+          screen: 'Login',
+        })
+      }}/>
     </DrawerContentScrollView>
   );
 };
@@ -67,6 +91,7 @@ export default function DrawerTabRouter() {
       )}>
       <Drawer.Screen name="TabStack" component={TabStackRouter} />
       <Drawer.Screen name="ClientStack" component={ClientStackScreen} />
+  
     </Drawer.Navigator>
   );
 }

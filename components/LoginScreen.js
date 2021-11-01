@@ -16,6 +16,7 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
+import style from '../style';
 
 function LoginScreen({navigation}) {
   const [userId, setUserId] = useState('');
@@ -26,6 +27,9 @@ function LoginScreen({navigation}) {
 
   const DataSet = require('../routers/DataSet');
   const memberID = require('../Global');
+  const timerCheck = require('../components/TimerCheck');
+  
+  timerCheck.check = true; //true = 타이머 초기화
 
   const handleSubmitButton = async () => {
     if (!userId) {
@@ -41,9 +45,9 @@ function LoginScreen({navigation}) {
 
     let login_check = {
       qry:
-        "SELECT * FROM `member` WHERE mem_userid = '" +
+        "SELECT * FROM `member` WHERE user_id = '" +
         userId +
-        "' and mem_password = '" +
+        "' and user_pw = '" +
         userPassword +
         "'",
     };
@@ -63,27 +67,27 @@ function LoginScreen({navigation}) {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={style.container_LoginScreen}>
       <Loader loading={loading} />
-      <View style={styles.topArea}>
-        <View style={styles.titleArea}>
+      <View style={style.topArea_LoginScreen}>
+        <View style={style.titleArea_LoginScreen}>
           <Image
-            source={{uri: 'http://3.35.18.154/img/login.png'}}
+            source={{uri: 'http://54.180.126.3/img/login.png'}}
             style={{width: wp(35), height: hp(13), resizeMode: 'contain'}}
           />
         </View>
-        <View style={styles.TextArea}>
-          <Text style={[styles.Text, {paddingLeft: wp(1)}]}>
+        <View style={style.TextArea_LoginScreen}>
+          <Text style={[style.Text_LoginScreen, {paddingLeft: wp(1)}]}>
             앱을 이용하기 위해
           </Text>
-          <Text style={[styles.Text, {paddingLeft: wp(1)}]}>
+          <Text style={[style.Text_LoginScreen, {paddingLeft: wp(1)}]}>
             로그인이 필요해요
           </Text>
         </View>
       </View>
-      <View style={styles.formArea}>
+      <View style={style.formArea_LoginScreen}>
         <TextInput
-          style={styles.textFormTop}
+          style={style.textFormTop_LoginScreen}
           placeholder={'아이디'}
           onChangeText={userId => setUserId(userId)}
           autoCapitalize="none"
@@ -96,9 +100,10 @@ function LoginScreen({navigation}) {
           blurOnSubmit={false}
         />
         <TextInput
-          style={styles.textFormBottom}
+          style={style.textFormBottom_LoginScreen}
           placeholder={'비밀번호'}
           ref={passwordInputRef}
+          secureTextEntry={true}
           onChangeText={userPassword => setUserPassword(userPassword)}
           autoCapitalize="none"
           returnKeyType="next"
@@ -107,101 +112,32 @@ function LoginScreen({navigation}) {
         />
       </View>
       <View style={{flex: 0.75}}>
-        <View style={styles.btnArea}>
-          <TouchableOpacity style={styles.btn} onPress={handleSubmitButton}>
-            <Text style={(styles.Text, {color: 'white'})}>로그인</Text>
+        <View style={style.btnArea_LoginScreen}>
+          <TouchableOpacity style={style.btn_LoginScreen} onPress={handleSubmitButton}>
+            <Text style={(style.Text_LoginScreen, {color: 'white'})}>로그인</Text>
           </TouchableOpacity>
         </View>
+        <View style = { {flexDirection: 'row'}}>
         <Text
-          style={styles.TextRegister}
-          onPress={() => navigation.navigate('Register')}>
-          처음이시라면, 회원가입이 필요해요
+          style={style.TextRegister_LoginScreen}
+          onPress={() => navigation.navigate('Search_id')}>
+          아이디찾기
         </Text>
+        <Text
+          style={style.TextRegister_LoginScreen}
+          onPress={() => navigation.navigate('Search_pw')}>
+          비밀번호찾기
+        </Text>
+        <Text
+          style={style.TextRegister_LoginScreen}
+          onPress={() => navigation.navigate('Register')}>
+          회원가입
+        </Text>
+        </View>
       </View>
       <View style={{flex: 3}} />
     </ScrollView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: 'white',
-    paddingLeft: wp(7),
-    paddingRight: wp(7),
-  },
-  topArea: {
-    flex: 1.0,
-    paddingTop: wp(2),
-  },
-  titleArea: {
-    flex: 0.7,
-    justifyContent: 'center',
-    //paddingTop: wp(7),
-  },
-  TextArea: {
-    flex: 0.3,
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    paddingBottom: hp(3),
-  },
-  Text: {
-    fontSize: wp('4%'),
-  },
-  TextValidation: {
-    fontSize: wp('4%'),
-    color: 'red',
-    paddingTop: wp(2),
-    paddingBottom: hp(1),
-  },
-
-  formArea: {
-    justifyContent: 'center',
-    flex: 1.5,
-    paddingBottom: hp(3),
-  },
-  textFormTop: {
-    borderWidth: 2,
-    borderBottomWidth: 1,
-    borderColor: 'black',
-    borderTopLeftRadius: 7,
-    borderTopRightRadius: 7,
-    width: '100%',
-    height: hp(6),
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
-  textFormBottom: {
-    borderWidth: 2,
-    borderTopWidth: 1,
-    borderColor: 'black',
-    borderBottomRightRadius: 7,
-    borderBottomLeftRadius: 7,
-    width: '100%',
-    height: hp(6),
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
-  btnArea: {
-    height: hp(8),
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingBottom: hp(1.5),
-  },
-  btn: {
-    flex: 1,
-    width: '100%',
-    borderRadius: 7,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black',
-  },
-  TextRegister: {
-    fontSize: wp('4%'),
-    color: 'grey',
-    textDecorationLine: 'underline',
-    paddingTop: wp(2),
-  },
-});
 export default LoginScreen;

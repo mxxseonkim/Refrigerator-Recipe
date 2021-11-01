@@ -3,6 +3,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native';
 import RegisterScreen from './components/RegisterScreen';
 import LoginScreen from './components/LoginScreen';
+import Search_id from './components/Search_id';
+import Search_pw from './components/Search_pw';
+import Search_pw2 from './components/Search_pw2';
 import DrawerTabRouter from './routers/DrawerTabRouter';
 import SplashScreen from './components/SplashScreen';
 
@@ -23,6 +26,27 @@ const Auth = () => {
       <Stack.Screen
         name="Register"
         component={RegisterScreen}
+        options={{
+          title: '',
+        }}
+      />
+      <Stack.Screen
+        name="Search_id"
+        component={Search_id}
+        options={{
+          title: '',
+        }}
+      />
+      <Stack.Screen
+        name="Search_pw"
+        component={Search_pw}
+        options={{
+          title: '',
+        }}
+      />
+      <Stack.Screen
+        name="Search_pw2"
+        component={Search_pw2}
         options={{
           title: '',
         }}

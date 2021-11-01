@@ -5,10 +5,9 @@ import Toast, {Duration} from 'react-native-whc-toast';
 import style from '../style';
 
 export default function RecipeInfo({data, mark}) {
-  
-  const videoId = data.url.split('v=')[1].split('&')[0];
-  const ingredient = data.ingredient.replace(/\$/gi, '\n').replace(/@/gi, ' ');
-  
+
+  const videoId = data.recipe_youtube.split('v=')[1].split('&')[0];
+  const ingredient = data.recipe_ingredient.replace(/\$/gi, '\n').replace(/@/gi, ' ');
   
   const mounted = useRef(false);
   const msg = useRef(null);
@@ -24,7 +23,7 @@ export default function RecipeInfo({data, mark}) {
         <Text style={style.subheading_RecipeInfo}>●　재료</Text>
         <Text style={style.content_RecipeInfo}>{ingredient}</Text>
         <Text style={style.subheading_RecipeInfo}>●　레시피</Text>
-        <Text style={style.content_RecipeInfo}>{data.step}</Text>
+        <Text style={style.content_RecipeInfo}>{data.recipe_cookStep}</Text>
       </Animated.ScrollView>
       <Toast ref={msg}/>
     </View>

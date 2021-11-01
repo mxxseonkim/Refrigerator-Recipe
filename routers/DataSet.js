@@ -1,7 +1,6 @@
 const getData = async dataObj => {
-  console.log(dataObj.qry);
   try {
-    const response = await fetch('http://3.35.18.154/phpdir/ref_get.php', {
+    const response = await fetch('http://54.180.126.3/phpdir/ref_get.php', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(dataObj),
@@ -14,9 +13,8 @@ const getData = async dataObj => {
 };
 
 const setData = async dataObj => {
-  console.log(dataObj.qry);
   try {
-    const response = await fetch(`http://3.35.18.154/phpdir/ref_set.php`, {
+    const response = await fetch(`http://54.180.126.3/phpdir/ref_set.php`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(dataObj),
@@ -26,22 +24,25 @@ const setData = async dataObj => {
   }
 };
 
-const memberCreate = async dataObj => {
-  try {
-    const response = await fetch(`http://3.35.18.154/phpdir/mem_insert.php`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(dataObj),
-    });
-  } catch (error) {
-    console.error(error);
-  }
-};
 
 const overlabCheck = async dataObj => {
-  console.log(dataObj.qry);
   try {
-    const response = await fetch(`http://3.35.18.154/phpdir/id_check.php`, {
+    const response = await fetch(`http://54.180.126.3/phpdir/id_check.php`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(dataObj),
+    });
+    const json = await response.text();
+    //console.log(json);
+    return json;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const sendUserEmail = async dataObj => {
+  try {
+    const response = await fetch(`http://54.180.126.3/PHPMailer/sendEmail.php`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(dataObj),
@@ -57,6 +58,6 @@ const overlabCheck = async dataObj => {
 module.exports = {
   getData,
   setData,
-  memberCreate,
   overlabCheck,
+  sendUserEmail,
 };
