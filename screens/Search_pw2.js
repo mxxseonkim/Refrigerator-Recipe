@@ -18,7 +18,7 @@ import {
 } from 'react-native';
 import style from '../global/style';
 
-function Search_pw2({navigation}) {
+export default function Search_pw2({route, navigation}) {
   var email_rule =
     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
@@ -30,6 +30,7 @@ function Search_pw2({navigation}) {
   const emailInputRef = createRef();
 
   const authSubmitButton = () => {
+    console.log(route.params.userId);
     if (!userName) {
       alert('이름을 입력해주세요');
       return;
@@ -65,8 +66,8 @@ function Search_pw2({navigation}) {
             <Image
               source={{uri: 'http://54.180.126.3/img/find_pw.jpg'}}
               style={{
-                width: wp(30),
-                height: hp(30),
+                width: wp(50),
+                height: hp(20),
                 resizeMode: 'contain',
                 alignSelf: 'center',
               }}
@@ -125,24 +126,24 @@ function Search_pw2({navigation}) {
       <View style={style.topArea_RegisterScreen}>
         <View style={style.titleArea_RegisterScreen}>
           <Image
-            //source={require('C:/Users/Administrator/react-native/Refrigerator-recipe/Refrigerator-Recipe/imageSrc/pw.jpg')}
+            source={{uri: 'http://54.180.126.3/img/find_pw.jpg'}}
             style={{width: wp(57), height: hp(10), resizeMode: 'contain'}}
           />
         </View>
-        <View style={styles.TextArea_Search_pw}>
-          <Text style={styles.Text_Search_pw}>
+        <View style={style.TextArea_Search_pw}>
+          <Text style={style.Text_Search_pw}>
             {' '}
             이름과 이메일을 입력해주세요.
           </Text>
         </View>
       </View>
 
-      <View style={styles.form_Search_pw}>
-        <View style={styles.formArea_Search_pw}>
+      <View style={style.form_Search_pw}>
+        <View style={style.formArea_Search_pw}>
           <View style={{flexDirection: 'row'}}>
-            <Text style={styles.Text_Search_pw}> 이름 </Text>
+            <Text style={style.Text_Search_pw}> 이름 </Text>
             <TextInput
-              style={styles.textFormAlone_Search_pw}
+              style={style.textFormAlone_Search_pw}
               onChangeText={userName => setUserName(userName)}
               onSubmitEditing={() =>
                 emailInputRef.current && emailInputRef.current.focus()
@@ -153,17 +154,17 @@ function Search_pw2({navigation}) {
           </View>
         </View>
 
-        <View style={styles.formArea_Search_pw}>
+        <View style={style.formArea_Search_pw}>
           <View style={{flexDirection: 'row'}}>
-            <Text style={styles.Text_Search_pw}>이메일 </Text>
+            <Text style={style.Text_Search_pw}>이메일 </Text>
             <TextInput
-              style={styles.textFormAlone_Search_pw}
+              style={style.textFormAlone_Search_pw}
               onChangeText={userEmail => setUserEmail(userEmail)}
               returnKeyType="next"
               keyboardType="email-address"
               blurOnSubmit={false}
             />
-            <View style={styles.EmailCheck_Search_pw}>
+            <View style={style.EmailCheck_Search_pw2}>
               <TouchableOpacity onPress={authSubmitButton}>
                 <Text style={{color: 'white'}}>번호 받기</Text>
               </TouchableOpacity>
@@ -171,22 +172,22 @@ function Search_pw2({navigation}) {
           </View>
         </View>
         <View style={{justifyContent: 'center'}}>
-          <Text style={styles.TextValidation_Search_pw}>
+          <Text style={style.TextValidation_Search_pw}>
             인증번호를 입력해주세요.
           </Text>
         </View>
-        <View style={styles.formArea_Search_pw}>
+        <View style={style.formArea_Search_pw}>
           <View style={{flexDirection: 'row'}}>
-            <Text style={styles.Text_Search_pw}> </Text>
+            <Text style={style.Text_Search_pw}> </Text>
             <TextInput
-              style={styles.textFormAlone_Search_pw}
+              style={style.textFormAlone_Search_pw}
               placeholder={'인증번호 6자리 입력'}
               onChangeText={auth => setAuth(auth)}
               keyboardType="number-pad"
               returnKeyType="next"
               blurOnSubmit={false}
             />
-            <View style={styles.EmailCheck_Search_pw}>
+            <View style={style.EmailCheck_Search_pw2}>
               <TouchableOpacity onPress={checkSubmitButton}>
                 <Text style={{color: 'white'}}>확인</Text>
               </TouchableOpacity>
@@ -197,94 +198,3 @@ function Search_pw2({navigation}) {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  textFormAlone_Search_pw: {
-    borderWidth: 2,
-    borderBottomWidth: 2,
-    borderColor: 'black',
-    borderTopLeftRadius: 7,
-    borderTopRightRadius: 7,
-    borderBottomRightRadius: 7,
-    borderBottomLeftRadius: 7,
-    width: '50%',
-    height: hp(6),
-    paddingLeft: 10,
-    paddingRight: 10,
-    marginRight: 15,
-  },
-
-  Text_Search_pw: {
-    fontSize: wp('4.5%'),
-    paddingTop: wp(1.5),
-  },
-
-  TextArea_Search_pw: {
-    // flex: 0.5,
-    justifyContent: 'center',
-    //paddingTop: hp(),
-  },
-
-  formArea_Search_pw: {
-    justifyContent: 'center',
-    paddingTop: wp(5),
-    paddingBottom: wp(1),
-    // backgroundColor: 'red',
-  },
-
-  btnArea_Search_pw: {
-    height: hp(8),
-    // backgroundColor: 'orange',
-    justifyContent: 'center',
-    alignItems: 'center',
-    //paddingBottom: hp(1.5),
-    paddingTop: hp(1.5),
-  },
-
-  btn_Search_pw: {
-    flex: 1,
-    width: '40%',
-    borderRadius: 7,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black',
-  },
-
-  form_Search_pw: {
-    paddingBottom: hp(2),
-  },
-
-  TextArea_Search_pw: {
-    // flex: 0.5,
-    justifyContent: 'center',
-    paddingBottom: hp(3),
-  },
-
-  EmailCheck_Search_pw: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 2,
-    borderBottomWidth: 2,
-    borderColor: 'black',
-    backgroundColor: 'black',
-    borderTopLeftRadius: 7,
-    borderTopRightRadius: 7,
-    borderBottomRightRadius: 7,
-    borderBottomLeftRadius: 7,
-    width: '25%',
-    height: hp(6),
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
-
-  TextValidation_Search_pw: {
-    fontSize: wp('4%'),
-    color: 'red',
-    marginLeft: 65,
-    marginBottom: hp(-2),
-    paddingTop: hp(1),
-    paddingBottom: hp(1),
-  },
-});
-
-export default Search_pw2;

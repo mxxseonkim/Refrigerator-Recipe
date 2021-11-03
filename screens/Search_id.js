@@ -20,7 +20,7 @@ import style from '../global/style';
 import TimerFunction from '../components/TimerFunction';
 import {set} from 'react-native-reanimated';
 
-function Search_id({navigation}) {
+export default function Search_id({navigation}) {
   var email_rule =
     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
@@ -119,10 +119,10 @@ function Search_id({navigation}) {
               paddingRight: wp(1.5),
             }}>
             <Image
-              source={{uri: 'http://54.180.126.3/img/checked.png'}}
+              source={{uri: 'http://54.180.126.3/img/find_id.jpg'}}
               style={{
-                width: wp(30),
-                height: hp(30),
+                width: wp(40),
+                height: hp(20),
                 resizeMode: 'contain',
                 alignSelf: 'center',
               }}
@@ -156,23 +156,23 @@ function Search_id({navigation}) {
             </Text>
             <Text
               style={{color: 'gray', fontSize: wp('4%'), marginRight: wp(1.5)}}>
-              id: {userID}
+              id{/* 여기에 고객 실제 아이디 넣기 */}
             </Text>
             <Text style={{color: 'black', fontSize: wp('4%')}}>입니다.</Text>
           </View>
           <View style={{paddingTop: hp(5), flexDirection: 'row'}}>
-            <View style={styles.btnArea_Search_id}>
+            <View style={style.btnArea_Search_id}>
               <TouchableOpacity
-                style={styles.btn2_Search_id}
+                style={style.btn2_Search_id}
                 onPress={() => navigation.navigate('Login')}>
                 <Text style={{color: 'white', fontSize: wp('4%')}}>
                   로그인 화면으로
                 </Text>
               </TouchableOpacity>
             </View>
-            <View style={styles.btnArea_Search_id}>
+            <View style={style.btnArea_Search_id}>
               <TouchableOpacity
-                style={styles.btn3_Search_id}
+                style={style.btn3_Search_id}
                 onPress={() => navigation.navigate('Search_pw')}>
                 <Text style={{color: 'white', fontSize: wp('4%')}}>
                   비밀번호 찾기
@@ -190,24 +190,24 @@ function Search_id({navigation}) {
       <View style={style.topArea_RegisterScreen}>
         <View style={style.titleArea_RegisterScreen}>
           <Image
-            //source={require('C:/Users/Administrator/react-native/Refrigerator-recipe/Refrigerator-Recipe/imageSrc/id.jpg')}
+            source={{uri: 'http://54.180.126.3/img/find_id.jpg'}}
             style={{width: wp(50), height: hp(10), resizeMode: 'contain'}}
           />
         </View>
-        <View style={styles.TextArea_Search_id}>
-          <Text style={styles.Text_Search_id}>
+        <View style={style.TextArea_Search_id}>
+          <Text style={style.Text_Search_id}>
             {' '}
             이름과 이메일을 입력해주세요.
           </Text>
         </View>
       </View>
 
-      <View style={styles.form_Search_id}>
-        <View style={styles.formArea_Search_id}>
+      <View style={style.form_Search_id}>
+        <View style={style.formArea_Search_id}>
           <View style={{flexDirection: 'row'}}>
-            <Text style={styles.Text_Search_id}> 이름 </Text>
+            <Text style={style.Text_Search_id}> 이름 </Text>
             <TextInput
-              style={styles.textFormAlone_Search_id}
+              style={style.textFormAlone_Search_id}
               onChangeText={userName => setUserName(userName)}
               onSubmitEditing={() =>
                 emailInputRef.current && emailInputRef.current.focus()
@@ -218,17 +218,17 @@ function Search_id({navigation}) {
           </View>
         </View>
 
-        <View style={styles.formArea_Search_id}>
+        <View style={style.formArea_Search_id}>
           <View style={{flexDirection: 'row'}}>
-            <Text style={styles.Text_Search_id}>이메일 </Text>
+            <Text style={style.Text_Search_id}>이메일 </Text>
             <TextInput
-              style={styles.textFormAlone_Search_id}
+              style={style.textFormAlone_Search_id}
               onChangeText={userEmail => setUserEmail(userEmail)}
               returnKeyType="next"
               keyboardType="email-address"
               blurOnSubmit={false}
             />
-            <View style={styles.EmailCheck_Search_id}>
+            <View style={style.EmailCheck_Search_id}>
               <TouchableOpacity onPress={authSubmitButton}>
                 <Text style={{color: 'white'}}>번호 받기</Text>
               </TouchableOpacity>
@@ -236,145 +236,29 @@ function Search_id({navigation}) {
           </View>
         </View>
         <View style={{justifyContent: 'center'}}>
-          <Text style={styles.TextValidation_Search_id}>{checkState}</Text>
+          <Text style={style.TextValidation_Search_id}>
+            인증번호를 입력해주세요.
+          </Text>
         </View>
-        <View style={styles.formArea_Search_id}>
+        <View style={style.formArea_Search_id}>
           <View style={{flexDirection: 'row'}}>
-            <Text style={styles.Text_Search_id}> </Text>
+            <Text style={style.Text_Search_id}> </Text>
             <TextInput
-              style={styles.textFormAlone_Search_id}
+              style={style.textFormAlone_Search_id}
               placeholder={'인증번호 6자리 입력'}
               onChangeText={auth => setAuth(auth)}
               keyboardType="number-pad"
               returnKeyType="next"
               blurOnSubmit={false}
             />
-            <View style={styles.EmailCheck_Search_id}>
+            <View style={style.EmailCheck_Search_id}>
               <TouchableOpacity onPress={checkSubmitButton}>
                 <Text style={{color: 'white'}}>확인</Text>
               </TouchableOpacity>
             </View>
           </View>
         </View>
-        <View style={{justifyContent: 'center'}}>
-          <Text style={styles.TextValidation_Search_id}>
-            {(function () {
-              if (timerCheck.check == false) return <TimerFunction />;
-            })()}
-          </Text>
-        </View>
       </View>
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  textFormAlone_Search_id: {
-    borderWidth: 2,
-    borderBottomWidth: 2,
-    borderColor: 'black',
-    borderTopLeftRadius: 7,
-    borderTopRightRadius: 7,
-    borderBottomRightRadius: 7,
-    borderBottomLeftRadius: 7,
-    width: '50%',
-    height: hp(6),
-    paddingLeft: 10,
-    paddingRight: 10,
-    marginRight: 15,
-  },
-
-  Text_Search_id: {
-    fontSize: wp('4.5%'),
-    paddingTop: wp(1.5),
-  },
-
-  TextArea_Search_id: {
-    // flex: 0.5,
-    justifyContent: 'center',
-    //paddingTop: hp(),
-  },
-
-  formArea_Search_id: {
-    justifyContent: 'center',
-    paddingTop: wp(5),
-    paddingBottom: wp(1),
-    // backgroundColor: 'red',
-  },
-
-  btnArea_Search_id: {
-    height: hp(8),
-    // backgroundColor: 'orange',
-    justifyContent: 'center',
-    alignItems: 'center',
-    //paddingBottom: hp(1.5),
-    paddingTop: hp(1.5),
-  },
-
-  btn_Search_id: {
-    flex: 1,
-    width: '40%',
-    borderRadius: 7,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black',
-  },
-
-  form_Search_id: {
-    paddingBottom: hp(2),
-  },
-
-  TextArea_Search_id: {
-    // flex: 0.5,
-    justifyContent: 'center',
-    paddingBottom: hp(3),
-  },
-
-  EmailCheck_Search_id: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 2,
-    borderBottomWidth: 2,
-    borderColor: 'black',
-    backgroundColor: 'black',
-    borderTopLeftRadius: 7,
-    borderTopRightRadius: 7,
-    borderBottomRightRadius: 7,
-    borderBottomLeftRadius: 7,
-    width: '25%',
-    height: hp(6),
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
-
-  TextValidation_Search_id: {
-    fontSize: wp('4%'),
-    color: 'red',
-    marginLeft: 65,
-    marginBottom: hp(-2),
-    paddingTop: hp(1),
-    paddingBottom: hp(1),
-  },
-  btn2_Search_id: {
-    width: '75%',
-    height: hp(6),
-    borderRadius: 7,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black',
-    marginRight: 10,
-    marginLeft: 45,
-  },
-  btn3_Search_id: {
-    width: '85%',
-    height: hp(6),
-    borderRadius: 7,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black',
-    marginRight: 10,
-    marginLeft: 45,
-  },
-});
-
-export default Search_id;

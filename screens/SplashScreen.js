@@ -33,7 +33,7 @@ export default function SplashScreen({navigation}) {
       />
       <ActivityIndicator
         animating={animating}
-        color="#6990F7"
+        color="#FA8072"
         size="large"
         style={style.activityIndicator_SplashScreen}
       />

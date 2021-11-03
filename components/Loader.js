@@ -20,7 +20,7 @@ export default function Loader(props) {
           {/* ActivityIndicator 항상 true */}
           <ActivityIndicator
             animating={true}
-            color="#000000"
+            color="#FA8072"
             size="large"
             style={style.activityIndicator_Loader}
           />

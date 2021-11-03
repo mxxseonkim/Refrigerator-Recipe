@@ -10,17 +10,17 @@ const style = StyleSheet.create({
     fontSize: 30,
     marginRight: 15,
     marginTop: 5,
-    color: 'tomato',
+    color: '#FA8072',
   },
   //AddButton------------------------------------
   headerIcon_AddButton: {
     fontSize: 30,
     marginRight: 15,
     marginTop: 5,
-    color: 'tomato',
+    color: '#FA8072',
   },
   calendarIcon_AddButton: {
-    color: 'tomato',
+    color: '#FA8072',
     fontSize: 33,
     marginTop: 10,
   },
@@ -29,7 +29,7 @@ const style = StyleSheet.create({
     fontSize: 30,
     marginLeft: 15,
     marginTop: 5,
-    color: 'tomato',
+    color: '#FA8072',
   },
   // RefrigeratorScreen--------------------------
   checkBox_RefrigeratorScreen: {
@@ -43,13 +43,13 @@ const style = StyleSheet.create({
     margin: 5,
     width: '45%',
     borderRadius: 10,
-    backgroundColor: 'tomato',
+    backgroundColor: '#FA8072',
   },
   button2_RefrigeratorScreen: {
     padding: 10,
     margin: 5,
     borderRadius: 10,
-    backgroundColor: 'tomato',
+    backgroundColor: '#FA8072',
   },
   textStyle_RefrigeratorScreen: {
     color: 'black',
@@ -172,7 +172,7 @@ const style = StyleSheet.create({
     textAlign: 'right',
     fontSize: 17,
     fontWeight: 'bold',
-    color: 'tomato',
+    color: '#FA8072',
   },
   //RecipeInfo-----------------------------------
   root_RecipeInfo: {
@@ -266,7 +266,7 @@ const style = StyleSheet.create({
   },
   textForm_LoginScreen: {
     borderWidth: 2,
-    borderColor: 'black',
+    borderColor: '#FA8072',
     width: '100%',
     height: hp(6),
     paddingLeft: 10,
@@ -284,7 +284,7 @@ const style = StyleSheet.create({
     borderRadius: 7,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'black',
+    backgroundColor: '#FA8072',
   },
   TextAddFuncView_LoginScreen: {
     flexDirection: 'row',
@@ -292,7 +292,7 @@ const style = StyleSheet.create({
   },
   TextAddFunc_LoginScreen: {
     fontSize: wp('4%'),
-    color: 'grey',
+    color: 'gray',
     textDecorationLine: 'underline',
     paddingTop: wp(2),
   },
@@ -351,7 +351,7 @@ const style = StyleSheet.create({
     borderRadius: 7,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'black',
+    backgroundColor: '#FA8072',
   },
   TextValidation_RegisterScreen: {
     fontSize: wp('3.6%'),
@@ -369,7 +369,7 @@ const style = StyleSheet.create({
   textFormAlone_RegisterScreen: {
     borderWidth: 2,
     borderBottomWidth: 2,
-    borderColor: 'black',
+    borderColor: '#FA8072',
     borderTopLeftRadius: 7,
     borderBottomLeftRadius: 7,
     width: '77%',
@@ -382,8 +382,8 @@ const style = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 2,
     borderBottomWidth: 2,
-    borderColor: 'black',
-    backgroundColor: 'black',
+    borderColor: '#FA8072',
+    backgroundColor: '#FA8072',
     borderTopRightRadius: 7,
     borderBottomRightRadius: 7,
     width: '23%',
@@ -392,7 +392,7 @@ const style = StyleSheet.create({
   textFormTop_RegisterScreen: {
     borderWidth: 2,
     borderBottomWidth: 1,
-    borderColor: 'black',
+    borderColor: '#FA8072',
     borderTopLeftRadius: 7,
     borderTopRightRadius: 7,
     width: '100%',
@@ -404,7 +404,7 @@ const style = StyleSheet.create({
     borderWidth: 2,
     borderTopWidth: 1,
     borderBottomWidth: 1,
-    borderColor: 'black',
+    borderColor: '#FA8072',
     width: '100%',
     height: hp(6),
     paddingLeft: 10,
@@ -413,7 +413,7 @@ const style = StyleSheet.create({
   textFormBottom_RegisterScreen: {
     borderWidth: 2,
     borderTopWidth: 1,
-    borderColor: 'black',
+    borderColor: '#FA8072',
     borderBottomRightRadius: 7,
     borderBottomLeftRadius: 7,
     width: '100%',
@@ -473,6 +473,229 @@ const style = StyleSheet.create({
     borderBottomWidth: 0,
     marginLeft: 10,
     marginRight: 10,
+  },
+  //Search_id
+  textFormAlone_Search_id: {
+    borderWidth: 2,
+    borderBottomWidth: 2,
+    borderColor: '#FA8072',
+    borderTopLeftRadius: 7,
+    borderTopRightRadius: 7,
+    borderBottomRightRadius: 7,
+    borderBottomLeftRadius: 7,
+    width: '50%',
+    height: hp(6),
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginRight: 15,
+  },
+
+  Text_Search_id: {
+    fontSize: wp('4.5%'),
+    paddingTop: wp(1.5),
+  },
+
+  TextArea_Search_id: {
+    // flex: 0.5,
+    justifyContent: 'center',
+    //paddingTop: hp(),
+  },
+
+  formArea_Search_id: {
+    justifyContent: 'center',
+    paddingTop: wp(5),
+    paddingBottom: wp(1),
+    // backgroundColor: 'red',
+  },
+
+  btnArea_Search_id: {
+    height: hp(8),
+    // backgroundColor: 'orange',
+    justifyContent: 'center',
+    alignItems: 'center',
+    //paddingBottom: hp(1.5),
+    paddingTop: hp(1.5),
+  },
+
+  btn_Search_id: {
+    flex: 1,
+    width: '40%',
+    borderRadius: 7,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'black',
+  },
+
+  form_Search_id: {
+    paddingBottom: hp(2),
+  },
+
+  TextArea_Search_id: {
+    // flex: 0.5,
+    justifyContent: 'center',
+    paddingBottom: hp(3),
+  },
+
+  EmailCheck_Search_id: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderBottomWidth: 2,
+    borderColor: '#FA8072',
+    backgroundColor: '#FA8072',
+    borderTopLeftRadius: 7,
+    borderTopRightRadius: 7,
+    borderBottomRightRadius: 7,
+    borderBottomLeftRadius: 7,
+    width: '25%',
+    height: hp(6),
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+
+  TextValidation_Search_id: {
+    fontSize: wp('4%'),
+    color: 'red',
+    marginLeft: 65,
+    marginBottom: hp(-2),
+    paddingTop: hp(1),
+    paddingBottom: hp(1),
+  },
+  btn2_Search_id: {
+    width: '75%',
+    height: hp(6),
+    borderRadius: 7,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FA8072',
+    marginRight: 10,
+    marginLeft: 45,
+  },
+  btn3_Search_id: {
+    width: '85%',
+    height: hp(6),
+    borderRadius: 7,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FA8072',
+    marginRight: 10,
+    marginLeft: 45,
+  },
+  //Search_pw
+  textFormAlone_Search_pw: {
+    borderWidth: 2,
+    borderBottomWidth: 2,
+    borderColor: '#FA8072',
+    borderTopLeftRadius: 7,
+    borderTopRightRadius: 7,
+    borderBottomRightRadius: 7,
+    borderBottomLeftRadius: 7,
+    width: '50%',
+    height: hp(6),
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginRight: 15,
+  },
+
+  Text_Search_pw: {
+    fontSize: wp('4.5%'),
+    paddingTop: wp(1.5),
+    paddingLeft: wp(1),
+  },
+
+  Text_Search_pw2: {
+    fontSize: wp('4.5%'),
+    paddingTop: wp(1.5),
+    paddingLeft: wp(9),
+    paddingRight: wp(3),
+  },
+
+  TextArea_Search_pw: {
+    // flex: 0.5,
+    justifyContent: 'center',
+    //paddingTop: hp(),
+  },
+
+  formArea_Search_pw: {
+    justifyContent: 'center',
+    paddingTop: wp(5),
+    paddingBottom: wp(1),
+    // backgroundColor: 'red',
+  },
+
+  btnArea_Search_pw: {
+    height: hp(8),
+    // backgroundColor: 'orange',
+    justifyContent: 'center',
+    alignItems: 'center',
+    //paddingBottom: hp(1.5),
+    paddingTop: hp(1.5),
+  },
+
+  btn_Search_pw: {
+    flex: 1,
+    width: '40%',
+    borderRadius: 7,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FA8072',
+  },
+
+  form_Search_pw: {
+    paddingBottom: hp(2),
+  },
+
+  TextArea_Search_pw: {
+    // flex: 0.5,
+    justifyContent: 'center',
+    paddingBottom: hp(3),
+  },
+
+  EmailCheck_Search_pw: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderBottomWidth: 2,
+    borderColor: '#FA8072',
+    backgroundColor: '#FA8072',
+    borderTopLeftRadius: 7,
+    borderTopRightRadius: 7,
+    borderBottomRightRadius: 7,
+    borderBottomLeftRadius: 7,
+    width: '73%',
+    height: hp(6),
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginLeft: 37,
+    marginTop: 20,
+  },
+
+  TextValidation_Search_pw: {
+    fontSize: wp('4%'),
+    color: 'red',
+    marginLeft: 65,
+    marginBottom: hp(-2),
+    paddingTop: hp(1),
+    paddingBottom: hp(1),
+  },
+  //Search_pw2
+  EmailCheck_Search_pw2: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderBottomWidth: 2,
+    borderColor: '#FA8072',
+    backgroundColor: '#FA8072',
+    borderTopLeftRadius: 7,
+    borderTopRightRadius: 7,
+    borderBottomRightRadius: 7,
+    borderBottomLeftRadius: 7,
+    width: '25%',
+    height: hp(6),
+    paddingLeft: 10,
+    paddingRight: 10,
+    // marginLeft: ,
+    // marginTop: 20,
   },
 });
 
