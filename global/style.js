@@ -197,7 +197,7 @@ const style = StyleSheet.create({
   profile_ClientScreen: {
     height: 210,
     flexDirection: 'row',
-    backgroundColor: 'lightgrey',
+    backgroundColor: 'lightgray',
     padding: 30,
     paddingTop: 40,
   },
@@ -206,6 +206,7 @@ const style = StyleSheet.create({
     width: 140,
     marginRight: 20,
     borderRadius: 100,
+    backgroundColor: 'white',
   },
   nickname_ClientScreen: {
     fontSize: 20,
@@ -222,9 +223,10 @@ const style = StyleSheet.create({
     padding: 10,
   },
   menuItemIcon_ClientScreen: {
-    height: 30,
-    width: 30,
+    fontSize: 30,
     marginRight: 15,
+    marginTop: 5,
+    color: 'gray',
   },
   menuItemText_ClientScreen: {
     fontSize: 15,

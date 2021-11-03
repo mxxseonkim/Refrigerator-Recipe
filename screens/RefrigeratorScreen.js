@@ -15,7 +15,6 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
-  StyleSheet,
 } from 'react-native';
 import style from '../global/style';
 
@@ -214,9 +213,18 @@ export default function RefrigeratorScreen({
               isChecked={item.ingredient_delChecked === '0' ? false : true}
             />
             <View style={{flexDirection: 'row'}}>
-              <Image
-                style={style.itemImg_RefrigeratorScreen}
-                source={{uri: item.ingredient_imgPath}}></Image>
+              {item.ingredient_imgPath ===
+              'http://54.180.126.3/img/add-image.png' ? (
+                <Image
+                  style={style.itemImg_RefrigeratorScreen}
+                  source={{
+                    uri: 'http://54.180.126.3/img/eggfry.jpg',
+                  }}></Image>
+              ) : (
+                <Image
+                  style={style.itemImg_RefrigeratorScreen}
+                  source={{uri: item.ingredient_imgPath}}></Image>
+              )}
               <View style={{flexDirection: 'column'}}>
                 <View style={{flexDirection: 'row'}}>
                   <Text style={style.itemName_RefrigeratorScreen}>
@@ -240,15 +248,24 @@ export default function RefrigeratorScreen({
               setText(item.ingredient_name);
               onSetNumber(item.ingredient_vol);
               onSetDate(item.ingredient_buyDate);
-              onSetType(item.ingredient_type);
+              onSetSaveType(item.ingredient_type);
               onSetNo(item.no);
               setImgPath(item.ingredient_imgPath);
             }}>
             <View style={{flexDirection: 'row'}}>
               <View style={{width: '25%'}}>
-                <Image
-                  style={style.itemImg_RefrigeratorScreen}
-                  source={{uri: item.ingredient_imgPath}}></Image>
+                {item.ingredient_imgPath ===
+                'http://54.180.126.3/img/add-image.png' ? (
+                  <Image
+                    style={style.itemImg_RefrigeratorScreen}
+                    source={{
+                      uri: 'http://54.180.126.3/img/eggfry.jpg',
+                    }}></Image>
+                ) : (
+                  <Image
+                    style={style.itemImg_RefrigeratorScreen}
+                    source={{uri: item.ingredient_imgPath}}></Image>
+                )}
               </View>
               <View style={{flexDirection: 'column', width: '55%'}}>
                 <View style={{flexDirection: 'row'}}>
@@ -338,14 +355,24 @@ export default function RefrigeratorScreen({
                       </View>
                     </View>
                     <View style={{width: '30%'}}>
-                      <Image
-                        style={[
-                          style.itemImg2_RefrigeratorScreen,
-                          {borderColor: 'black'},
-                        ]}
-                        source={{
-                          uri: imgPath,
-                        }}></Image>
+                      {item.ingredient_imgPath ===
+                      'http://54.180.126.3/img/add-image.png' ? (
+                        <Image
+                          style={[
+                            style.itemImg2_RefrigeratorScreen,
+                            {borderColor: 'black'},
+                          ]}
+                          source={{
+                            uri: 'http://54.180.126.3/img/eggfry.jpg',
+                          }}></Image>
+                      ) : (
+                        <Image
+                          style={[
+                            style.itemImg2_RefrigeratorScreen,
+                            {borderColor: 'black'},
+                          ]}
+                          source={{uri: imgPath}}></Image>
+                      )}
                     </View>
                   </View>
                   <View style={{flexDirection: 'row'}}>

@@ -31,8 +31,6 @@ export default function AddButton({onSlctChk, Chk}) {
   const [endDate, setEndDate] = useState('-'); // 유통기한
   const [saveType, setSaveType] = useState('0'); // 보관방법 선택
   const [saveType_value, setSaveTypeValue] = useState(null); //보관방법 선택_문자
-  const [divType, setDivType] = useState('0'); //분류방법 선택
-  const [divType_value, setDivTypeValue] = useState(null); //분류방법 선택_문자
   const [imgButton, setImgButton] = useState(false);
   const [imgPath, setImgPath] = useState(
     'http://54.180.126.3/img/add-image.png',
@@ -103,36 +101,30 @@ export default function AddButton({onSlctChk, Chk}) {
       onCancle();
       return;
     }
-    if (endDate !== '-') {
-      if (
-        endDate.replace('-', '').replace('-', '') <
-        startDate.replace('-', '').replace('-', '')
-      ) {
-        alert('유통기한이 구매일자보다 빠릅니다.');
-        onCancle();
-        return;
-      }
+    if (endDate === '-') {
+      alert('유통기한을 입력해주세요');
+      onCancle();
+      return;
+    }
+    if (
+      endDate.replace('-', '').replace('-', '') <
+      startDate.replace('-', '').replace('-', '')
+    ) {
+      alert('유통기한이 구매일자보다 빠릅니다.');
+      onCancle();
+      return;
     }
     if (saveType === '0') {
       alert('보관방법을 선택해주세요');
       onCancle();
       return;
     }
-    if (divType === '0') {
-      alert('분류방법을 선택해주세요');
-      onCancle();
-      return;
-    }
 
-    // imgPath가 add-image라면 기본이미지로 바꿈
-    if (imgPath === 'http://54.180.126.3/img/add-image.png') {
-      setImgPath('http://54.180.126.3/img/eggfry.jpg');
-    }
     let dataObj = {
       qry:
         'INSERT INTO ' +
         memberID.userID +
-        ' (f_name, f_vol, f_ref, f_last, f_type, f_divType, f_imgPath, f_checked) VALUES ("' +
+        ' (ingredient_name, ingredient_vol, ingredient_buyDate, ingredient_expiryDate, ingredient_type, ingredient_imgPath, ingredient_delChecked) VALUES ("' +
         text +
         '", "' +
         number +
@@ -142,8 +134,6 @@ export default function AddButton({onSlctChk, Chk}) {
         endDate +
         '", "' +
         saveType +
-        '", "' +
-        divType +
         '", "' +
         imgPath +
         '", "0")',
@@ -165,7 +155,6 @@ export default function AddButton({onSlctChk, Chk}) {
     onSetStartDate('-');
     onSetEndDate('-');
     onSetSaveType('0');
-    onSetDivType('0');
     setImgPath('http://54.180.126.3/img/add-image.png');
   };
 
@@ -209,28 +198,6 @@ export default function AddButton({onSlctChk, Chk}) {
     setSaveTypeValue(_value);
   };
 
-  // 분류방법 선택 + 문자열 변수 변경
-  const onSetDivType = _divType => {
-    var _value = null;
-    if (_divType === '0') {
-      _value = 'empty';
-    } else if (_divType === '1') {
-      _value = 'grain';
-    } else if (_divType === '2') {
-      _value = 'meat';
-    } else if (_divType === '3') {
-      _value = 'vegetable';
-    } else if (_divType === '4') {
-      _value = 'fat';
-    } else if (_divType === '5') {
-      _value = 'milk';
-    } else if (_divType === '6') {
-      _value = 'fruit';
-    }
-    setDivType(_divType);
-    setDivTypeValue(_value);
-  };
-
   //------------------ 식재료 검색 키워드로 필터링 하는 함수 ----------------------------
 
   const filterData = text => {
@@ -271,7 +238,7 @@ export default function AddButton({onSlctChk, Chk}) {
         ref={refRBSheet}
         closeOnDragDown={true}
         closeOnPressMask={false}
-        height={420}
+        height={360}
         keyboardAvoidingViewEnabled={false}
         dragFromTopOnly={true}
         animationType={'slide'}
@@ -301,10 +268,9 @@ export default function AddButton({onSlctChk, Chk}) {
                       {flexDirection: 'row', width: '30%'},
                     ]}>
                     <Text style={style.text_RefrigeratorScreen}>식재료명</Text>
-                    <Text style={style.text1_RefrigeratorScreen}> *</Text>
                   </View>
                   <View style={{width: '70%'}}>
-                    {/* <TextInput
+                    <TextInput
                       style={[
                         style.text_RefrigeratorScreen,
                         style.input_RefrigeratorScreen,
@@ -316,8 +282,8 @@ export default function AddButton({onSlctChk, Chk}) {
                         numberInputRef.current && numberInputRef.current.focus()
                       }
                       placeholder="입력해주세요"
-                    /> */}
-                    <Autocomplete
+                    />
+                    {/* <Autocomplete
                       autoCapitalize="none"
                       autoCorrect={false}
                       data={filteredData}
@@ -345,7 +311,7 @@ export default function AddButton({onSlctChk, Chk}) {
                           </Text>
                         </TouchableOpacity>
                       )}
-                    />
+                    /> */}
                   </View>
                 </View>
                 <View style={{flexDirection: 'row'}}>
@@ -355,7 +321,6 @@ export default function AddButton({onSlctChk, Chk}) {
                       {flexDirection: 'row', width: '30%'},
                     ]}>
                     <Text style={style.text_RefrigeratorScreen}>용량(g)</Text>
-                    <Text style={style.text1_RefrigeratorScreen}> *</Text>
                   </View>
                   <View style={{width: '70%'}}>
                     <TextInput
@@ -422,7 +387,6 @@ export default function AddButton({onSlctChk, Chk}) {
                   {flexDirection: 'row', width: '20%'},
                 ]}>
                 <Text style={style.text_RefrigeratorScreen}>구매일자</Text>
-                <Text style={style.text1_RefrigeratorScreen}> *</Text>
               </View>
               <View style={{width: '80%', flexDirection: 'row'}}>
                 <View
@@ -503,7 +467,6 @@ export default function AddButton({onSlctChk, Chk}) {
                   {flexDirection: 'row', width: '20%'},
                 ]}>
                 <Text style={style.text_RefrigeratorScreen}>보관방법</Text>
-                <Text style={style.text1_RefrigeratorScreen}> *</Text>
               </View>
               <View style={{width: '60%'}}>
                 <RNPickerSelect
@@ -536,55 +499,6 @@ export default function AddButton({onSlctChk, Chk}) {
                     {label: '냉동', value: 'frozen', inputLabel: '냉동'},
                     {label: '조미료', value: 'condi', inputLabel: '조미료'},
                     {label: '실온', value: 'room', inputLabel: '실온'},
-                  ]}></RNPickerSelect>
-              </View>
-            </View>
-            <View style={{flexDirection: 'row'}}>
-              <View
-                style={[
-                  style.textView_RefrigeratorScreen,
-                  {flexDirection: 'row', width: '20%'},
-                ]}>
-                <Text style={style.text_RefrigeratorScreen}>분류방법</Text>
-                <Text style={style.text1_RefrigeratorScreen}> *</Text>
-              </View>
-              <View style={{width: '60%'}}>
-                <RNPickerSelect
-                  style={{
-                    inputAndroid:
-                      divType === '0' ? {color: 'gray'} : {color: 'black'},
-                  }}
-                  onValueChange={value => {
-                    if (value === 'empty') {
-                      onSetDivType('0');
-                    } else if (value === 'grain') {
-                      onSetDivType('1');
-                    } else if (value === 'meat') {
-                      onSetDivType('2');
-                    } else if (value === 'vegetable') {
-                      onSetDivType('3');
-                    } else if (value === 'fat') {
-                      onSetDivType('4');
-                    } else if (value === 'milk') {
-                      onSetDivType('4');
-                    } else if (value === 'fruit') {
-                      onSetDivType('4');
-                    }
-                  }}
-                  placeholder={{}}
-                  value={divType_value}
-                  items={[
-                    {
-                      label: '분류방법 선택',
-                      value: 'empty',
-                      inputLabel: '분류방법 선택',
-                    },
-                    {label: '곡류', value: 'grain', inputLabel: '곡류'},
-                    {label: '어육류', value: 'meat', inputLabel: '어육류'},
-                    {label: '채소류', value: 'vegetable', inputLabel: '채소류'},
-                    {label: '지방류', value: 'fat', inputLabel: '지방류'},
-                    {label: '유제품류', value: 'milk', inputLabel: '유제품류'},
-                    {label: '과일류', value: 'fruit', inputLabel: '과일류'},
                   ]}></RNPickerSelect>
               </View>
             </View>

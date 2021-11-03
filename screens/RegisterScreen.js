@@ -59,7 +59,7 @@ export default function RegisterScreen({navigation}) {
     setLoading(true);
     //아이디 중복 체크 쿼리
     let ID_overlab_check = {
-      qry: 'SELECT * FROM member where mem_userid="' + userId + '"',
+      qry: 'SELECT * FROM member where user_id="' + userId + '"',
     };
     let result = await DataSet.overlabCheck(ID_overlab_check);
     if (Number(result)) {
@@ -136,21 +136,39 @@ export default function RegisterScreen({navigation}) {
     // DB 연결 전 loading 시작
     setLoading(true);
 
+    console.log(userId);
+    console.log(userId);
+    console.log(userId);
+    console.log(userId);
+    console.log(userId);
+
     // DB에 보낼 Dataset
-    // + data 변수에 더 추가해야할 것 -> 자기소개, 아이콘
-    var data = {
-      user_id: userId,
-      user_email: userEmail,
-      user_password: userPassword,
-      user_realname: userName,
-      user_nickname: userNick,
-      user_profilcontent: 'NULL',
-      user_icon: 'NULL',
-      user_photo: 'NULL',
+    let userData = {
+      qry:
+        'INSERT INTO member (user_id, user_pw, user_name, user_nickname, user_email, user_bookmark) VALUES ("' +
+        userId +
+        '", "' +
+        userPassword +
+        '", "' +
+        userName +
+        '", "' +
+        userNick +
+        '", "' +
+        userEmail +
+        '", NULL)',
     };
 
-    //멤버 DB insert & 냉장고 테이블 생성
-    DataSet.memberCreate(data);
+    let newRef = {
+      qry:
+        'CREATE TABLE ' +
+        userId +
+        '(no int AUTO_INCREMENT,ingredient_name varchar(100),ingredient_vol int,ingredient_buyDate varchar(100),ingredient_expiryDate varchar(100),ingredient_type varchar(100),ingredient_imgPath varchar(500),ingredient_delChecked tinyint(1),primary key (no))',
+    };
+
+    DataSet.setData(userData);
+    //멤버 DB insert
+    DataSet.setData(newRef);
+    //냉장고 생성
 
     // DB 연결 후 loading 해제
     setLoading(false);

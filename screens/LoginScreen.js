@@ -12,7 +12,6 @@ import {
   Alert,
 } from 'react-native';
 import style from '../global/style';
-import {userID} from '../global/Global';
 
 export default function LoginScreen({navigation}) {
   const [userId, setUserId] = useState(''); // 아이디
@@ -21,6 +20,9 @@ export default function LoginScreen({navigation}) {
 
   const DataSet = require('../global/DataSet');
   const memberID = require('../global/Global');
+  const timerCheck = require('../components/TimerCheck');
+
+  timerCheck.check = true; //true = 타이머 초기화
 
   const idInputRef = createRef();
   const passwordInputRef = createRef();
@@ -44,9 +46,9 @@ export default function LoginScreen({navigation}) {
     //로그인 체크 쿼리
     let login_check = {
       qry:
-        "SELECT * FROM `member` WHERE mem_userid = '" +
+        "SELECT * FROM `member` WHERE user_id = '" +
         userId +
-        "' and mem_password = '" +
+        "' and user_pw = '" +
         userPassword +
         "'",
     };
@@ -142,12 +144,12 @@ export default function LoginScreen({navigation}) {
         <View style={style.TextAddFuncView_LoginScreen}>
           <Text
             style={style.TextAddFunc_LoginScreen}
-            onPress={() => navigation.navigate('Register')}>
+            onPress={() => navigation.navigate('Search_id')}>
             아이디찾기
           </Text>
           <Text
             style={style.TextAddFunc_LoginScreen}
-            onPress={() => navigation.navigate('Register')}>
+            onPress={() => navigation.navigate('Search_pw')}>
             비밀번호찾기
           </Text>
           <Text

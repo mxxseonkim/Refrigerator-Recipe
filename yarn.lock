@@ -30,7 +30,8 @@
   "resolved" "https://registry.npmjs.org/@babel/compat-data/-/compat-data-7.14.4.tgz"
   "version" "7.14.4"
 
-"@babel/core@^7.0.0", "@babel/core@^7.1.0", "@babel/core@^7.1.6", "@babel/core@^7.7.2", "@babel/core@^7.7.5", "@babel/core@7.14.3":
+
+"@babel/core@*", "@babel/core@^7.0.0", "@babel/core@^7.0.0-0", "@babel/core@^7.1.0", "@babel/core@^7.1.6", "@babel/core@^7.4.0-0", "@babel/core@^7.7.2", "@babel/core@^7.7.5", "@babel/core@^7.8.0", "@babel/core@7.14.3":
   "integrity" "sha512-jB5AmTKOCSJIZ72sd78ECEhuPiDMKlQdDI/4QRI6lzYATx5SSogS1oQA2AoPecRCknm30gHi2l+QVvNUu3wZAg=="
   "resolved" "https://registry.npmjs.org/@babel/core/-/core-7.14.3.tgz"
   "version" "7.14.3"
@@ -1305,10 +1306,9 @@
   "resolved" "https://registry.npmjs.org/@protobufjs/utf8/-/utf8-1.1.0.tgz"
   "version" "1.1.0"
 
-"@react-native-async-storage/async-storage@^1.15.7":
-  "integrity" "sha512-ctD51BxjBxSSZ/3xCxQ//e10nP3rWFuOABsOGCGCqCXO4ypznK+fcWONHI6fIZubfV5KdyBJnNXcKtXRjocE5Q=="
-  "resolved" "https://registry.npmjs.org/@react-native-async-storage/async-storage/-/async-storage-1.15.7.tgz"
-  "version" "1.15.7"
+"@react-native-async-storage/async-storage@github:react-native-async-storage/async-storage":
+  "resolved" "git+ssh://git@github.com/react-native-async-storage/async-storage.git#e99edf035485a93dfcf5b897b72eee119d8bec3b"
+  "version" "1.13.0"
   dependencies:
     "merge-options" "^3.0.4"
 
@@ -3601,6 +3601,11 @@
   "integrity" "sha1-FQStJSMVjKpA20onh8sBQRmU6k8="
   "resolved" "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   "version" "1.0.0"
+
+"fsevents@^2.1.2", "fsevents@^2.3.2":
+  "integrity" "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
+  "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
+  "version" "2.3.2"
 
 "function-bind@^1.1.1":
   "integrity" "sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A=="

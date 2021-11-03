@@ -33,7 +33,7 @@ export default function RecipeList(props) {
       // 전체 데이터에서 filter 함수를 사용하여 검색어에 따른 데이터를 선별
       const newData = masterData.filter(function (item) {
         // 일단 데이터의 item.name과 text(검색어)를 모두 대문자화 함
-        const itemData = item.name ? item.name.toUpperCase() : ''.toUpperCase();
+        const itemData = item.recipe_name ? item.recipe_name.toUpperCase() : ''.toUpperCase();
         const textData = text.toUpperCase();
         //  itemData와 textData를 비교해서 -1보다 높으면 filter() 함수에 의해 선별(return) 됨 (-1이 나오면 일치하지 X)
         return itemData.indexOf(textData) > -1;
@@ -62,7 +62,7 @@ export default function RecipeList(props) {
           props.navigation.navigate('RecipeInfo', {data: item});
         }}>
         <View style={{width: '80%'}}>
-          <Text style={style.itemName_RecipeList}>{item.name}</Text>
+          <Text style={style.itemName_RecipeList}>{item.recipe_name}</Text>
         </View>
         <View style={{width: '20%'}}>
           <Text style={style.itemSimilarity_RecipeList}>67%</Text>
@@ -84,7 +84,7 @@ export default function RecipeList(props) {
         <FlatList
           data={filteredData}
           renderItem={renderItem}
-          keyExtract={item => item.id}
+          keyExtract={item => item.recipe_id}
         />
       </View>
     </View>
