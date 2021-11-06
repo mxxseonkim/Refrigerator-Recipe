@@ -18,6 +18,7 @@ import {
 } from 'react-native';
 import style from '../global/style';
 
+
 export default function Search_pw2({route, navigation}) {
   var email_rule =
     /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
@@ -29,7 +30,51 @@ export default function Search_pw2({route, navigation}) {
   const nameInputRef = createRef();
   const emailInputRef = createRef();
 
-  const authSubmitButton = () => {
+  const [displayTimer, setDisplaTimer] = useState('ㅇㅇ');
+  const [checkState, setCheckState] = useState('');
+  const [timerOver, setTimerOver] = useState(false);
+  const [tmpPW, setTmpPW] = useState('');
+  const [number, setNumber] = useState('');
+
+  const DataSet = require('../global/DataSet');
+
+  var timer;
+  var isRunning = false;
+
+  // 인증번호 확인 제한시간 타이머
+  const sendAuthNum = () => {
+    var leftSec = 180; //남은시간
+    //display = document.querySelector('#timer');
+    //이미 타미머가 작동중이라면 중지.
+    if (isRunning){
+      clearInterval(timer);
+    }
+    startTimer(leftSec);
+  };
+
+
+  // 타이머 함수
+const startTimer = (count) => {
+    var minutes, seconds;
+    timer = setInterval(function () {
+    minutes = parseInt(count / 60, 10);
+    seconds = parseInt(count % 60, 10);
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+    setDisplaTimer(minutes + ":" + seconds);
+    //display.textContent = minutes + ":" + seconds;
+    // 타이머 끝
+    if (--count < 0) {
+      clearInterval(timer);
+      //display.textContent = "";
+      setDisplaTimer("00:00");
+      isRunning = false;
+      setTimerOver(true);
+    }
+    }, 1000);
+    }
+
+  const authSubmitButton = async () => {
     console.log(route.params.userId);
     if (!userName) {
       alert('이름을 입력해주세요');
@@ -43,13 +88,48 @@ export default function Search_pw2({route, navigation}) {
       alert('이메일을 형식에 맞게 입력해주세요.');
       return false;
     }
-    // 여기에 인증번호 전송하는 함수 넣기
+    setCheckState('인증번호를 입력해주세요.');
+    sendAuthNum();
+    console.log(userEmail);
+    let sendEmail = {
+        email : userEmail,
+    };
+    let result = await DataSet.sendUserEmail(sendEmail);
+    setNumber(result.toString());
+    console.log(number);
   };
 
-  const checkSubmitButton = () => {
-    setIsPwSuccess(ture);
-
-    //여기에 임시 비밀번호 넘겨주기
+  const checkSubmitButton = async () => {
+    if(auth==number&&timerOver==false){
+      var newPassword;
+      var randomValue = "abcdefghijklmnopqrstuvwxyz0123456789";
+      for(i=1; i<=8; i++){
+        randomPoint = Math.round(Math.random()*34+1);
+        Pwdchar = randomValue.charAt(randomPoint);
+        if(i == 1){
+          newPassword = Pwdchar;
+        }else{
+          newPassword += Pwdchar;
+        }
+       }
+      var num = '';
+      for (let i=0;i<4;i++){
+        num += Math.floor(Math.random()*10)
+      }
+      newPassword = newPassword + num;
+      let updatePW = {
+        qry: "UPDATE `member` SET `user_pw` = '"+newPassword+"' WHERE `member`.`user_id` = '"+route.params.userId+"'",
+      };
+      DataSet.setData(updatePW);
+      setTmpPW(newPassword);
+      setIsPwSuccess(true);
+    }
+    else if(auth==number&&timerOver == true){
+      setCheckState('시간이 초과했습니다. 다시 시도해주세요.');
+    }
+    else{
+      setCheckState('인증번호가 틀렸습니다. 다시 입력해주세요.');
+    }
   };
 
   if (isPwSuccess) {
@@ -101,7 +181,7 @@ export default function Search_pw2({route, navigation}) {
             </Text>
             <Text
               style={{color: 'gray', fontSize: wp('4%'), marginRight: wp(1.5)}}>
-              password{/* 여기에 고객 임시 비밀번호 넣기 */}
+              {tmpPW}
             </Text>
             <Text style={{color: 'black', fontSize: wp('4%')}}>입니다.</Text>
           </View>
@@ -173,7 +253,7 @@ export default function Search_pw2({route, navigation}) {
         </View>
         <View style={{justifyContent: 'center'}}>
           <Text style={style.TextValidation_Search_pw}>
-            인증번호를 입력해주세요.
+            {checkState}
           </Text>
         </View>
         <View style={style.formArea_Search_pw}>
@@ -191,6 +271,11 @@ export default function Search_pw2({route, navigation}) {
               <TouchableOpacity onPress={checkSubmitButton}>
                 <Text style={{color: 'white'}}>확인</Text>
               </TouchableOpacity>
+            </View>
+            <View style={{justifyContent: 'center'}}>
+              <Text>
+                {displayTimer}
+              </Text>
             </View>
           </View>
         </View>
