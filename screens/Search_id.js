@@ -17,7 +17,6 @@ import {
   Alert,
 } from 'react-native';
 import style from '../global/style';
-import TimerFunction from '../components/TimerFunction';
 import {set} from 'react-native-reanimated';
 
 export default function Search_id({navigation}) {
@@ -32,17 +31,49 @@ export default function Search_id({navigation}) {
   const [isIdSuccess, setIsIdSuccess] = useState(false);
   const emailInputRef = createRef();
   const [number, setNumber] = useState('');
-
-  const [minutes, setMinutes] = useState(1);
-  const [seconds, setSeconds] = useState(0);
-  const [result, setResult] = useState('');
-  const [checkState, setCheckState] = useState('');
   const [userID, setUserID] = useState('');
+  const [displayTimer, setDisplaTimer] = useState('ㅇㅇ');
+  const [checkState, setCheckState] = useState('');
+  const [timerOver, setTimerOver] = useState(false);
 
-  const timerCheck = require('../components/TimerCheck');
-  //console.log(timerCheck.check);
-  //timerCheck.check 가 true 일 때 == 인증번호 비활성화. 옳은 인증번호를 입력해도 본인인증이 되지 않는 상태.
-  //timerCheck.check 가 false 일 때 == 인증번호 활성화. 옳은 인증번호를 입력하면 본인인증 완료됨.
+  var timer;
+  var isRunning = false;
+
+
+  // 인증번호 확인 제한시간 타이머
+  const sendAuthNum = () => {
+    var leftSec = 180; //남은시간
+    //display = document.querySelector('#timer');
+    //이미 타미머가 작동중이라면 중지.
+    if (isRunning){
+      clearInterval(timer);
+    }
+    startTimer(leftSec);
+  };
+
+
+  // 타이머 함수
+const startTimer = (count) => {
+    var minutes, seconds;
+    timer = setInterval(function () {
+    minutes = parseInt(count / 60, 10);
+    seconds = parseInt(count % 60, 10);
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+    setDisplaTimer(minutes + ":" + seconds);
+    //display.textContent = minutes + ":" + seconds;
+    // 타이머 끝
+    if (--count < 0) {
+      clearInterval(timer);
+      //display.textContent = "";
+      setDisplaTimer("00:00");
+      isRunning = false;
+      setTimerOver(true);
+    }
+    }, 1000);
+    }
+    
+
 
   const authSubmitButton = async () => {
     let dataCheck = {
@@ -75,7 +106,7 @@ export default function Search_id({navigation}) {
       return false;
     }
     setCheckState('인증번호를 입력해주세요.');
-    timerCheck.check = false;
+    sendAuthNum();
     console.log(userEmail);
     let sendEmail = {
       email: userEmail,
@@ -86,8 +117,7 @@ export default function Search_id({navigation}) {
   };
 
   const checkSubmitButton = async () => {
-    if (auth == number && timerCheck.check == false) {
-      timerCheck.check = true;
+    if (auth == number && timerOver==false) {
       let getID = {
         qry:
           "SELECT user_id FROM `member` WHERE user_name = '" +
@@ -100,7 +130,7 @@ export default function Search_id({navigation}) {
       console.log(id_Json);
       setUserID(id_Json[0].user_id);
       setIsIdSuccess(true);
-    } else if (auth == number && timerCheck.check == true) {
+    } else if (auth == number && timerOver == true) {
       setCheckState('시간이 초과했습니다. 다시 시도해주세요.');
     } else {
       setCheckState('인증번호가 틀렸습니다. 다시 입력해주세요.');
@@ -156,7 +186,7 @@ export default function Search_id({navigation}) {
             </Text>
             <Text
               style={{color: 'gray', fontSize: wp('4%'), marginRight: wp(1.5)}}>
-              id{/* 여기에 고객 실제 아이디 넣기 */}
+              {userID}
             </Text>
             <Text style={{color: 'black', fontSize: wp('4%')}}>입니다.</Text>
           </View>
@@ -237,7 +267,7 @@ export default function Search_id({navigation}) {
         </View>
         <View style={{justifyContent: 'center'}}>
           <Text style={style.TextValidation_Search_id}>
-            인증번호를 입력해주세요.
+            {checkState}
           </Text>
         </View>
         <View style={style.formArea_Search_id}>
@@ -255,6 +285,11 @@ export default function Search_id({navigation}) {
               <TouchableOpacity onPress={checkSubmitButton}>
                 <Text style={{color: 'white'}}>확인</Text>
               </TouchableOpacity>
+            </View>
+            <View style={{justifyContent: 'center'}}>
+              <Text>
+                {displayTimer}
+              </Text>
             </View>
           </View>
         </View>
