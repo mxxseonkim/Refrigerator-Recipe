@@ -108,7 +108,7 @@ const RecipeStackScreen = ({navigation, route}) => {
         )}
         options={({route}) => ({
           // RecipeList에서 받아온 data.name으로 title 등록
-          title: route.params.data.name,
+          title: route.params.data.recipe_name,
           //header 왼쪽에 MenuButton 오른쪽에 BookMark 컴포넌트 등록
           headerLeft: () => <MenuButton />,
           headerRight: () => (
