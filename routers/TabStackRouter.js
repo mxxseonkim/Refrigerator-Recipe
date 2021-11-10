@@ -153,7 +153,7 @@ export default function TabStackRouter() {
         },
       })}
       tabBarOptions={{
-        activeTintColor: 'tomato', //focused
+        activeTintColor: 'salmon', //focused
         inactiveTintColor: 'gray', //not focused
       }}>
       <TabStack.Screen

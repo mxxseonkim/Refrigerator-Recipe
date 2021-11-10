@@ -5,6 +5,8 @@ import CheckBox from 'react-native-check-box';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Searchbar from '../components/Searchbar.js';
 import RBSheet from 'react-native-raw-bottom-sheet';
+import {Slider} from '@miblanchard/react-native-slider';
+
 import {
   ActivityIndicator,
   Pressable,
@@ -30,6 +32,7 @@ export default function RefrigeratorScreen({
   const [isLodaing, setIsLoding] = useState(true); // Database loding
   const [text, setText] = useState(null); // 이름
   const [number, setNumber] = useState(null); // 용량
+  const [numberUnit, setNumberUnit] = useState(null); // 용량_단위
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [date, setDate] = useState('2021-01-01'); // 유통기한
   const [saveType, setSaveType] = useState(null); // 보관선택
@@ -39,6 +42,7 @@ export default function RefrigeratorScreen({
   const [filteredData, setFilteredData] = useState(); // 검색 키워드에 필터링된 데이터
   const refRBSheet = useRef(); // BottomSheet
   const [imgPath, setImgPath] = useState(null);
+
   //-------------------Data Select/Update/Delete ----------------------------------------
 
   const DataSet = require('../global/DataSet');
@@ -76,11 +80,11 @@ export default function RefrigeratorScreen({
       qry:
         'UPDATE ' +
         memberID.userID +
-        ' ingredient_buyDate = "' +
+        ' SET ingredient_expiryDate = " ' +
         date +
-        '", ingredient_vol ="' +
+        '", ingredient_vol =" ' +
         number +
-        '", ingredient_type =' +
+        '", ingredient_type = ' +
         saveType +
         ' WHERE no =' +
         no,
@@ -145,6 +149,7 @@ export default function RefrigeratorScreen({
       });
       // 검색어로 필터링 된 데이터를 검색 필터링 State에 담음
       // 그리고 text를 Searchbar의 props로 보냄
+      console.log(newData);
       setFilteredData(newData);
       setSearch(text);
     } else {
@@ -163,6 +168,10 @@ export default function RefrigeratorScreen({
 
   const onSetNumber = _number => {
     setNumber(_number);
+  };
+
+  const onSetNumberUnit = _numberUnit => {
+    setNumberUnit(_numberUnit);
   };
 
   const onSetDate = _date => {
@@ -202,6 +211,21 @@ export default function RefrigeratorScreen({
   //---------------------- UI 부분 --------------------------------------------
 
   const renderItem = ({item}) => {
+    let today_tmp = new Date();
+    let today = new Date(
+      today_tmp.getFullYear(),
+      today_tmp.getMonth(),
+      today_tmp.getDate(),
+    );
+    let expiry_tmp = item.ingredient_expiryDate;
+    let expiry = new Date(
+      expiry_tmp.split('-')[0],
+      expiry_tmp.split('-')[1] - 1,
+      expiry_tmp.split('-')[2],
+    );
+    const elapsedMSec1 = expiry.getTime() - today.getTime();
+    const elapsedDay1 = elapsedMSec1 / 1000 / 60 / 60 / 24;
+
     return (
       <View>
         {/* Chk1이 true인지 false 인지에 따라 UI 상이 */}
@@ -225,7 +249,7 @@ export default function RefrigeratorScreen({
                   style={style.itemImg_RefrigeratorScreen}
                   source={{uri: item.ingredient_imgPath}}></Image>
               )}
-              <View style={{flexDirection: 'column'}}>
+              <View style={style.itemTextView_RefrigeratorScreen}>
                 <View style={{flexDirection: 'row'}}>
                   <Text style={style.itemName_RefrigeratorScreen}>
                     {item.ingredient_name}
@@ -233,10 +257,34 @@ export default function RefrigeratorScreen({
                   <Text style={style.itemMsg_RefrigeratorScreen}>
                     {item.ingredient_vol}g
                   </Text>
+                  <Text
+                    style={[
+                      style.itemDate_RefrigeratorScreen,
+                      {paddingLeft: 60},
+                    ]}>
+                    {item.ingredient_expiryDate}
+                  </Text>
                 </View>
-                <Text style={style.itemMsg_RefrigeratorScreen}>
-                  {item.ingredient_expiryDate}
-                </Text>
+                <View
+                  style={{
+                    marginLeft: 10,
+                    marginRight: 65,
+                    alignItems: 'stretch',
+                    justifyContent: 'center',
+                  }}>
+                  <Slider
+                    value={elapsedDay1}
+                    disabled={true}
+                    minimumValue={0}
+                    maximumValue={7}
+                    step={1}
+                    minimumTrackTintColor="#fa8072"
+                    maximumTrackTintColor="#808080"
+                    thumbTintColor="#fa8072"
+                    thumbStyle={{width: 7, height: 7}}
+                    trackStyle={{width: 0, height: 7}}
+                  />
+                </View>
               </View>
             </View>
           </View>
@@ -247,13 +295,18 @@ export default function RefrigeratorScreen({
               refRBSheet.current.open();
               setText(item.ingredient_name);
               onSetNumber(item.ingredient_vol);
-              onSetDate(item.ingredient_buyDate);
+              onSetDate(item.ingredient_expiryDate);
               onSetSaveType(item.ingredient_type);
               onSetNo(item.no);
               setImgPath(item.ingredient_imgPath);
+              onSetNumberUnit(item.ingredient_vol_unit);
             }}>
             <View style={{flexDirection: 'row'}}>
-              <View style={{width: '25%'}}>
+              <View
+                style={{
+                  width: '25%',
+                  //backgroundColor: 'red',
+                }}>
                 {item.ingredient_imgPath ===
                 'http://54.180.126.3/img/add-image.png' ? (
                   <Image
@@ -267,25 +320,44 @@ export default function RefrigeratorScreen({
                     source={{uri: item.ingredient_imgPath}}></Image>
                 )}
               </View>
-              <View style={{flexDirection: 'column', width: '55%'}}>
+              <View style={style.itemTextView_RefrigeratorScreen}>
                 <View style={{flexDirection: 'row'}}>
                   <Text style={style.itemName_RefrigeratorScreen}>
                     {item.ingredient_name}
                   </Text>
                   <Text style={style.itemMsg_RefrigeratorScreen}>
-                    {item.ingredient_vol}g
+                    {item.ingredient_vol}
+                    {''}
+                    {item.ingredient_vol_unit}
+                  </Text>
+                  <Text
+                    style={[
+                      style.itemDate_RefrigeratorScreen,
+                      {paddingLeft: 100},
+                    ]}>
+                    {item.ingredient_expiryDate}
                   </Text>
                 </View>
-                <Text style={style.itemMsg_RefrigeratorScreen}>
-                  {item.ingredient_expiryDate}
-                </Text>
-              </View>
-              <View style={style.imgView_RefrigeratorScreen}>
-                <Image
-                  style={style.itemImg3_RefrigeratorScreen}
-                  source={{
-                    uri: 'http://54.180.126.3/img/caution.png',
-                  }}></Image>
+                <View
+                  style={{
+                    marginLeft: 10,
+                    marginRight: 20,
+                    alignItems: 'stretch',
+                    justifyContent: 'center',
+                  }}>
+                  <Slider
+                    value={elapsedDay1}
+                    disabled={true}
+                    minimumValue={0}
+                    maximumValue={7}
+                    step={1}
+                    minimumTrackTintColor="#fa8072"
+                    maximumTrackTintColor="#808080"
+                    thumbTintColor="#fa8072"
+                    thumbStyle={{width: 7, height: 7}}
+                    trackStyle={{width: 0, height: 7}}
+                  />
+                </View>
               </View>
             </View>
             <RBSheet
@@ -338,7 +410,7 @@ export default function RefrigeratorScreen({
                             {width: '30%'},
                           ]}>
                           <Text style={style.text_RefrigeratorScreen}>
-                            용량(g)
+                            용량 {'(' + numberUnit + ')'}
                           </Text>
                         </View>
                         <View style={{width: '70%'}}>
@@ -510,7 +582,7 @@ export default function RefrigeratorScreen({
       {/* isLoding이 true이면 ActivityIndicator화면을 띄움 */}
       {isLodaing ? (
         <View style={style.ActivityIndicatorView_RefrigeratorScreen}>
-          <ActivityIndicator size="large" color="tomato" />
+          <ActivityIndicator size="large" color="salmon" />
         </View>
       ) : (
         <View style={style.flatlist_RefrigeratorScreen}>

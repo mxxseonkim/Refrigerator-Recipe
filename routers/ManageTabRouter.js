@@ -12,7 +12,21 @@ export default function ManageTabRouter({Chk, Chk1, onDeltChk, onSlctChk}) {
     // children 속성으로 RefrigeratorScreen 컴포넌트 등록
     // RefrigeratorScreen에 count, Chk, Chk1, onDeltChk, onSlctChk를 props로 전달
     // count는 냉장, 냉동, 조미료, 실온을 나눠서 데이터를 select 하기 위함
-    <ManageTab.Navigator initRouteName="coldStorageScreen">
+    <ManageTab.Navigator
+      initRouteName="coldStorageScreen"
+      tabBarOptions={{
+        activeTintColor: 'salmon',
+        inactiveTintColor: 'gray',
+        pressColor: 'lightsalmon',
+        indicatorStyle: {
+          borderBottomWidth: 3,
+          borderBottomColor: 'salmon',
+        },
+        labelStyle: {
+          fontSize: 14,
+          fontWeight: 'bold',
+        },
+      }}>
       <ManageTab.Screen
         name="coldStorageScreen"
         options={{title: '냉장'}}

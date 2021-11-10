@@ -136,12 +136,6 @@ export default function RegisterScreen({navigation}) {
     // DB 연결 전 loading 시작
     setLoading(true);
 
-    console.log(userId);
-    console.log(userId);
-    console.log(userId);
-    console.log(userId);
-    console.log(userId);
-
     // DB에 보낼 Dataset
     let userData = {
       qry:
@@ -162,7 +156,7 @@ export default function RegisterScreen({navigation}) {
       qry:
         'CREATE TABLE ' +
         userId +
-        '(no int AUTO_INCREMENT,ingredient_name varchar(100),ingredient_vol int,ingredient_buyDate varchar(100),ingredient_expiryDate varchar(100),ingredient_type varchar(100),ingredient_imgPath varchar(500),ingredient_delChecked tinyint(1),primary key (no))',
+        '(no int AUTO_INCREMENT,ingredient_name varchar(100),ingredient_vol int, ingredient_vol_unit varchar(4),ingredient_buyDate varchar(100),ingredient_expiryDate varchar(100),ingredient_type varchar(100),ingredient_imgPath varchar(500),ingredient_delChecked tinyint(1),primary key (no))',
     };
 
     DataSet.setData(userData);

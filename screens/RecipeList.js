@@ -86,7 +86,7 @@ export default function RecipeList(props) {
         <FlatList
           data={filteredData}
           renderItem={renderItem}
-          keyExtract={item => item.recipe_id}
+          keyExtractor={item => item.recipe_id}
         />
       </View>
     </View>
