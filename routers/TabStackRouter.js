@@ -113,7 +113,7 @@ const RecipeStackScreen = ({navigation, Chk}) => {
           headerRight: () => (
             <BookMark
               //mark, setMark, recipeId를 props로 전달
-              recipeId={route.params.data.id}
+              recipeId={route.params.data.recipe_id}
               mark={mark}
               setMark={setMark}
             />
