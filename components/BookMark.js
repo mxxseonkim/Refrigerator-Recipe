@@ -66,7 +66,7 @@ export default function Bookmark({recipeId, mark, setMark}) {
     <TouchableOpacity onPress={clickBookmark}>
       <Icon
         name={Platform.OS === 'ios' ? 'ios-bookmark' : 'md-bookmark'}
-        style={[style.Icon_BookMark, {color: mark ? 'tomato' : 'gray'}]}
+        style={[style.Icon_BookMark, {color: mark ? 'salmon' : 'gray'}]}
       />
     </TouchableOpacity>
   );

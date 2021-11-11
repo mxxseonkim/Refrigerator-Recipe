@@ -30,8 +30,7 @@
   "resolved" "https://registry.npmjs.org/@babel/compat-data/-/compat-data-7.14.4.tgz"
   "version" "7.14.4"
 
-
-"@babel/core@*", "@babel/core@^7.0.0", "@babel/core@^7.0.0-0", "@babel/core@^7.1.0", "@babel/core@^7.1.6", "@babel/core@^7.4.0-0", "@babel/core@^7.7.2", "@babel/core@^7.7.5", "@babel/core@^7.8.0", "@babel/core@7.14.3":
+"@babel/core@^7.0.0", "@babel/core@^7.1.0", "@babel/core@^7.1.6", "@babel/core@^7.7.2", "@babel/core@^7.7.5", "@babel/core@7.14.3":
   "integrity" "sha512-jB5AmTKOCSJIZ72sd78ECEhuPiDMKlQdDI/4QRI6lzYATx5SSogS1oQA2AoPecRCknm30gHi2l+QVvNUu3wZAg=="
   "resolved" "https://registry.npmjs.org/@babel/core/-/core-7.14.3.tgz"
   "version" "7.14.3"
@@ -1253,6 +1252,11 @@
     "@types/yargs" "^16.0.0"
     "chalk" "^4.0.0"
 
+"@miblanchard/react-native-slider@^2.0.2":
+  "integrity" "sha512-z3rFxqUfe+BWQUNCytHafV9gwppYmkqxOW5tAAQ1ROS1750XJY/cd+CsJr2bvw3zak3NBT3JhSAk4/rzMViyAQ=="
+  "resolved" "https://registry.npmjs.org/@miblanchard/react-native-slider/-/react-native-slider-2.0.2.tgz"
+  "version" "2.0.2"
+
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   "integrity" "sha1-m4sMxmPWaafY9vXQiToU00jzD78="
   "resolved" "https://registry.npmjs.org/@protobufjs/aspromise/-/aspromise-1.1.2.tgz"
@@ -1306,9 +1310,10 @@
   "resolved" "https://registry.npmjs.org/@protobufjs/utf8/-/utf8-1.1.0.tgz"
   "version" "1.1.0"
 
-"@react-native-async-storage/async-storage@github:react-native-async-storage/async-storage":
-  "resolved" "git+ssh://git@github.com/react-native-async-storage/async-storage.git#e99edf035485a93dfcf5b897b72eee119d8bec3b"
-  "version" "1.13.0"
+"@react-native-async-storage/async-storage@^1.15.7":
+  "integrity" "sha512-l/I+PK+lh5M25QSdk44aX+UR63ian2d2CSx6WbydwU+RUZmKP7eOEPe+OeaTWgfOFSVtlEqEcP2AbW2YM7ukMA=="
+  "resolved" "https://registry.npmjs.org/@react-native-async-storage/async-storage/-/async-storage-1.15.11.tgz"
+  "version" "1.15.11"
   dependencies:
     "merge-options" "^3.0.4"
 
@@ -3601,11 +3606,6 @@
   "integrity" "sha1-FQStJSMVjKpA20onh8sBQRmU6k8="
   "resolved" "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   "version" "1.0.0"
-
-"fsevents@^2.1.2", "fsevents@^2.3.2":
-  "integrity" "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
-  "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
-  "version" "2.3.2"
 
 "function-bind@^1.1.1":
   "integrity" "sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A=="
