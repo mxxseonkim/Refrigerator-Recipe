@@ -1,7 +1,6 @@
 import React, {useRef, useEffect} from 'react';
 import {Text, View, Animated} from 'react-native';
 import Youtube from 'react-native-youtube-iframe';
-import Toast, {Duration} from 'react-native-whc-toast';
 import style from '../global/style';
 
 export default function RecipeInfo({data, mark}) {
@@ -10,18 +9,6 @@ export default function RecipeInfo({data, mark}) {
   // data.url에서 'V='와 &사이의 문자열을 잘라서 저장
   const ingredient = data.recipe_ingredient.replace(/\$/gi, '\n').replace(/@/gi, ' ');
   // data.ingredient에서 /\$/gi 는 '\n'으로 바꾸고 /@/gi 는 ' '로 바꿈
-
-  //(??) 잘 모르겠음
-  const mounted = useRef(false);
-  const msg = useRef(null);
-  useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-    } else {
-      msg.current.show(mark ? '북마크 추가' : '북마크 취소', Duration.short);
-    }
-  }, [mark]);
-  //mark의 값이 변경 될때 마다 useEffect()가 실행 됨
 
   // ------------------------------ UI 부분 ---------------------------------------
 
@@ -34,7 +21,6 @@ export default function RecipeInfo({data, mark}) {
         <Text style={style.subheading_RecipeInfo}>●　레시피</Text>
         <Text style={style.content_RecipeInfo}>{data.recipe_cookStep}</Text>
       </Animated.ScrollView>
-      <Toast ref={msg} />
     </View>
   );
 }

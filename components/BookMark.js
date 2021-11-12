@@ -7,9 +7,12 @@ import style from '../global/style';
 Icon.loadFont();
 
 export default function Bookmark({recipeId, mark, setMark}) {
-  const [myBookmarkText, setMyBookmarkText] = useState('');
   const DataSet = require('../global/DataSet');
   const memberID = require('../global/Global');
+
+  const [myBookmarkText, setMyBookmarkText] = useState('');
+  const [myBookmarkList, setMyBookmarkList] = useState([]);
+
 
   useEffect(async () => {
     let get_data = {
@@ -18,22 +21,27 @@ export default function Bookmark({recipeId, mark, setMark}) {
         memberID.userID +
         "'",
     };
-    let bookmark_Json = await DataSet.getData(get_data);
+    let bookmark_json = await DataSet.getData(get_data);
     setMyBookmarkText(
-      bookmark_Json[0].user_bookmark ? bookmark_Json[0].user_bookmark : '',
+      bookmark_json[0].user_bookmark ?
+      bookmark_json[0].user_bookmark : ''
     );
   }, []);
 
-  const myBookmarkData = myBookmarkText.split('/');
-  const [myBookmarks, setMyBookmarks] = useState(myBookmarkData);
-  setMark(myBookmarks.includes(recipeId) ? true : false);
+  useEffect(() => {
+    setMyBookmarkList(myBookmarkText.split('/').filter(e => e));
+  }, [myBookmarkText])
+  
+  useEffect(() => {
+    setMark(myBookmarkList.includes(recipeId) ? true : false);
+  }, [myBookmarkList])
 
-  const addBookmark = async newBookmark => {
-    console.log(newBookmark);
+
+  const updateBookmark = async (newBookmarkText) => {
     let update_data = {
       qry:
         "UPDATE member SET user_bookmark = '" +
-        newBookmark +
+        newBookmarkText +
         "' WHERE user_id = '" +
         memberID.userID +
         "'",
@@ -44,19 +52,17 @@ export default function Bookmark({recipeId, mark, setMark}) {
   // ------------------------- 북마크 체크 함수 ------------------------------------
 
   const clickBookmark = () => {
-    if (!mark) {
-      // 기존에 선택이 안되어 있다면 bookmark 데이터에 recipeId 추가
-      myBookmarks.push(recipeId);
-      //addBookmark(myBookmarkText+'/'+recipeId)
-    } else {
-      // 기존에 선택이 되어 있다면 bookmark 데이터에서 recipeId를 삭제
-      myBookmarks.splice(myBookmarks.indexOf(recipeId), 1);
-    }
+    mark ?
+    // 기존에 선택이 되어 있다면 bookmark 데이터에서 recipeId를 삭제
+    myBookmarkList.splice(myBookmarkList.indexOf(recipeId), 1) :
+    // 기존에 선택이 안되어 있다면 bookmark 데이터에 recipeId 추가
+    myBookmarkList.push(recipeId);
+
+    // 회원 DB의 bookmark 데이터 업데이트
+    updateBookmark(myBookmarkList.join('/'));
     // mark의 boolean 변경
     // 실질적으로 실행되는 곳은 TabStackRouter[RecipeStack]의 setMark()
-    addBookmark(myBookmarkText + '/' + recipeId);
     setMark(!mark);
-    // 회원 DB의 bookmark 데이터 업데이트
   };
 
   // ------------------------------ UI 부분 ---------------------------------------

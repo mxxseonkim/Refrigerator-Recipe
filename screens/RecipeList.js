@@ -1,28 +1,70 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {TouchableOpacity, Text, View, FlatList} from 'react-native';
 import style from '../global/style';
 import Searchbar from '../components/Searchbar.js';
 
-export default function RecipeList(props) {
+export default function RecipeList({navigation, Chk}) {
+  const [my, setMy] = useState([]); // 냉장고 데이터
   const [search, setSearch] = useState(''); // 검색 키워드
-  const [masterData, setMasterData] = useState(); // 전체 데이터
-  const [filteredData, setFilteredData] = useState(); // 검색 키워드에 필터링된 데이터
+  const [masterData, setMasterData] = useState([]); // 전체 데이터
+  const [filteredData, setFilteredData] = useState([]); // 검색 키워드에 필터링된 데이터
 
   const DataSet = require('../global/DataSet');
+  const memberID = require('../global/Global');
+
+  const calMatchRate = (ingre) => {
+    const ingre_list = ingre.split(/\$/gi).map(function(i) {
+      if(!i) return null;
+      var info = i.split(/@/gi);
+      var name = info[0];
+      var vol = info[1].includes('/') ?
+        parseFloat(info[1].split('/')[0]) /
+        parseFloat(info[1].split('/')[1].slice(0, -1)) :
+        parseFloat(info[1].slice(0, -1));
+      return (name && vol) ? {'name': name, 'vol': vol} : null;
+    }).filter(i => i);
+
+    const exist_list = ingre_list.filter(i => 
+      my.map(e => e.name).includes(i.name) && 
+      i.vol <= parseFloat(my.find(e => e.name==i.name ? true : false).vol)
+    );
+
+    const match_rate = exist_list.length / ingre_list.length * 100;
+    return match_rate.toFixed(1);
+  }
+
 
   //-------------------------- Data Select -------------------------------------
 
-  useState(async () => {
-    // DB에서 데이터 읽기
+  useEffect(async() => {
     let dataObj = {
-      qry: 'SELECT * FROM recipe',
+      qry: 'SELECT * FROM ' + memberID.userID
     };
-    // 쿼리 전송후 json으로 전달 받음
-    let json = await DataSet.getData(dataObj);
-    // 받아온 Data로 setState
-    setFilteredData(json);
-    setMasterData(json);
-  }, []);
+    let my_data = await DataSet.getData(dataObj);
+    
+    const my_list = my_data.map(function(e) {
+      return {'name': e.ingredient_name, 'vol': parseFloat(e.ingredient_vol)};
+    });
+    setMy(my_list);
+  }, [Chk]);
+
+  useEffect(async() => {
+    let dataObj = {
+      qry: 'SELECT * FROM temp',
+    };
+    let recipe_data = await DataSet.getData(dataObj);
+    
+    const recipe_data_with_match_rate = recipe_data.map(function(e) {
+      e['match_rate'] = calMatchRate(e['recipe_developerArea']);
+      return e;
+    });
+    const recipe_data_sorted = recipe_data_with_match_rate.sort((a, b) => {
+      return parseFloat(a['match_rate']) < parseFloat(b['match_rate']);
+    });
+    setFilteredData(recipe_data_sorted);
+    setMasterData(recipe_data_sorted);
+  }, [my]);
+
 
   //------------------ 검색 키워드로 필터링 하는 함수 ----------------------------
 
@@ -61,13 +103,13 @@ export default function RecipeList(props) {
         style={style.itemView_RecipeList}
         onPress={() => {
           // 터치 시 RecipeInfo로 이동 (item 객체를 가지고 감)
-          props.navigation.navigate('RecipeInfo', {data: item});
+          navigation.navigate('RecipeInfo', {data: item});
         }}>
         <View style={{width: '80%'}}>
           <Text style={style.itemName_RecipeList}>{item.recipe_name}</Text>
         </View>
         <View style={{width: '20%'}}>
-          <Text style={style.itemSimilarity_RecipeList}>67%</Text>
+          <Text style={style.itemSimilarity_RecipeList}>{item.match_rate} %</Text>
         </View>
       </TouchableOpacity>
     );
@@ -85,8 +127,8 @@ export default function RecipeList(props) {
       <View>
         <FlatList
           data={filteredData}
-          renderItem={renderItem}
           keyExtractor={item => item.recipe_id}
+          renderItem={renderItem}
         />
       </View>
     </View>
