@@ -32,7 +32,7 @@ export default function ManageTabRouter({Chk, Chk1, onDeltChk, onSlctChk}) {
         options={{title: '냉장'}}
         children={() => (
           <RefrigeratorScreen
-            count={1}
+            propsType={'cold'}
             Chk={Chk}
             Chk1={Chk1}
             onDeltChk={onDeltChk}
@@ -45,7 +45,7 @@ export default function ManageTabRouter({Chk, Chk1, onDeltChk, onSlctChk}) {
         options={{title: '냉동'}}
         children={() => (
           <RefrigeratorScreen
-            count={2}
+            propsType={'frozen'}
             Chk={Chk}
             Chk1={Chk1}
             onDeltChk={onDeltChk}
@@ -58,7 +58,7 @@ export default function ManageTabRouter({Chk, Chk1, onDeltChk, onSlctChk}) {
         options={{title: '조미료'}}
         children={() => (
           <RefrigeratorScreen
-            count={3}
+            propsType={'condi'}
             Chk={Chk}
             Chk1={Chk1}
             onDeltChk={onDeltChk}
@@ -71,7 +71,7 @@ export default function ManageTabRouter({Chk, Chk1, onDeltChk, onSlctChk}) {
         options={{title: '실온'}}
         children={() => (
           <RefrigeratorScreen
-            count={4}
+            propsType={'room'}
             Chk={Chk}
             Chk1={Chk1}
             onDeltChk={onDeltChk}

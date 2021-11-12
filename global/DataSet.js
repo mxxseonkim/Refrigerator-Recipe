@@ -1,6 +1,7 @@
 //--------------- Data select - 쿼리 송신 및 json 수신 ---------------------
 const getData = async dataObj => {
   try {
+    //console.log(dataObj.qry);
     const response = await fetch('http://54.180.126.3/phpdir/ref_get.php', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -16,7 +17,7 @@ const getData = async dataObj => {
 //---------------  Data Insert/Update/delete - 쿼리 송신 ------------------
 const setData = async dataObj => {
   try {
-    console.log(dataObj.qry);
+    //console.log(dataObj.qry);
     const response = await fetch('http://54.180.126.3/phpdir/ref_set.php', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},

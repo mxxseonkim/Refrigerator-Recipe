@@ -156,7 +156,7 @@ export default function RegisterScreen({navigation}) {
       qry:
         'CREATE TABLE ' +
         userId +
-        '(no int AUTO_INCREMENT,ingredient_name varchar(100),ingredient_vol int, ingredient_vol_unit varchar(4),ingredient_buyDate varchar(100),ingredient_expiryDate varchar(100),ingredient_type varchar(100),ingredient_imgPath varchar(500),ingredient_delChecked tinyint(1),primary key (no))',
+        '(no int AUTO_INCREMENT,ingredient_name varchar(100),ingredient_vol int, ingredient_vol_unit varchar(4),ingredient_buyDate varchar(100),ingredient_expiryDate varchar(100),ingredient_type varchar(100),ingredient_divtype varchar(100),ingredient_delChecked tinyint(1),primary key (no))',
     };
 
     DataSet.setData(userData);

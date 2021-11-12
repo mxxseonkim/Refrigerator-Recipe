@@ -24,6 +24,13 @@ const style = StyleSheet.create({
     fontSize: 33,
     marginTop: 10,
   },
+  input_AddButton: {
+    height: 40,
+    margin: 7,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+    width: '100%',
+  },
   //MenuButton-----------------------------------
   menuIcon_MenuButton: {
     fontSize: 30,
@@ -75,9 +82,10 @@ const style = StyleSheet.create({
   input_RefrigeratorScreen: {
     height: 40,
     margin: 7,
+    paddingLeft: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
-    width: '100%',
+    width: '80%',
   },
   text_RefrigeratorScreen: {
     fontSize: 17,
@@ -110,6 +118,7 @@ const style = StyleSheet.create({
     height: 85,
     padding: 20,
     margin: 10,
+    borderRadius: 10,
     borderWidth: 1,
     resizeMode: 'cover',
     backgroundColor: 'white',

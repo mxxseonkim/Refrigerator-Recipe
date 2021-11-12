@@ -11,8 +11,8 @@ import {
   Pressable,
   TextInput,
   View,
+  Modal,
   Text,
-  Image,
   TouchableOpacity,
 } from 'react-native';
 import style from '../global/style';
@@ -22,18 +22,15 @@ Icon.loadFont();
 export default function AddButton({onSlctChk, Chk}) {
   const DataSet = require('../global/DataSet');
   const memberID = require('../global/Global');
+  const [modalVisible, setModalVisible] = useState(false);
   const [text, setText] = useState(null); // 이름
   const [number, setNumber] = useState(null); // 용량
   const [isDatePickerVisible1, setDatePickerVisibility1] = useState(false);
   const [isDatePickerVisible2, setDatePickerVisibility2] = useState(false);
   const [startDate, setStartDate] = useState('-'); // 구매일자
   const [endDate, setEndDate] = useState('-'); // 유통기한
-  const [saveType, setSaveType] = useState('0'); // 보관방법 선택
-  const [saveType_value, setSaveTypeValue] = useState(null); //보관방법 선택_문자
-  const [imgButton, setImgButton] = useState(false);
-  const [imgPath, setImgPath] = useState(
-    'http://54.180.126.3/img/add-image.png',
-  );
+  const [divType, setDivType] = useState('empty'); // 분류방법 선택
+  const [saveType, setSaveType] = useState('empty'); // 보관방법 선택
   const [MasterData, setMasterData] = useState([]); // 전체 재료 데이터
   const [filteredData, setFilteredData] = useState([]); // 재료검색 키워드에 필터링된 데이터
   const [selectedItem, setSelectedItem] = useState({});
@@ -46,16 +43,6 @@ export default function AddButton({onSlctChk, Chk}) {
   var number_rule = /^([0-9]){1,6}$/; // id 5~25자
 
   // -------------------- 카메라, 갤러리에서 사진 선택해서 설정 --------------------------
-
-  const pickImage = () => {
-    ImagePicker.openPicker({width: 85, height: 85, cropping: true})
-      .then(image => {
-        setImgPath(image.path);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  };
 
   const cameraImage = () => {
     ImagePicker.openCamera({width: 85, height: 85, cropping: true})
@@ -139,8 +126,13 @@ export default function AddButton({onSlctChk, Chk}) {
       onCancle();
       return;
     }
-    if (saveType === '0') {
+    if (saveType === 'empty') {
       alert('보관방법을 선택해주세요');
+      onCancle();
+      return;
+    }
+    if (divType === 'empty') {
+      alert('분류방법을 선택해주세요');
       onCancle();
       return;
     }
@@ -151,7 +143,7 @@ export default function AddButton({onSlctChk, Chk}) {
       qry:
         'INSERT INTO ' +
         memberID.userID +
-        ' (ingredient_name, ingredient_vol, ingredient_vol_units,  ingredient_buyDate, ingredient_expiryDate, ingredient_type, ingredient_imgPath, ingredient_delChecked) VALUES ("' +
+        ' (ingredient_name, ingredient_vol, ingredient_vol_unit,  ingredient_buyDate, ingredient_expiryDate, ingredient_type, ingredient_divtype, ingredient_delChecked) VALUES ("' +
         text +
         '", "' +
         number +
@@ -164,7 +156,7 @@ export default function AddButton({onSlctChk, Chk}) {
         '", "' +
         saveType +
         '", "' +
-        imgPath +
+        divType +
         '", "0")',
     };
 
@@ -183,10 +175,10 @@ export default function AddButton({onSlctChk, Chk}) {
     onSetNumber(null);
     onSetStartDate('-');
     onSetEndDate('-');
-    onSetSaveType('0');
+    setSaveType('empty');
+    setDivType('empty');
     filterData('');
     setSelectedItem({});
-    setImgPath('http://54.180.126.3/img/add-image.png');
   };
 
   //---------------------- UI 값 변경 함수 -------------------------------------
@@ -209,24 +201,6 @@ export default function AddButton({onSlctChk, Chk}) {
   // 유통기한 변수 변경
   const onSetEndDate = _date => {
     setEndDate(_date);
-  };
-
-  // 보관방법 선택 + 문자열 변수 변경
-  const onSetSaveType = _saveType => {
-    var _value = null;
-    if (_saveType === '0') {
-      _value = 'empty';
-    } else if (_saveType === '1') {
-      _value = 'cold';
-    } else if (_saveType === '2') {
-      _value = 'frozen';
-    } else if (_saveType === '3') {
-      _value = 'condi';
-    } else if (_saveType === '4') {
-      _value = 'room';
-    }
-    setSaveType(_saveType);
-    setSaveTypeValue(_value);
   };
 
   //------------------ 식재료 검색 키워드로 필터링 하는 함수 ----------------------------
@@ -256,7 +230,6 @@ export default function AddButton({onSlctChk, Chk}) {
     if (obj.constructor === Object && Object.keys(obj).length === 0) {
       return true;
     }
-
     return false;
   }
 
@@ -265,8 +238,9 @@ export default function AddButton({onSlctChk, Chk}) {
   return (
     <TouchableOpacity
       onPress={() => {
-        refRBSheet.current.open();
-        setImgButton(false);
+        //refRBSheet.current.open();
+        setModalVisible(true);
+        //setStartDate(new Date().toISOString().split('T')[0]);
       }}>
       <Icon
         name={
@@ -275,11 +249,76 @@ export default function AddButton({onSlctChk, Chk}) {
         style={style.headerIcon_AddButton}
       />
 
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <View
+          style={{
+            margin: 20,
+            backgroundColor: 'white',
+            borderRadius: 20,
+            padding: 35,
+            justifyContent: 'center',
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 4,
+            elevation: 5,
+          }}>
+          <Pressable
+            style={{
+              borderRadius: 20,
+              padding: 10,
+              elevation: 2,
+              borderWidth: 2,
+              borderColor: 'salmon',
+              backgroundColor: 'white',
+            }}
+            onPress={() => setModalVisible(!modalVisible)}>
+            <Text
+              style={{
+                color: 'salmon',
+                fontWeight: 'bold',
+                textAlign: 'center',
+              }}>
+              Hide Modal
+            </Text>
+          </Pressable>
+          <Pressable
+            style={[
+              {
+                margin: 5,
+                borderRadius: 20,
+                padding: 10,
+                elevation: 2,
+                backgroundColor: 'salmon',
+              },
+            ]}
+            onPress={() => setModalVisible(!modalVisible)}>
+            <Text
+              style={{
+                color: 'white',
+                fontWeight: 'bold',
+                textAlign: 'center',
+              }}>
+              Hide Modal
+            </Text>
+          </Pressable>
+        </View>
+      </Modal>
+
       <RBSheet
         ref={refRBSheet}
         closeOnDragDown={true}
         closeOnPressMask={false}
-        height={360}
+        height={420}
         keyboardAvoidingViewEnabled={false}
         dragFromTopOnly={true}
         animationType={'slide'}
@@ -311,7 +350,7 @@ export default function AddButton({onSlctChk, Chk}) {
                 </View>
                 <View
                   style={{
-                    width: '70%',
+                    width: '68%',
                   }}>
                   <Autocomplete
                     style={{
@@ -326,7 +365,7 @@ export default function AddButton({onSlctChk, Chk}) {
                       flex: 1,
                       paddingLeft: 8,
                       position: 'absolute',
-                      width: '95%',
+                      width: '100%',
                       zIndex: adjustZIndex,
                     }}
                     autoCorrect={false}
@@ -335,12 +374,12 @@ export default function AddButton({onSlctChk, Chk}) {
                       borderColor: 'white',
                       borderBottomWidth: 1,
                       borderBottomColor: '#eee',
-                      width: '93%',
+                      width: '100%',
                     }}
                     listContainerStyle={{
                       height: 93,
                       padding: 1,
-                      width: '93%',
+                      width: '100%',
                       opacity: 1,
                       flex: 1,
                       backgroundColor: 'white',
@@ -400,17 +439,17 @@ export default function AddButton({onSlctChk, Chk}) {
                 </View>
                 <View
                   style={{
-                    width: '85%',
+                    width: '66%',
                     flexDirection: 'row',
                   }}>
                   <View
                     style={{
-                      width: '70%',
+                      width: '100%',
                     }}>
                     <TextInput
                       style={[
                         style.text_RefrigeratorScreen,
-                        style.input_RefrigeratorScreen,
+                        style.input_AddButton,
                       ]}
                       onChangeText={onSetNumber}
                       value={number}
@@ -422,49 +461,7 @@ export default function AddButton({onSlctChk, Chk}) {
                 </View>
               </View>
             </View>
-            <View style={{width: '30%'}}>
-              <TouchableOpacity onPress={() => setImgButton(!imgButton)}>
-                <Image
-                  style={
-                    imgPath === 'http://54.180.126.3/img/add-image.png'
-                      ? style.itemImg2_RefrigeratorScreen
-                      : [
-                          style.itemImg2_RefrigeratorScreen,
-                          {borderColor: 'black'},
-                        ]
-                  }
-                  source={{
-                    uri: imgPath,
-                  }}></Image>
-              </TouchableOpacity>
-            </View>
           </View>
-          {imgButton && (
-            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-              <Pressable
-                style={[
-                  style.button_RefrigeratorScreen,
-                  {backgroundColor: 'salmon'},
-                ]}
-                onPress={() => {
-                  cameraImage();
-                  setImgButton(!imgButton);
-                }}>
-                <Text style={style.textStyle_RefrigeratorScreen}>카메라</Text>
-              </Pressable>
-              <Pressable
-                style={[
-                  style.button_RefrigeratorScreen,
-                  {backgroundColor: 'salmon'},
-                ]}
-                onPress={() => {
-                  pickImage();
-                  setImgButton(!imgButton);
-                }}>
-                <Text style={style.textStyle_RefrigeratorScreen}>갤러리</Text>
-              </Pressable>
-            </View>
-          )}
           <View style={{flexDirection: 'row'}}>
             <View
               style={[
@@ -555,23 +552,13 @@ export default function AddButton({onSlctChk, Chk}) {
               <RNPickerSelect
                 style={{
                   inputAndroid:
-                    saveType === '0' ? {color: 'gray'} : {color: 'black'},
+                    saveType === 'empty' ? {color: 'gray'} : {color: 'black'},
                 }}
                 onValueChange={value => {
-                  if (value === 'empty') {
-                    onSetSaveType('0');
-                  } else if (value === 'cold') {
-                    onSetSaveType('1');
-                  } else if (value === 'frozen') {
-                    onSetSaveType('2');
-                  } else if (value === 'condi') {
-                    onSetSaveType('3');
-                  } else if (value === 'room') {
-                    onSetSaveType('4');
-                  }
+                  setSaveType(value);
                 }}
                 placeholder={{}}
-                value={saveType_value}
+                value={saveType}
                 items={[
                   {
                     label: '보관방법 선택',
@@ -585,29 +572,63 @@ export default function AddButton({onSlctChk, Chk}) {
                 ]}></RNPickerSelect>
             </View>
           </View>
-          {imgButton ? (
-            <View></View>
-          ) : (
-            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-              <Pressable
-                style={style.button_RefrigeratorScreen}
-                onPress={() => {
-                  refRBSheet.current.close();
-                  // 추가 버튼을 눌려서 onInsert() 함수 실행
-                  onInsert();
-                }}>
-                <Text style={style.textStyle_RefrigeratorScreen}>추가</Text>
-              </Pressable>
-              <Pressable
-                style={style.button_RefrigeratorScreen}
-                onPress={() => {
-                  refRBSheet.current.close();
-                  onCancle();
-                }}>
-                <Text style={style.textStyle_RefrigeratorScreen}>취소</Text>
-              </Pressable>
+          <View style={{flexDirection: 'row'}}>
+            <View
+              style={[
+                style.textView_RefrigeratorScreen,
+                {flexDirection: 'row', width: '20%'},
+              ]}>
+              <Text style={style.text_RefrigeratorScreen}>분류방법</Text>
             </View>
-          )}
+            <View style={{width: '60%'}}>
+              <RNPickerSelect
+                style={{
+                  inputAndroid:
+                    divType === 'empty' ? {color: 'gray'} : {color: 'black'},
+                }}
+                onValueChange={value => {
+                  setDivType(value);
+                }}
+                placeholder={{}}
+                value={divType}
+                items={[
+                  {
+                    label: '분류방법 선택',
+                    value: 'empty',
+                    inputLabel: '분류방법 선택',
+                  },
+                  {label: '곡류', value: 'cereals', inputLabel: '곡류'},
+                  {label: '어육류', value: 'meat', inputLabel: '어육류'},
+                  {label: '채소류', value: 'vegetables', inputLabel: '채소류'},
+                  {
+                    label: '유지 및 당류',
+                    value: 'oilfat',
+                    inputLabel: '유지 및 당류',
+                  },
+                  {label: '유제품류', value: 'milk', inputLabel: '유제품류'},
+                  {label: '과일류', value: 'fruit', inputLabel: '과일류'},
+                ]}></RNPickerSelect>
+            </View>
+          </View>
+          <View style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <Pressable
+              style={style.button_RefrigeratorScreen}
+              onPress={() => {
+                refRBSheet.current.close();
+                // 추가 버튼을 눌려서 onInsert() 함수 실행
+                onInsert();
+              }}>
+              <Text style={style.textStyle_RefrigeratorScreen}>추가</Text>
+            </Pressable>
+            <Pressable
+              style={style.button_RefrigeratorScreen}
+              onPress={() => {
+                refRBSheet.current.close();
+                onCancle();
+              }}>
+              <Text style={style.textStyle_RefrigeratorScreen}>취소</Text>
+            </Pressable>
+          </View>
         </View>
       </RBSheet>
     </TouchableOpacity>
