@@ -30,7 +30,7 @@ export default function Search_pw2({route, navigation}) {
   const nameInputRef = createRef();
   const emailInputRef = createRef();
 
-  const [displayTimer, setDisplaTimer] = useState('ㅇㅇ');
+  const [displayTimer, setDisplaTimer] = useState('');
   const [checkState, setCheckState] = useState('');
   const [timerOver, setTimerOver] = useState(false);
   const [tmpPW, setTmpPW] = useState('');
@@ -221,7 +221,7 @@ const startTimer = (count) => {
       <View style={style.form_Search_pw}>
         <View style={style.formArea_Search_pw}>
           <View style={{flexDirection: 'row'}}>
-            <Text style={style.Text_Search_pw}> 이름 </Text>
+            <Text style={style.Text_Search_pw}> 이름     </Text>
             <TextInput
               style={style.textFormAlone_Search_pw}
               onChangeText={userName => setUserName(userName)}
@@ -236,7 +236,7 @@ const startTimer = (count) => {
 
         <View style={style.formArea_Search_pw}>
           <View style={{flexDirection: 'row'}}>
-            <Text style={style.Text_Search_pw}>이메일 </Text>
+            <Text style={style.Text_Search_pw}> 이메일 </Text>
             <TextInput
               style={style.textFormAlone_Search_pw}
               onChangeText={userEmail => setUserEmail(userEmail)}
@@ -251,16 +251,19 @@ const startTimer = (count) => {
             </View>
           </View>
         </View>
-        <View style={{justifyContent: 'center'}}>
-          <Text style={style.TextValidation_Search_pw}>
+        <View style={{justifyContent: 'center'}, {flexDirection: 'row'}}>
+          <Text style={style.TextValidation_Search_id}>
             {checkState}
+          </Text>
+          <Text style={style.Timer_Search_id}>
+            {displayTimer}
           </Text>
         </View>
         <View style={style.formArea_Search_pw}>
           <View style={{flexDirection: 'row'}}>
             <Text style={style.Text_Search_pw}> </Text>
             <TextInput
-              style={style.textFormAlone_Search_pw}
+              style={style.textFormAlone2_Search_pw}
               placeholder={'인증번호 6자리 입력'}
               onChangeText={auth => setAuth(auth)}
               keyboardType="number-pad"

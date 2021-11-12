@@ -77,7 +77,7 @@ const style = StyleSheet.create({
     margin: 7,
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
-    width: '100%',
+    width: '80%',
   },
   text_RefrigeratorScreen: {
     fontSize: 17,
@@ -94,16 +94,26 @@ const style = StyleSheet.create({
   },
   itemView_RefrigeratorScreen: {
     flexDirection: 'row',
+    borderWidth: 0,
+    borderRadius: 0,
+    padding: 1,
+    marginBottom: 1,
+    borderBottomWidth: 1,
+    borderRadius: 0,
+    borderColor: '#ccc',
+  },
+  imgView_RefrigeratorScreen: {
+    width: '20%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   itemImg_RefrigeratorScreen: {
-    width: 73,
-    height: 73,
+    width: 70,
+    height: 70,
     padding: 20,
     margin: 10,
-    marginLeft: 20,
     resizeMode: 'cover',
     backgroundColor: 'white',
-    borderRadius: 20,
   },
   itemImg2_RefrigeratorScreen: {
     width: 85,
@@ -114,23 +124,19 @@ const style = StyleSheet.create({
     resizeMode: 'cover',
     backgroundColor: 'white',
   },
-  itemTextView_RefrigeratorScreen: {
-    flexDirection: 'column',
-    width: '75%',
-    paddingVertical: 15,
+  itemImg3_RefrigeratorScreen: {
+    width: 30,
+    height: 30,
+    resizeMode: 'cover',
+    backgroundColor: 'white',
   },
   itemName_RefrigeratorScreen: {
-    paddingHorizontal: 10,
+    paddingRight: 10,
     fontSize: 18,
     fontWeight: 'bold',
   },
   itemMsg_RefrigeratorScreen: {
-    paddingTop: 2,
-    paddingRight: 10,
-    fontSize: 14,
-  },
-  itemDate_RefrigeratorScreen: {
-    paddingTop: 1,
+    height: 30,
     fontSize: 14,
   },
   datePickerStyle_RefrigeratorScreen: {
@@ -467,7 +473,6 @@ const style = StyleSheet.create({
     borderBottomWidth: 0,
     marginLeft: 10,
     marginRight: 10,
-    paddingTop: 15,
   },
   //Search_id
   textFormAlone_Search_id: {
@@ -483,6 +488,23 @@ const style = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     marginRight: 15,
+    marginLeft: 10,
+  },
+
+  textFormAlone2_Search_id: {
+    borderWidth: 2,
+    borderBottomWidth: 2,
+    borderColor: '#FA8072',
+    borderTopLeftRadius: 7,
+    borderTopRightRadius: 7,
+    borderBottomRightRadius: 7,
+    borderBottomLeftRadius: 7,
+    width: '50%',
+    height: hp(6),
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginRight: 15,
+    marginLeft: 66,
   },
 
   Text_Search_id: {
@@ -551,10 +573,18 @@ const style = StyleSheet.create({
   TextValidation_Search_id: {
     fontSize: wp('4%'),
     color: 'red',
-    marginLeft: 65,
+    marginLeft: 74,
     marginBottom: hp(-2),
     paddingTop: hp(1),
     paddingBottom: hp(1),
+  },
+  Timer_Search_id:{
+      fontSize: wp('4%'),
+      color: 'black',
+      marginLeft: 17,
+      marginBottom: hp(-2),
+      paddingTop: hp(1),
+      paddingBottom: hp(1),
   },
   btn2_Search_id: {
     width: '75%',
@@ -590,6 +620,23 @@ const style = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     marginRight: 15,
+    marginLeft: 10,
+  },
+
+  textFormAlone2_Search_pw: {
+    borderWidth: 2,
+    borderBottomWidth: 2,
+    borderColor: '#FA8072',
+    borderTopLeftRadius: 7,
+    borderTopRightRadius: 7,
+    borderBottomRightRadius: 7,
+    borderBottomLeftRadius: 7,
+    width: '50%',
+    height: hp(6),
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginRight: 15,
+    marginLeft: 66,
   },
 
   Text_Search_pw: {
@@ -668,7 +715,7 @@ const style = StyleSheet.create({
   TextValidation_Search_pw: {
     fontSize: wp('4%'),
     color: 'red',
-    marginLeft: 65,
+    marginLeft: 74,
     marginBottom: hp(-2),
     paddingTop: hp(1),
     paddingBottom: hp(1),

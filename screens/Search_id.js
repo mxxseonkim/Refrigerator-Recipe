@@ -32,7 +32,7 @@ export default function Search_id({navigation}) {
   const emailInputRef = createRef();
   const [number, setNumber] = useState('');
   const [userID, setUserID] = useState('');
-  const [displayTimer, setDisplaTimer] = useState('ㅇㅇ');
+  const [displayTimer, setDisplaTimer] = useState('');
   const [checkState, setCheckState] = useState('');
   const [timerOver, setTimerOver] = useState(false);
 
@@ -50,6 +50,7 @@ export default function Search_id({navigation}) {
     }
     startTimer(leftSec);
   };
+  
 
 
   // 타이머 함수
@@ -235,7 +236,7 @@ const startTimer = (count) => {
       <View style={style.form_Search_id}>
         <View style={style.formArea_Search_id}>
           <View style={{flexDirection: 'row'}}>
-            <Text style={style.Text_Search_id}> 이름 </Text>
+            <Text style={style.Text_Search_id}> 이름     </Text>
             <TextInput
               style={style.textFormAlone_Search_id}
               onChangeText={userName => setUserName(userName)}
@@ -250,7 +251,7 @@ const startTimer = (count) => {
 
         <View style={style.formArea_Search_id}>
           <View style={{flexDirection: 'row'}}>
-            <Text style={style.Text_Search_id}>이메일 </Text>
+            <Text style={style.Text_Search_id}> 이메일 </Text>
             <TextInput
               style={style.textFormAlone_Search_id}
               onChangeText={userEmail => setUserEmail(userEmail)}
@@ -265,16 +266,19 @@ const startTimer = (count) => {
             </View>
           </View>
         </View>
-        <View style={{justifyContent: 'center'}}>
+        <View style={{justifyContent: 'center'}, {flexDirection: 'row'}}>
           <Text style={style.TextValidation_Search_id}>
             {checkState}
+          </Text>
+          <Text style={style.Timer_Search_id}>
+            {displayTimer}
           </Text>
         </View>
         <View style={style.formArea_Search_id}>
           <View style={{flexDirection: 'row'}}>
             <Text style={style.Text_Search_id}> </Text>
             <TextInput
-              style={style.textFormAlone_Search_id}
+              style={style.textFormAlone2_Search_id}
               placeholder={'인증번호 6자리 입력'}
               onChangeText={auth => setAuth(auth)}
               keyboardType="number-pad"
@@ -285,11 +289,6 @@ const startTimer = (count) => {
               <TouchableOpacity onPress={checkSubmitButton}>
                 <Text style={{color: 'white'}}>확인</Text>
               </TouchableOpacity>
-            </View>
-            <View style={{justifyContent: 'center'}}>
-              <Text>
-                {displayTimer}
-              </Text>
             </View>
           </View>
         </View>

@@ -47,7 +47,7 @@ const overlabCheck = async dataObj => {
 const sendUserEmail = async dataObj => {
   try {
     const response = await fetch(
-      'http://54.180.126.3/PHPMailer/sendEmail.php',
+      'http://54.180.126.3/phpdir/sendEmail.php',
       {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
