@@ -20,13 +20,13 @@ export default function CameraResultScreen({route}) {
   const detectionResult = route.params.detectionArr;
   const [isDatePickerVisible1, setDatePickerVisibility1] = useState(false);
   const [isDatePickerVisible2, setDatePickerVisibility2] = useState(false);
-  //const [data, setData] = useState([]);
-  const data = [];
+  const [data, setData] = useState([]);
+  const tmpData = [];
 
   useState(async () => {
     for(let i = 0 ; i<detectionResult.length; i++){
-      data.push({
-        no: 0,
+      tmpData.push({
+        no: i,
         name: detectionResult[i],
         number: null,
         startDate: '-',
@@ -35,8 +35,8 @@ export default function CameraResultScreen({route}) {
         divType: 'empty',
       })
     };
-  })
-
+    setData(tmpData);
+  });
   let maxAryNum;
   const navigation = useNavigation();
 
@@ -327,30 +327,19 @@ export default function CameraResultScreen({route}) {
         </ScrollView>
         <TouchableOpacity
           onPress={() => {
-            data.push({
-              no: maxAryNum,
+            setData([
+              ...data,
+              {
+                no: maxAryNum,
                 name: null,
                 number: null,
                 startDate: '-',
                 endDate: '-',
                 saveType: 'empty',
                 divType: 'empty',
-            })
-            // setData([
-            //   ...data,
-            //   {
-            //     no: maxAryNum,
-            //     name: null,
-            //     number: null,
-            //     startDate: '-',
-            //     endDate: '-',
-            //     saveType: 'empty',
-            //     divType: 'empty',
-            //   },
-            // ]);
-            //console.log(data);
+              },
+            ]);
             maxAryNum = maxAryNum + 1;
-            //console.log(maxAryNum);
           }}
           style={{justifyContent: 'center', height: 50}}>
           <Text style={{color: 'gray', textAlign: 'center', fontSize: 15}}>
