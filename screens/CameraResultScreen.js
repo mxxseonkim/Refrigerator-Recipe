@@ -15,28 +15,31 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {useNavigation} from '@react-navigation/core';
 
 //import Icon from 'react-native-vector-icons/Ionicons';
-export default function CameraResultScreen({route, cameraNavigation}) {
+export default function CameraResultScreen({route}) {
 
+  const detectionResult = route.params.detectionArr;
   const [isDatePickerVisible1, setDatePickerVisibility1] = useState(false);
   const [isDatePickerVisible2, setDatePickerVisibility2] = useState(false);
+  //const [data, setData] = useState([]);
+  const data = [];
 
-  const [data, setData] = useState([]);
   useState(async () => {
-    let detectionArr = route.params.detectionArr;
-    for(let i = 0 ; i<detectionArr.length; i++){
-      setData([...data, {
+    for(let i = 0 ; i<detectionResult.length; i++){
+      data.push({
         no: 0,
-        name: detectionArr[i].ingredient,
+        name: detectionResult[i],
         number: null,
         startDate: '-',
         endDate: '-',
         saveType: 'empty',
         divType: 'empty',
-      }])
-    }
+      })
+    };
   })
+
   let maxAryNum;
   const navigation = useNavigation();
+
 
   useEffect(() => {
     maxAryNum = data.length;
@@ -324,18 +327,27 @@ export default function CameraResultScreen({route, cameraNavigation}) {
         </ScrollView>
         <TouchableOpacity
           onPress={() => {
-            setData([
-              ...data,
-              {
-                no: maxAryNum,
+            data.push({
+              no: maxAryNum,
                 name: null,
                 number: null,
                 startDate: '-',
                 endDate: '-',
                 saveType: 'empty',
                 divType: 'empty',
-              },
-            ]);
+            })
+            // setData([
+            //   ...data,
+            //   {
+            //     no: maxAryNum,
+            //     name: null,
+            //     number: null,
+            //     startDate: '-',
+            //     endDate: '-',
+            //     saveType: 'empty',
+            //     divType: 'empty',
+            //   },
+            // ]);
             //console.log(data);
             maxAryNum = maxAryNum + 1;
             //console.log(maxAryNum);

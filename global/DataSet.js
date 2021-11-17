@@ -119,8 +119,6 @@ const textDetection = async (imgPath) => {
   })
     .then((res) => res.json())
     .then((data) => {
-      console.log(data.response);
-      console.log(data.responses[0].labelAnnotations);
       tmp = data.responses[0].fullTextAnnotation.text;
     })
     .catch((err) => console.log('error : ', err));
