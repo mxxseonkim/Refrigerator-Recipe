@@ -17,6 +17,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import style from '../global/style';
+import RNFS from 'react-native-fs';
 
 Icon.loadFont();
 
@@ -44,18 +45,91 @@ export default function AddButton({onSlctChk, Chk}) {
 
   var number_rule = /^([0-9]){1,6}$/; // id 5~25자
 
+  var onlyKor= /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
+  //한글만 남기는 정규식
+  const [imgTobase64, setImgTobase64] = useState(''); // imagePath -> base64 유형으로 인코딩 했을 때 결과값 저장 변수
+  const [imagePath, setImagePath] = useState('');
+  const [ingredientData, setIngredientData] = useState(); // 개발자 재료 데이터
+  const [detectionArr, setDetectionArr] = useState([]);
+
+  useState(async () => {
+    let dataObj = {
+      qry: 'SELECT * FROM `developer_ingredient`',
+    };
+    // 쿼리 전송후 json으로 전달 받음
+    let json = await DataSet.getData(dataObj);
+    setIngredientData(json);
+  }, []);
+
+  // 텍스트 인식 함수
+  const filterArr = async () => {
+
+    let tmp_detectionArr = await DataSet.textDetection(imgTobase64);
+    let detectionArr = tmp_detectionArr.map((ingredient) => ingredient.replace(onlyKor, ''));
+    console.log(detectionArr);
+    let resultArr = [];
+    let set = [];
+    // 텍스트 인식 결과값을 배열로 저장하는 변수
+    for(let i = 0; i<ingredientData.length; i++){
+      const found = detectionArr.find(function (element) {
+        return element == ingredientData[i].d_ingredientName
+      });
+      if (found != undefined) {
+        resultArr.push(found);
+        set = new Set(resultArr);
+      }
+      //console.log(found);
+    }
+    console.log(Array.from(set));
+    setDetectionArr(Array.from(set));
+  }
+
+  // 라벨 인식 함수
+  const labalArr = async () => {
+    let tmp_detectionArr = await DataSet.labelDetection(imgTobase64);
+    let tmp2_detectionArr = [];
+    //console.log(tmp_detectionArr);
+    for(let i = 0 ; i<tmp_detectionArr.length;i++){
+      tmp2_detectionArr.push({ingredient: tmp_detectionArr[i].description, prob: tmp_detectionArr[i].score});
+    }
+
+    let detectionArr = await DataSet.textTranslation(tmp2_detectionArr);
+    console.log(detectionArr);
+
+    let resultArr = [];
+    let set = [];
+    for(let i = 0; i<ingredientData.length; i++){
+      const found = detectionArr.find(function (element) {
+        return element.ingredient == ingredientData[i].d_ingredientName
+      });
+      if (found != undefined) {
+        resultArr.push(found);
+        set = new Set(resultArr);
+      }
+      //console.log(found);
+    }
+    console.log(Array.from(set));
+    setDetectionArr(Array.from(set));
+  }
+
   // -------------------- 카메라, 갤러리에서 사진 선택해서 설정 --------------------------
 
   const cameraImage = () => {
     ImagePicker.openCamera({width: 85, height: 85, cropping: true})
       .then(image => {
         console.log(image.path);
-        navigation.navigate('CameraResult');
+        setImagePath(image.path);
       })
       .catch(e => {
         console.log(e);
       });
   };
+
+  // -------------------- 이미지 경로 -> base64 format으로 인코딩 --------------------------
+  RNFS.readFile(imagePath, 'base64')
+  .then(res =>{
+    setImgTobase64(res);
+  });
 
   // --------------------- 식재료 자동완성 배열 검색 -----------------------------------
 
@@ -288,6 +362,8 @@ export default function AddButton({onSlctChk, Chk}) {
               onPress={() => {
                 setModalVisible(!modalVisible);
                 cameraImage();
+                filterArr();
+                navigation.navigate('CameraResult', {detectionArr: detectionArr});
               }}>
               <Text
                 style={{
@@ -315,6 +391,9 @@ export default function AddButton({onSlctChk, Chk}) {
               ]}
               onPress={() => {
                 setModalVisible(!modalVisible);
+                cameraImage();
+                labalArr();
+                navigation.navigate('CameraResult', {detectionArr: detectionArr});
               }}>
               <Text
                 style={{
