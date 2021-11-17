@@ -119,23 +119,19 @@ const style = StyleSheet.create({
     resizeMode: 'cover',
     backgroundColor: 'white',
   },
-  itemTextView_RefrigeratorScreen: {
-    flexDirection: 'column',
-    width: '75%',
-    paddingVertical: 15,
+  itemImg3_RefrigeratorScreen: {
+    width: 30,
+    height: 30,
+    resizeMode: 'cover',
+    backgroundColor: 'white',
   },
   itemName_RefrigeratorScreen: {
-    paddingHorizontal: 10,
+    paddingRight: 10,
     fontSize: 18,
     fontWeight: 'bold',
   },
   itemMsg_RefrigeratorScreen: {
-    paddingTop: 2,
-    paddingRight: 10,
-    fontSize: 14,
-  },
-  itemDate_RefrigeratorScreen: {
-    paddingTop: 1,
+    height: 30,
     fontSize: 14,
   },
   datePickerStyle_RefrigeratorScreen: {
@@ -472,7 +468,6 @@ const style = StyleSheet.create({
     borderBottomWidth: 0,
     marginLeft: 10,
     marginRight: 10,
-    paddingTop: 15,
   },
   //Search_id
   textFormAlone_Search_id: {
@@ -488,6 +483,23 @@ const style = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     marginRight: 15,
+    marginLeft: 10,
+  },
+
+  textFormAlone2_Search_id: {
+    borderWidth: 2,
+    borderBottomWidth: 2,
+    borderColor: '#FA8072',
+    borderTopLeftRadius: 7,
+    borderTopRightRadius: 7,
+    borderBottomRightRadius: 7,
+    borderBottomLeftRadius: 7,
+    width: '50%',
+    height: hp(6),
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginRight: 15,
+    marginLeft: 66,
   },
 
   Text_Search_id: {
@@ -556,7 +568,15 @@ const style = StyleSheet.create({
   TextValidation_Search_id: {
     fontSize: wp('4%'),
     color: 'red',
-    marginLeft: 65,
+    marginLeft: 74,
+    marginBottom: hp(-2),
+    paddingTop: hp(1),
+    paddingBottom: hp(1),
+  },
+  Timer_Search_id: {
+    fontSize: wp('4%'),
+    color: 'black',
+    marginLeft: 17,
     marginBottom: hp(-2),
     paddingTop: hp(1),
     paddingBottom: hp(1),
@@ -595,6 +615,23 @@ const style = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     marginRight: 15,
+    marginLeft: 10,
+  },
+
+  textFormAlone2_Search_pw: {
+    borderWidth: 2,
+    borderBottomWidth: 2,
+    borderColor: '#FA8072',
+    borderTopLeftRadius: 7,
+    borderTopRightRadius: 7,
+    borderBottomRightRadius: 7,
+    borderBottomLeftRadius: 7,
+    width: '50%',
+    height: hp(6),
+    paddingLeft: 10,
+    paddingRight: 10,
+    marginRight: 15,
+    marginLeft: 66,
   },
 
   Text_Search_pw: {
@@ -673,7 +710,7 @@ const style = StyleSheet.create({
   TextValidation_Search_pw: {
     fontSize: wp('4%'),
     color: 'red',
-    marginLeft: 65,
+    marginLeft: 74,
     marginBottom: hp(-2),
     paddingTop: hp(1),
     paddingBottom: hp(1),

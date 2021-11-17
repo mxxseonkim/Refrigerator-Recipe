@@ -136,6 +136,12 @@ export default function RegisterScreen({navigation}) {
     // DB 연결 전 loading 시작
     setLoading(true);
 
+    console.log(userId);
+    console.log(userId);
+    console.log(userId);
+    console.log(userId);
+    console.log(userId);
+
     // DB에 보낼 Dataset
     let userData = {
       qry:
@@ -256,7 +262,7 @@ export default function RegisterScreen({navigation}) {
           <TextInput
             style={style.textFormTop_RegisterScreen}
             secureTextEntry={true}
-            placeholder={'비밀번호(8자 이상)'}
+            placeholder={'비밀번호(8자 이상,영문,숫자,특수문자 포함)'}
             onChangeText={userPassword => setUserPassword(userPassword)}
             ref={passwordInputRef}
             returnKeyType="next"
