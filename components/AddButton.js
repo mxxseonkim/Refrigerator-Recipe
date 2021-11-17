@@ -5,6 +5,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import ImagePicker from 'react-native-image-crop-picker';
 import Autocomplete from 'react-native-autocomplete-input';
+import {useNavigation} from '@react-navigation/core';
 
 import {
   Platform,
@@ -35,6 +36,7 @@ export default function AddButton({onSlctChk, Chk}) {
   const [filteredData, setFilteredData] = useState([]); // 재료검색 키워드에 필터링된 데이터
   const [selectedItem, setSelectedItem] = useState({});
   const [adjustZIndex, setAdjustZIndex] = useState();
+  const navigation = useNavigation();
 
   const refRBSheet = useRef(); // BottomSheet
 
@@ -47,7 +49,8 @@ export default function AddButton({onSlctChk, Chk}) {
   const cameraImage = () => {
     ImagePicker.openCamera({width: 85, height: 85, cropping: true})
       .then(image => {
-        setImgPath(image.path);
+        console.log(image.path);
+        navigation.navigate('CameraResult');
       })
       .catch(e => {
         console.log(e);
@@ -136,8 +139,6 @@ export default function AddButton({onSlctChk, Chk}) {
       onCancle();
       return;
     }
-
-    console.log(selectedItem.d_ingredientUnit);
 
     let dataObj = {
       qry:
@@ -238,9 +239,7 @@ export default function AddButton({onSlctChk, Chk}) {
   return (
     <TouchableOpacity
       onPress={() => {
-        //refRBSheet.current.open();
         setModalVisible(true);
-        //setStartDate(new Date().toISOString().split('T')[0]);
       }}>
       <Icon
         name={
@@ -256,64 +255,111 @@ export default function AddButton({onSlctChk, Chk}) {
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}>
-        <View
-          style={{
-            margin: 20,
-            backgroundColor: 'white',
-            borderRadius: 20,
-            padding: 35,
-            justifyContent: 'center',
-            shadowColor: '#000',
-            shadowOffset: {
-              width: 0,
-              height: 2,
-            },
-            shadowOpacity: 0.25,
-            shadowRadius: 4,
-            elevation: 5,
-          }}>
-          <Pressable
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <View
             style={{
+              margin: 50,
+              backgroundColor: 'white',
               borderRadius: 20,
               padding: 10,
-              elevation: 2,
-              borderWidth: 2,
-              borderColor: 'salmon',
-              backgroundColor: 'white',
-            }}
-            onPress={() => setModalVisible(!modalVisible)}>
-            <Text
-              style={{
-                color: 'salmon',
-                fontWeight: 'bold',
-                textAlign: 'center',
+              justifyContent: 'center',
+              shadowColor: '#000',
+              height: 220,
+              shadowOpacity: 0.25,
+              shadowRadius: 4,
+              elevation: 5,
+            }}>
+            <Pressable
+              style={({pressed}) => [
+                {
+                  backgroundColor: pressed ? '#f5f5f5' : 'white',
+                },
+                {
+                  margin: 5,
+                  borderRadius: 20,
+                  padding: 10,
+                  marginHorizontal: 20,
+                  borderWidth: 3,
+                  height: 50,
+                  justifyContent: 'center',
+                  borderColor: 'salmon',
+                },
+              ]}
+              onPress={() => {
+                setModalVisible(!modalVisible);
+                cameraImage();
               }}>
-              Hide Modal
-            </Text>
-          </Pressable>
-          <Pressable
-            style={[
-              {
-                margin: 5,
-                borderRadius: 20,
-                padding: 10,
-                elevation: 2,
-                backgroundColor: 'salmon',
-              },
-            ]}
-            onPress={() => setModalVisible(!modalVisible)}>
-            <Text
-              style={{
-                color: 'white',
-                fontWeight: 'bold',
-                textAlign: 'center',
+              <Text
+                style={{
+                  color: 'salmon',
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  fontSize: 15,
+                }}>
+                영수증 인식
+              </Text>
+            </Pressable>
+            <Pressable
+              style={({pressed}) => [
+                {
+                  backgroundColor: pressed ? '#ffa07a' : 'salmon',
+                },
+                {
+                  margin: 5,
+                  borderRadius: 20,
+                  marginHorizontal: 20,
+                  padding: 10,
+                  height: 50,
+                  justifyContent: 'center',
+                },
+              ]}
+              onPress={() => {
+                setModalVisible(!modalVisible);
               }}>
-              Hide Modal
-            </Text>
-          </Pressable>
+              <Text
+                style={{
+                  color: 'white',
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  fontSize: 15,
+                }}>
+                이미지 인식
+              </Text>
+            </Pressable>
+            <Pressable
+              style={({pressed}) => [
+                {
+                  backgroundColor: pressed ? '#f5f5f5' : 'white',
+                },
+                {
+                  margin: 5,
+                  borderRadius: 20,
+                  padding: 10,
+                  marginHorizontal: 20,
+                  borderWidth: 3,
+                  height: 50,
+                  justifyContent: 'center',
+                  borderColor: 'salmon',
+                },
+              ]}
+              onPress={() => {
+                setModalVisible(!modalVisible);
+                refRBSheet.current.open();
+                setStartDate(new Date().toISOString().split('T')[0]);
+              }}>
+              <Text
+                style={{
+                  color: 'salmon',
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  fontSize: 15,
+                }}>
+                사용자 추가
+              </Text>
+            </Pressable>
+          </View>
         </View>
       </Modal>
-
       <RBSheet
         ref={refRBSheet}
         closeOnDragDown={true}
@@ -612,7 +658,12 @@ export default function AddButton({onSlctChk, Chk}) {
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'center'}}>
             <Pressable
-              style={style.button_RefrigeratorScreen}
+              style={({pressed}) => [
+                {
+                  backgroundColor: pressed ? '#ffa07a' : 'salmon',
+                },
+                style.button_RefrigeratorScreen,
+              ]}
               onPress={() => {
                 refRBSheet.current.close();
                 // 추가 버튼을 눌려서 onInsert() 함수 실행
@@ -621,7 +672,12 @@ export default function AddButton({onSlctChk, Chk}) {
               <Text style={style.textStyle_RefrigeratorScreen}>추가</Text>
             </Pressable>
             <Pressable
-              style={style.button_RefrigeratorScreen}
+              style={({pressed}) => [
+                {
+                  backgroundColor: pressed ? '#ffa07a' : 'salmon',
+                },
+                style.button_RefrigeratorScreen,
+              ]}
               onPress={() => {
                 refRBSheet.current.close();
                 onCancle();

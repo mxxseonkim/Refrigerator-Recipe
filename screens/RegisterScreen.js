@@ -176,7 +176,10 @@ export default function RegisterScreen({navigation}) {
   // 회원가입 후
   if (isRegistraionSuccess) {
     return (
-      <ScrollView style={style.container_RegisterScreen}>
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        style={style.container_RegisterScreen}>
         <View style={style.successImgView_RegisterScreen}>
           <Image
             source={{uri: 'http://54.180.126.3/img/checked.png'}}
@@ -203,7 +206,10 @@ export default function RegisterScreen({navigation}) {
   // 회원가입 전
   else {
     return (
-      <ScrollView style={style.container_RegisterScreen}>
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        style={style.container_RegisterScreen}>
         <Loader loading={loading} />
         <View style={style.titleArea_RegisterScreen}>
           <Image

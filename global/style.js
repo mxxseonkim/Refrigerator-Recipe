@@ -7,16 +7,16 @@ import {
 const style = StyleSheet.create({
   //CheckButton----------------------------------
   CheckIcon_CheckButton: {
-    fontSize: 30,
-    marginRight: 15,
-    marginTop: 5,
+    fontSize: 27,
+    marginRight: 5,
+    marginTop: 4,
     color: '#FA8072',
   },
   //AddButton------------------------------------
   headerIcon_AddButton: {
-    fontSize: 30,
-    marginRight: 15,
-    marginTop: 5,
+    fontSize: 27,
+    marginRight: 12,
+    marginTop: 4,
     color: '#FA8072',
   },
   calendarIcon_AddButton: {
@@ -40,17 +40,17 @@ const style = StyleSheet.create({
   },
   // RefrigeratorScreen--------------------------
   checkBox_RefrigeratorScreen: {
-    flex: 0.05,
-    paddingRight: 15,
     margin: 10,
-    justifyContent: 'center',
+    marginLeft: 15,
+    marginRight: 5,
+    //padingLeft: 15,
+    //backgroundColor: 'red',
   },
   button_RefrigeratorScreen: {
     padding: 10,
     margin: 5,
     width: '45%',
     borderRadius: 10,
-    backgroundColor: '#FA8072',
   },
   button2_RefrigeratorScreen: {
     padding: 10,
@@ -102,24 +102,20 @@ const style = StyleSheet.create({
   },
   itemView_RefrigeratorScreen: {
     flexDirection: 'row',
+    backgroundColor: 'white',
   },
   itemImg_RefrigeratorScreen: {
-    width: 73,
-    height: 73,
-    padding: 20,
-    margin: 10,
-    marginLeft: 20,
+    width: 60,
+    height: 60,
     resizeMode: 'cover',
-    backgroundColor: 'white',
-    borderRadius: 20,
   },
   itemImg2_RefrigeratorScreen: {
-    width: 85,
-    height: 85,
-    padding: 20,
-    margin: 10,
+    width: 65,
+    height: 65,
+
     borderRadius: 10,
     borderWidth: 1,
+    borderColor: 'salmon',
     resizeMode: 'cover',
     backgroundColor: 'white',
   },
@@ -464,9 +460,9 @@ const style = StyleSheet.create({
   },
   //BookMark-------------------------------------
   Icon_BookMark: {
-    fontSize: 30,
-    marginRight: 15,
-    marginTop: 5,
+    fontSize: 27,
+    marginRight: 10,
+    marginTop: 4,
   },
   //Searchbar------------------------------------
   searchbar_Searchbar: {

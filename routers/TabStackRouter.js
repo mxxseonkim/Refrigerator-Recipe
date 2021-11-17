@@ -9,6 +9,7 @@ import RecipeInfo from '../screens/RecipeInfo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AddButton from '../components/AddButton';
 import DeleteButton from '../components/DeleteButton';
+import CameraResultScreen from '../screens/CameraResultScreen';
 import {View, Platform} from 'react-native';
 import {useState} from 'react';
 
@@ -38,7 +39,21 @@ const ManageStackScreen = ({navigation, Chk, slctChk}) => {
 
   return (
     // ManageTab 컴포넌트 스크린 등록
-    <ManageStack.Navigator>
+    <ManageStack.Navigator
+      initialRouteName="CameraResult"
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#ffffff',
+          elevation: 0, //for android
+          shadowOpacity: 0, //for ios
+          borderBottomWidth: 0, //for ios
+        },
+        headerTintColor: '#000',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+        headerTitleAlign: 'center',
+      }}>
       <ManageStack.Screen
         name="ManageTab"
         children={() => (
@@ -70,6 +85,20 @@ const ManageStackScreen = ({navigation, Chk, slctChk}) => {
           ),
         }}
       />
+      <ManageStack.Screen
+        name="CameraResult"
+        component={CameraResultScreen}
+        options={{
+          title: '영수증 인식 결과',
+          headerStyle: {
+            backgroundColor: 'salmon',
+            elevation: 0, //for android
+            shadowOpacity: 0, //for ios
+            borderBottomWidth: 0, //for ios
+          },
+          headerTintColor: '#fff',
+        }}
+      />
     </ManageStack.Navigator>
   );
 };
@@ -89,10 +118,26 @@ const RecipeStackScreen = ({navigation, Chk}) => {
 
   return (
     // RecipeList, RecipeInfo 컴포넌트 스크린 등록
-    <RecipeStack.Navigator initRouteName="RecipeList">
+    <RecipeStack.Navigator
+      initRouteName="RecipeList"
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#ffffff',
+          elevation: 0, //for android
+          shadowOpacity: 0, //for ios
+          borderBottomWidth: 0, //for ios
+        },
+        headerTintColor: '#000',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+        headerTitleAlign: 'center',
+      }}>
       <RecipeStack.Screen
         name="RecipeList"
-        children={({navigation}) => <RecipeList navigation={navigation} Chk={Chk}/>}
+        children={({navigation}) => (
+          <RecipeList navigation={navigation} Chk={Chk} />
+        )}
         options={{
           title: '레시피',
           //header 왼쪽에 MenuButton 컴포넌트 등록
@@ -159,12 +204,12 @@ export default function TabStackRouter() {
       }}>
       <TabStack.Screen
         name="ManageStack"
-        children={()=><ManageStackScreen Chk={Chk} slctChk={slctChk}/>}
+        children={() => <ManageStackScreen Chk={Chk} slctChk={slctChk} />}
         options={{title: '냉장고 관리'}}
       />
       <TabStack.Screen
         name="RecipeStack"
-        children={()=><RecipeStackScreen Chk={Chk}/>}
+        children={() => <RecipeStackScreen Chk={Chk} />}
         options={{title: '레시피 추천'}}
       />
     </TabStack.Navigator>

@@ -77,7 +77,10 @@ export default function LoginScreen({navigation}) {
   //---------------------------UI 부분--------------------------------------
 
   return (
-    <ScrollView style={style.container_LoginScreen}>
+    <ScrollView
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
+      style={style.container_LoginScreen}>
       <Loader loading={loading} />
       <View style={style.titleArea_LoginScreen}>
         <Image

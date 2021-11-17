@@ -211,6 +211,43 @@ export default function RefrigeratorScreen({
     const elapsedMSec1 = expiry.getTime() - today.getTime();
     const elapsedDay1 = elapsedMSec1 / 1000 / 60 / 60 / 24;
     const divPath = item.ingredient_divtype;
+    let leftValue1 = 0;
+    let leftValue2 = 0;
+    let dotColor = '#AA9E9C';
+    if (elapsedDay1 <= 0) {
+      leftValue1 = -3;
+      leftValue2 = -3;
+      dotColor = '#AA9E9C';
+    } else if (elapsedDay1 == 1) {
+      leftValue1 = 28;
+      leftValue2 = 31;
+      dotColor = '#C29F9B';
+    } else if (elapsedDay1 == 2) {
+      leftValue1 = 60;
+      leftValue2 = 68;
+      dotColor = '#D0A6A2';
+    } else if (elapsedDay1 == 3) {
+      leftValue1 = 90;
+      leftValue2 = 106;
+      dotColor = '#D4A29D';
+    } else if (elapsedDay1 == 4) {
+      leftValue1 = 125;
+      leftValue2 = 142;
+      dotColor = '#DE9C95';
+    } else if (elapsedDay1 == 5) {
+      leftValue1 = 158;
+      leftValue2 = 178;
+      dotColor = '#E7968D';
+    } else if (elapsedDay1 == 6) {
+      leftValue1 = 190;
+      leftValue2 = 214;
+      dotColor = '#E98479';
+    } else if (elapsedDay1 >= 7) {
+      leftValue1 = 223;
+      leftValue2 = 250;
+      dotColor = '#FA8072';
+    }
+
     //    console.log(divPath);
 
     return (
@@ -218,17 +255,31 @@ export default function RefrigeratorScreen({
         {/* Chk1이 true인지 false 인지에 따라 UI 상이 */}
         {Chk1 ? (
           <View style={style.itemView_RefrigeratorScreen}>
-            <CheckBox
-              style={style.checkBox_RefrigeratorScreen}
-              onClick={() => checkThisBox(item.no)}
-              isChecked={item.ingredient_delChecked === '0' ? false : true}
-            />
             <View style={{flexDirection: 'row'}}>
-              <Image
-                style={style.itemImg_RefrigeratorScreen}
-                source={{
-                  uri: 'http://54.180.126.3/img/' + divPath + '.jpg',
-                }}></Image>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  //backgroundColor: 'blue',
+                }}>
+                <CheckBox
+                  style={style.checkBox_RefrigeratorScreen}
+                  onClick={() => checkThisBox(item.no)}
+                  isChecked={item.ingredient_delChecked === '0' ? false : true}
+                />
+              </View>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '20%',
+                  //backgroundColor: 'red',
+                }}>
+                <Image
+                  style={style.itemImg_RefrigeratorScreen}
+                  source={{
+                    uri: 'http://54.180.126.3/img/' + divPath + '.png',
+                  }}></Image>
+              </View>
               <View style={style.itemTextView_RefrigeratorScreen}>
                 <View style={{flexDirection: 'row'}}>
                   <Text style={style.itemName_RefrigeratorScreen}>
@@ -262,6 +313,24 @@ export default function RefrigeratorScreen({
                     thumbStyle={{width: 7, height: 7}}
                     trackStyle={{width: 0, height: 7}}
                   />
+                  <View
+                    style={{
+                      width: 25,
+                      height: 25,
+                      borderRadius: 15,
+                      position: 'absolute',
+                      backgroundColor: dotColor,
+                      borderColor: dotColor,
+                      borderWidth: 3,
+                      zIndex: 2,
+                      left: leftValue1,
+                      top: 7,
+                      justifyContent: 'center',
+                    }}>
+                    <Text style={{textAlign: 'center', fontWeight: 'bold'}}>
+                      {elapsedDay1}
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>
@@ -284,13 +353,21 @@ export default function RefrigeratorScreen({
               <View
                 style={{
                   width: '25%',
-                  //backgroundColor: 'red',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}>
-                <Image
-                  style={style.itemImg_RefrigeratorScreen}
-                  source={{
-                    uri: 'http://54.180.126.3/img/' + divPath + '.jpg',
-                  }}></Image>
+                <View
+                  style={{
+                    padding: 10,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Image
+                    style={style.itemImg_RefrigeratorScreen}
+                    source={{
+                      uri: 'http://54.180.126.3/img/' + divPath + '.png',
+                    }}></Image>
+                </View>
               </View>
               <View style={style.itemTextView_RefrigeratorScreen}>
                 <View style={{flexDirection: 'row'}}>
@@ -325,6 +402,24 @@ export default function RefrigeratorScreen({
                     thumbStyle={{width: 7, height: 7}}
                     trackStyle={{width: 0, height: 7}}
                   />
+                  <View
+                    style={{
+                      width: 25,
+                      height: 25,
+                      borderRadius: 15,
+                      position: 'absolute',
+                      backgroundColor: dotColor,
+                      borderColor: dotColor,
+                      borderWidth: 3,
+                      zIndex: 2,
+                      left: leftValue2,
+                      top: 7,
+                      justifyContent: 'center',
+                    }}>
+                    <Text style={{textAlign: 'center', fontWeight: 'bold'}}>
+                      {elapsedDay1}
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>
@@ -398,7 +493,7 @@ export default function RefrigeratorScreen({
                       <Image
                         style={[style.itemImg2_RefrigeratorScreen]}
                         source={{
-                          uri: 'http://54.180.126.3/img/' + divImg + '.jpg',
+                          uri: 'http://54.180.126.3/img/' + divImg + '.png',
                         }}></Image>
                     </View>
                   </View>
@@ -490,7 +585,12 @@ export default function RefrigeratorScreen({
                       justifyContent: 'center',
                     }}>
                     <Pressable
-                      style={style.button_RefrigeratorScreen}
+                      style={({pressed}) => [
+                        {
+                          backgroundColor: pressed ? '#ffa07a' : 'salmon',
+                        },
+                        style.button_RefrigeratorScreen,
+                      ]}
                       onPress={() => {
                         refRBSheet.current.close();
                         // 변경 버튼 누르면 onUpdate() 실행
@@ -501,7 +601,12 @@ export default function RefrigeratorScreen({
                       </Text>
                     </Pressable>
                     <Pressable
-                      style={style.button_RefrigeratorScreen}
+                      style={({pressed}) => [
+                        {
+                          backgroundColor: pressed ? '#e9967a' : 'salmon',
+                        },
+                        style.button_RefrigeratorScreen,
+                      ]}
                       onPress={() => refRBSheet.current.close()}>
                       <Text style={style.textStyle_RefrigeratorScreen}>
                         취소
@@ -518,7 +623,7 @@ export default function RefrigeratorScreen({
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: 'white'}}>
       {/* SearchBar에 props 전달 */}
       <Searchbar
         search={search}
@@ -534,6 +639,8 @@ export default function RefrigeratorScreen({
       ) : (
         <View style={style.flatlist_RefrigeratorScreen}>
           <FlatList
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
             data={filteredData}
             keyExtractor={item => item.no}
             renderItem={renderItem}
