@@ -48,7 +48,7 @@ export default function AddButton({onSlctChk, Chk}) {
   var onlyKor= /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
   //한글만 남기는 정규식
   const [imgTobase64, setImgTobase64] = useState(''); // imagePath -> base64 유형으로 인코딩 했을 때 결과값 저장 변수
-  const [imagePath, setImagePath] = useState('/Users/xiu0327/newUpdate_1118/Refrigerator-Recipe/receipt3.jpeg');
+  const [imagePath, setImagePath] = useState('/Users/xiu0327/newUpdate_1118/Refrigerator-Recipe/imgpath/receipt3.jpeg');
   const [ingredientData, setIngredientData] = useState(); // 개발자 재료 데이터
 
   useState(async () => {
@@ -383,7 +383,12 @@ export default function AddButton({onSlctChk, Chk}) {
               onPress={async () => {
                 setModalVisible(!modalVisible);
                 //cameraImage();
-                let result = await labalArr();
+                let tmpResult = await labalArr();
+                let result = [];
+                for(let i=0;i<tmpResult.length;i++){
+                  if(tmpResult[i].prob>=0.3) result.push(tmpResult[i].ingredient);
+                }
+                console.log(result);
                 navigation.navigate('CameraResult', {detectionArr:result});
               }}>
               <Text
