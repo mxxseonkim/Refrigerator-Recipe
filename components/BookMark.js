@@ -13,7 +13,6 @@ export default function Bookmark({recipeId, mark, setMark}) {
   const [myBookmarkText, setMyBookmarkText] = useState('');
   const [myBookmarkList, setMyBookmarkList] = useState([]);
 
-
   useEffect(async () => {
     let get_data = {
       qry:
@@ -23,21 +22,19 @@ export default function Bookmark({recipeId, mark, setMark}) {
     };
     let bookmark_json = await DataSet.getData(get_data);
     setMyBookmarkText(
-      bookmark_json[0].user_bookmark ?
-      bookmark_json[0].user_bookmark : ''
+      bookmark_json[0].user_bookmark ? bookmark_json[0].user_bookmark : '',
     );
   }, []);
 
   useEffect(() => {
     setMyBookmarkList(myBookmarkText.split('/').filter(e => e));
-  }, [myBookmarkText])
-  
+  }, [myBookmarkText]);
+
   useEffect(() => {
     setMark(myBookmarkList.includes(recipeId) ? true : false);
-  }, [myBookmarkList])
+  }, [myBookmarkList]);
 
-
-  const updateBookmark = async (newBookmarkText) => {
+  const updateBookmark = async newBookmarkText => {
     let update_data = {
       qry:
         "UPDATE member SET user_bookmark = '" +
@@ -52,12 +49,12 @@ export default function Bookmark({recipeId, mark, setMark}) {
   // ------------------------- 북마크 체크 함수 ------------------------------------
 
   const clickBookmark = () => {
-    mark ?
-    // 기존에 선택이 되어 있다면 bookmark 데이터에서 recipeId를 삭제
-    myBookmarkList.splice(myBookmarkList.indexOf(recipeId), 1) :
-    // 기존에 선택이 안되어 있다면 bookmark 데이터에 recipeId 추가
-    myBookmarkList.push(recipeId);
-
+    mark
+      ? // 기존에 선택이 되어 있다면 bookmark 데이터에서 recipeId를 삭제
+        myBookmarkList.splice(myBookmarkList.indexOf(recipeId), 1)
+      : // 기존에 선택이 안되어 있다면 bookmark 데이터에 recipeId 추가
+        myBookmarkList.push(recipeId);
+    console.log(myBookmarkList);
     // 회원 DB의 bookmark 데이터 업데이트
     updateBookmark(myBookmarkList.join('/'));
     // mark의 boolean 변경
