@@ -40,7 +40,7 @@ const ManageStackScreen = ({navigation, Chk, slctChk}) => {
   return (
     // ManageTab 컴포넌트 스크린 등록
     <ManageStack.Navigator
-      initialRouteName="CameraResult"
+      //initialRouteName="CameraResult"
       screenOptions={{
         headerStyle: {
           backgroundColor: '#ffffff',

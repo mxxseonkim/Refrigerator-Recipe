@@ -14,47 +14,29 @@ import style from '../global/style';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {useNavigation} from '@react-navigation/core';
 
-export default function CameraResultScreen() {
+//import Icon from 'react-native-vector-icons/Ionicons';
+export default function CameraResultScreen({route, cameraNavigation}) {
   const [isDatePickerVisible1, setDatePickerVisibility1] = useState(false);
   const [isDatePickerVisible2, setDatePickerVisibility2] = useState(false);
-  const [data, setData] = useState([
-    {
-      no: 0,
-      name: '감자',
-      number: null,
-      startDate: '-',
-      endDate: '-',
-      saveType: 'empty',
-      divType: 'empty',
-    },
-    {
-      no: 1,
-      name: '양파',
-      number: null,
-      startDate: '-',
-      endDate: '-',
-      saveType: 'empty',
-      divType: 'empty',
-    },
-    {
-      no: 2,
-      name: '당근',
-      number: null,
-      startDate: '-',
-      endDate: '-',
-      saveType: 'empty',
-      divType: 'empty',
-    },
-    {
-      no: 3,
-      name: '대파',
-      number: null,
-      startDate: '-',
-      endDate: '-',
-      saveType: 'empty',
-      divType: 'empty',
-    },
-  ]);
+
+  const [data, setData] = useState([]);
+  useState(async () => {
+    let detectionArr = route.params.detectionArr;
+    for (let i = 0; i < detectionArr.length; i++) {
+      setData([
+        ...data,
+        {
+          no: 0,
+          name: detectionArr[i].ingredient,
+          number: null,
+          startDate: '-',
+          endDate: '-',
+          saveType: 'empty',
+          divType: 'empty',
+        },
+      ]);
+    }
+  });
   let maxAryNum;
   const navigation = useNavigation();
 

@@ -29,6 +29,7 @@
     "react-native-autocomplete-input": "^5.0.2",
     "react-native-check-box": "^2.1.7",
     "react-native-elements": "3.4.2",
+    "react-native-fs": "^2.18.0",
     "react-native-gesture-handler": "1.10.3",
     "react-native-image-crop-picker": "0.36.2",
     "react-native-modal-datetime-picker": "^11.0.0",
