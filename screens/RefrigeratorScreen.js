@@ -19,15 +19,16 @@ import {
   ScrollView,
 } from 'react-native';
 import style from '../global/style';
+import {it} from 'jest-circus';
 
 export default function RefrigeratorScreen({
-  count,
+  propsType,
   Chk,
   Chk1,
   onDeltChk,
   onSlctChk,
 }) {
-  // 부모의 props count, Chk, Chk1, onDeltChk, onSlctChk 전달 받음
+  // 부모의 props propsType, Chk, Chk1, onDeltChk, onSlctChk 전달 받음
   const [data, onSetData] = useState([]); // Database에서 받은 Data
   const [isLodaing, setIsLoding] = useState(true); // Database loding
   const [text, setText] = useState(null); // 이름
@@ -36,12 +37,11 @@ export default function RefrigeratorScreen({
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [date, setDate] = useState('2021-01-01'); // 유통기한
   const [saveType, setSaveType] = useState(null); // 보관선택
-  const [saveType_value, setSaveTypeValue] = useState(null); // 보관선택_문자
   const [no, setNO] = useState(null); // 고유번호
   const [search, setSearch] = useState(''); // 검색 키워드
   const [filteredData, setFilteredData] = useState(); // 검색 키워드에 필터링된 데이터
+  const [divImg, setDivImg] = useState('');
   const refRBSheet = useRef(); // BottomSheet
-  const [imgPath, setImgPath] = useState(null);
 
   //-------------------Data Select/Update/Delete ----------------------------------------
 
@@ -57,7 +57,7 @@ export default function RefrigeratorScreen({
         'SELECT * FROM ' +
         memberID.userID +
         " WHERE ingredient_type = '" +
-        count +
+        propsType +
         "'",
     };
     let json = await DataSet.getData(dataObj);
@@ -80,13 +80,13 @@ export default function RefrigeratorScreen({
       qry:
         'UPDATE ' +
         memberID.userID +
-        ' SET ingredient_expiryDate = " ' +
+        ' SET ingredient_expiryDate = "' +
         date +
-        '", ingredient_vol =" ' +
+        '", ingredient_vol = "' +
         number +
-        '", ingredient_type = ' +
+        '", ingredient_type = "' +
         saveType +
-        ' WHERE no =' +
+        '" WHERE no =' +
         no,
     };
     // Update 쿼리문 전송
@@ -193,21 +193,6 @@ export default function RefrigeratorScreen({
     onSetData(_data);
   };
 
-  const onSetSaveType = _saveType => {
-    var _value = null;
-    if (_saveType === '1') {
-      _value = 'cold';
-    } else if (_saveType === '2') {
-      _value = 'frozen';
-    } else if (_saveType === '3') {
-      _value = 'condi';
-    } else if (_saveType === '4') {
-      _value = 'room';
-    }
-    setSaveType(_saveType);
-    setSaveTypeValue(_value);
-  };
-
   //---------------------- UI 부분 --------------------------------------------
 
   const renderItem = ({item}) => {
@@ -225,43 +210,87 @@ export default function RefrigeratorScreen({
     );
     const elapsedMSec1 = expiry.getTime() - today.getTime();
     const elapsedDay1 = elapsedMSec1 / 1000 / 60 / 60 / 24;
+    const divPath = item.ingredient_divtype;
+    let leftValue1 = 0;
+    let leftValue2 = 0;
+    let dotColor = '#AA9E9C';
+    if (elapsedDay1 <= 0) {
+      leftValue1 = -3;
+      leftValue2 = -3;
+      dotColor = '#AA9E9C';
+    } else if (elapsedDay1 == 1) {
+      leftValue1 = 28;
+      leftValue2 = 31;
+      dotColor = '#C29F9B';
+    } else if (elapsedDay1 == 2) {
+      leftValue1 = 60;
+      leftValue2 = 68;
+      dotColor = '#D0A6A2';
+    } else if (elapsedDay1 == 3) {
+      leftValue1 = 90;
+      leftValue2 = 106;
+      dotColor = '#D4A29D';
+    } else if (elapsedDay1 == 4) {
+      leftValue1 = 125;
+      leftValue2 = 142;
+      dotColor = '#DE9C95';
+    } else if (elapsedDay1 == 5) {
+      leftValue1 = 158;
+      leftValue2 = 178;
+      dotColor = '#E7968D';
+    } else if (elapsedDay1 == 6) {
+      leftValue1 = 190;
+      leftValue2 = 214;
+      dotColor = '#E98479';
+    } else if (elapsedDay1 >= 7) {
+      leftValue1 = 223;
+      leftValue2 = 250;
+      dotColor = '#FA8072';
+    }
+
+    //    console.log(divPath);
 
     return (
       <View>
         {/* Chk1이 true인지 false 인지에 따라 UI 상이 */}
         {Chk1 ? (
           <View style={style.itemView_RefrigeratorScreen}>
-            <CheckBox
-              style={style.checkBox_RefrigeratorScreen}
-              onClick={() => checkThisBox(item.no)}
-              isChecked={item.ingredient_delChecked === '0' ? false : true}
-            />
             <View style={{flexDirection: 'row'}}>
-              {item.ingredient_imgPath ===
-              'http://54.180.126.3/img/add-image.png' ? (
+              <View
+                style={{
+                  justifyContent: 'center',
+                  //backgroundColor: 'blue',
+                }}>
+                <CheckBox
+                  style={style.checkBox_RefrigeratorScreen}
+                  onClick={() => checkThisBox(item.no)}
+                  isChecked={item.ingredient_delChecked === '0' ? false : true}
+                />
+              </View>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '20%',
+                  //backgroundColor: 'red',
+                }}>
                 <Image
                   style={style.itemImg_RefrigeratorScreen}
                   source={{
-                    uri: 'http://54.180.126.3/img/eggfry.jpg',
+                    uri: 'http://54.180.126.3/img/' + divPath + '.png',
                   }}></Image>
-              ) : (
-                <Image
-                  style={style.itemImg_RefrigeratorScreen}
-                  source={{uri: item.ingredient_imgPath}}></Image>
-              )}
+              </View>
               <View style={style.itemTextView_RefrigeratorScreen}>
                 <View style={{flexDirection: 'row'}}>
                   <Text style={style.itemName_RefrigeratorScreen}>
                     {item.ingredient_name}
                   </Text>
                   <Text style={style.itemMsg_RefrigeratorScreen}>
-                    {item.ingredient_vol}g
+                    {item.ingredient_vol}
+                    {''}
+                    {item.ingredient_vol_unit}
                   </Text>
-                  <Text
-                    style={[
-                      style.itemDate_RefrigeratorScreen,
-                      {paddingLeft: 60},
-                    ]}>
+                  <Text style={[style.itemDate_RefrigeratorScreen]}>
                     {item.ingredient_expiryDate}
                   </Text>
                 </View>
@@ -284,6 +313,24 @@ export default function RefrigeratorScreen({
                     thumbStyle={{width: 7, height: 7}}
                     trackStyle={{width: 0, height: 7}}
                   />
+                  <View
+                    style={{
+                      width: 25,
+                      height: 25,
+                      borderRadius: 15,
+                      position: 'absolute',
+                      backgroundColor: dotColor,
+                      borderColor: dotColor,
+                      borderWidth: 3,
+                      zIndex: 2,
+                      left: leftValue1,
+                      top: 7,
+                      justifyContent: 'center',
+                    }}>
+                    <Text style={{textAlign: 'center', fontWeight: 'bold'}}>
+                      {elapsedDay1}
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>
@@ -296,29 +343,31 @@ export default function RefrigeratorScreen({
               setText(item.ingredient_name);
               onSetNumber(item.ingredient_vol);
               onSetDate(item.ingredient_expiryDate);
-              onSetSaveType(item.ingredient_type);
+              setSaveType(item.ingredient_type);
               onSetNo(item.no);
-              setImgPath(item.ingredient_imgPath);
+              setDivImg(item.ingredient_divtype);
+              //console.log(divImg);
               onSetNumberUnit(item.ingredient_vol_unit);
             }}>
             <View style={{flexDirection: 'row'}}>
               <View
                 style={{
                   width: '25%',
-                  //backgroundColor: 'red',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}>
-                {item.ingredient_imgPath ===
-                'http://54.180.126.3/img/add-image.png' ? (
+                <View
+                  style={{
+                    padding: 10,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
                   <Image
                     style={style.itemImg_RefrigeratorScreen}
                     source={{
-                      uri: 'http://54.180.126.3/img/eggfry.jpg',
+                      uri: 'http://54.180.126.3/img/' + divPath + '.png',
                     }}></Image>
-                ) : (
-                  <Image
-                    style={style.itemImg_RefrigeratorScreen}
-                    source={{uri: item.ingredient_imgPath}}></Image>
-                )}
+                </View>
               </View>
               <View style={style.itemTextView_RefrigeratorScreen}>
                 <View style={{flexDirection: 'row'}}>
@@ -330,11 +379,7 @@ export default function RefrigeratorScreen({
                     {''}
                     {item.ingredient_vol_unit}
                   </Text>
-                  <Text
-                    style={[
-                      style.itemDate_RefrigeratorScreen,
-                      {paddingLeft: 100},
-                    ]}>
+                  <Text style={[style.itemDate_RefrigeratorScreen]}>
                     {item.ingredient_expiryDate}
                   </Text>
                 </View>
@@ -357,6 +402,24 @@ export default function RefrigeratorScreen({
                     thumbStyle={{width: 7, height: 7}}
                     trackStyle={{width: 0, height: 7}}
                   />
+                  <View
+                    style={{
+                      width: 25,
+                      height: 25,
+                      borderRadius: 15,
+                      position: 'absolute',
+                      backgroundColor: dotColor,
+                      borderColor: dotColor,
+                      borderWidth: 3,
+                      zIndex: 2,
+                      left: leftValue2,
+                      top: 7,
+                      justifyContent: 'center',
+                    }}>
+                    <Text style={{textAlign: 'center', fontWeight: 'bold'}}>
+                      {elapsedDay1}
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>
@@ -427,24 +490,11 @@ export default function RefrigeratorScreen({
                       </View>
                     </View>
                     <View style={{width: '30%'}}>
-                      {item.ingredient_imgPath ===
-                      'http://54.180.126.3/img/add-image.png' ? (
-                        <Image
-                          style={[
-                            style.itemImg2_RefrigeratorScreen,
-                            {borderColor: 'black'},
-                          ]}
-                          source={{
-                            uri: 'http://54.180.126.3/img/eggfry.jpg',
-                          }}></Image>
-                      ) : (
-                        <Image
-                          style={[
-                            style.itemImg2_RefrigeratorScreen,
-                            {borderColor: 'black'},
-                          ]}
-                          source={{uri: imgPath}}></Image>
-                      )}
+                      <Image
+                        style={[style.itemImg2_RefrigeratorScreen]}
+                        source={{
+                          uri: 'http://54.180.126.3/img/' + divImg + '.png',
+                        }}></Image>
                     </View>
                   </View>
                   <View style={{flexDirection: 'row'}}>
@@ -509,18 +559,10 @@ export default function RefrigeratorScreen({
                       <RNPickerSelect
                         style={{inputAndroid: {color: 'black'}}}
                         onValueChange={value => {
-                          if (value === 'cold') {
-                            onSetSaveType('1');
-                          } else if (value === 'frozen') {
-                            onSetSaveType('2');
-                          } else if (value === 'condi') {
-                            onSetSaveType('3');
-                          } else if (value === 'room') {
-                            onSetSaveType('4');
-                          }
+                          setSaveType(value);
                         }}
                         placeholder={{}}
-                        value={saveType_value}
+                        value={saveType}
                         items={[
                           {label: '냉장', value: 'cold', inputLabel: '냉장'},
                           {
@@ -543,7 +585,12 @@ export default function RefrigeratorScreen({
                       justifyContent: 'center',
                     }}>
                     <Pressable
-                      style={style.button_RefrigeratorScreen}
+                      style={({pressed}) => [
+                        {
+                          backgroundColor: pressed ? '#ffa07a' : 'salmon',
+                        },
+                        style.button_RefrigeratorScreen,
+                      ]}
                       onPress={() => {
                         refRBSheet.current.close();
                         // 변경 버튼 누르면 onUpdate() 실행
@@ -554,7 +601,12 @@ export default function RefrigeratorScreen({
                       </Text>
                     </Pressable>
                     <Pressable
-                      style={style.button_RefrigeratorScreen}
+                      style={({pressed}) => [
+                        {
+                          backgroundColor: pressed ? '#e9967a' : 'salmon',
+                        },
+                        style.button_RefrigeratorScreen,
+                      ]}
                       onPress={() => refRBSheet.current.close()}>
                       <Text style={style.textStyle_RefrigeratorScreen}>
                         취소
@@ -571,7 +623,7 @@ export default function RefrigeratorScreen({
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, backgroundColor: 'white'}}>
       {/* SearchBar에 props 전달 */}
       <Searchbar
         search={search}
@@ -587,6 +639,8 @@ export default function RefrigeratorScreen({
       ) : (
         <View style={style.flatlist_RefrigeratorScreen}>
           <FlatList
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
             data={filteredData}
             keyExtractor={item => item.no}
             renderItem={renderItem}

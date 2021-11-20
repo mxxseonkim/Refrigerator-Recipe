@@ -17,7 +17,20 @@ const ClientStackScreen = () => {
   return (
     // Client 컴포넌트 스크린 등록
     // headerLeft에 MenuButton 컴포넌트 등록
-    <ClientStack.Navigator>
+    <ClientStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#ffffff',
+          elevation: 0, //for android
+          shadowOpacity: 0, //for ios
+          borderBottomWidth: 0, //for ios
+        },
+        headerTintColor: '#000',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+        headerTitleAlign: 'center',
+      }}>
       <ClientStack.Screen
         name="Client"
         component={ClientScreen}

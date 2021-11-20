@@ -3,12 +3,14 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import ManageTabRouter from './ManageTabRouter';
 import MenuButton from '../components/MenuButton';
-import BookMark from '../components/BookMark';
+import BookMarkInfo from '../components/BookMarkInfo';
+import BookMarkList from '../components/BookMarkList';
 import RecipeList from '../screens/RecipeList';
 import RecipeInfo from '../screens/RecipeInfo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AddButton from '../components/AddButton';
 import DeleteButton from '../components/DeleteButton';
+import CameraResultScreen from '../screens/CameraResultScreen';
 import {View, Platform} from 'react-native';
 import {useState} from 'react';
 
@@ -38,7 +40,21 @@ const ManageStackScreen = ({navigation, Chk, slctChk}) => {
 
   return (
     // ManageTab 컴포넌트 스크린 등록
-    <ManageStack.Navigator>
+    <ManageStack.Navigator
+      initialRouteName="ClientStack"
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#ffffff',
+          elevation: 0, //for android
+          shadowOpacity: 0, //for ios
+          borderBottomWidth: 0, //for ios
+        },
+        headerTintColor: '#000',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+        headerTitleAlign: 'center',
+      }}>
       <ManageStack.Screen
         name="ManageTab"
         children={() => (
@@ -70,6 +86,20 @@ const ManageStackScreen = ({navigation, Chk, slctChk}) => {
           ),
         }}
       />
+      <ManageStack.Screen
+        name="CameraResult"
+        component={CameraResultScreen}
+        options={{
+          title: '영수증 인식 결과',
+          headerStyle: {
+            backgroundColor: 'salmon',
+            elevation: 0, //for android
+            shadowOpacity: 0, //for ios
+            borderBottomWidth: 0, //for ios
+          },
+          headerTintColor: '#fff',
+        }}
+      />
     </ManageStack.Navigator>
   );
 };
@@ -85,25 +115,64 @@ const RecipeStackScreen = ({navigation, Chk}) => {
   // mark, setMark 정의 / null로 초기화
   // mark 값이 이 컴포넌트까지 끌어올려져서 값이 변경 됨
   // 그리고 자동으로 바뀐 값을 prop로 전달
-  const [mark, setMark] = useState(null);
+
+  const [listMark, setListMark] = useState(false);
+  const [infoMark, setInfoMark] = useState(null);
+  const [bookmarkList, setBookmarkList] = useState([]);
+
+  const onSetListMark = () => {
+    setListMark(pre => !pre);
+  };
+
+  const onSetBookmarkList = (newList) => {
+    setBookmarkList(newList);
+  };
 
   return (
     // RecipeList, RecipeInfo 컴포넌트 스크린 등록
-    <RecipeStack.Navigator initRouteName="RecipeList">
+    <RecipeStack.Navigator
+      initRouteName="RecipeList"
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#ffffff',
+          elevation: 0, //for android
+          shadowOpacity: 0, //for ios
+          borderBottomWidth: 0, //for ios
+        },
+        headerTintColor: '#000',
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+        headerTitleAlign: 'center',
+      }}>
       <RecipeStack.Screen
         name="RecipeList"
-        children={({navigation}) => <RecipeList navigation={navigation} Chk={Chk}/>}
+        children={({navigation}) => (
+          <RecipeList
+            navigation={navigation}
+            chk={Chk}
+            mark={listMark}
+            bookmarkList={bookmarkList}
+            setBookmarkList={onSetBookmarkList}
+          />
+        )}
         options={{
           title: '레시피',
           //header 왼쪽에 MenuButton 컴포넌트 등록
           headerLeft: () => <MenuButton />,
+          headerRight: () => (
+            <BookMarkList
+              mark={listMark}
+              setMark={onSetListMark}
+            />
+          )
         }}
       />
       <RecipeStack.Screen
         name="RecipeInfo"
         children={({route}) => (
           //mark와 data를 props로 전달
-          <RecipeInfo mark={mark} data={route.params.data} />
+          <RecipeInfo data={route.params.data} />
         )}
         options={({route}) => ({
           // RecipeList에서 받아온 data.name으로 title 등록
@@ -111,13 +180,14 @@ const RecipeStackScreen = ({navigation, Chk}) => {
           //header 왼쪽에 MenuButton 오른쪽에 BookMark 컴포넌트 등록
           headerLeft: () => <MenuButton />,
           headerRight: () => (
-            <BookMark
-              //mark, setMark, recipeId를 props로 전달
+            <BookMarkInfo
               recipeId={route.params.data.recipe_id}
-              mark={mark}
-              setMark={setMark}
+              mark={infoMark}
+              setMark={setInfoMark}
+              bookmarkList={bookmarkList}
+              setBookmarkList={onSetBookmarkList}
             />
-          ),
+          )
         })}
       />
     </RecipeStack.Navigator>
@@ -159,12 +229,12 @@ export default function TabStackRouter() {
       }}>
       <TabStack.Screen
         name="ManageStack"
-        children={()=><ManageStackScreen Chk={Chk} slctChk={slctChk}/>}
+        children={() => <ManageStackScreen Chk={Chk} slctChk={slctChk} />}
         options={{title: '냉장고 관리'}}
       />
       <TabStack.Screen
         name="RecipeStack"
-        children={()=><RecipeStackScreen Chk={Chk}/>}
+        children={() => <RecipeStackScreen Chk={Chk} />}
         options={{title: '레시피 추천'}}
       />
     </TabStack.Navigator>

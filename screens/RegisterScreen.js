@@ -162,7 +162,7 @@ export default function RegisterScreen({navigation}) {
       qry:
         'CREATE TABLE ' +
         userId +
-        '(no int AUTO_INCREMENT,ingredient_name varchar(100),ingredient_vol int,ingredient_buyDate varchar(100),ingredient_expiryDate varchar(100),ingredient_type varchar(100),ingredient_imgPath varchar(500),ingredient_delChecked tinyint(1),primary key (no))',
+        '(no int AUTO_INCREMENT,ingredient_name varchar(100),ingredient_vol int, ingredient_vol_unit varchar(4),ingredient_buyDate varchar(100),ingredient_expiryDate varchar(100),ingredient_type varchar(100),ingredient_divtype varchar(100),ingredient_delChecked tinyint(1),primary key (no))',
     };
 
     DataSet.setData(userData);
@@ -182,7 +182,10 @@ export default function RegisterScreen({navigation}) {
   // 회원가입 후
   if (isRegistraionSuccess) {
     return (
-      <ScrollView style={style.container_RegisterScreen}>
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        style={style.container_RegisterScreen}>
         <View style={style.successImgView_RegisterScreen}>
           <Image
             source={{uri: 'http://54.180.126.3/img/checked.png'}}
@@ -209,7 +212,10 @@ export default function RegisterScreen({navigation}) {
   // 회원가입 전
   else {
     return (
-      <ScrollView style={style.container_RegisterScreen}>
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        style={style.container_RegisterScreen}>
         <Loader loading={loading} />
         <View style={style.titleArea_RegisterScreen}>
           <Image

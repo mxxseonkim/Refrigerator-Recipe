@@ -7,22 +7,29 @@ import {
 const style = StyleSheet.create({
   //CheckButton----------------------------------
   CheckIcon_CheckButton: {
-    fontSize: 30,
-    marginRight: 15,
-    marginTop: 5,
+    fontSize: 27,
+    marginRight: 5,
+    marginTop: 4,
     color: '#FA8072',
   },
   //AddButton------------------------------------
   headerIcon_AddButton: {
-    fontSize: 30,
-    marginRight: 15,
-    marginTop: 5,
+    fontSize: 27,
+    marginRight: 12,
+    marginTop: 4,
     color: '#FA8072',
   },
   calendarIcon_AddButton: {
     color: '#FA8072',
     fontSize: 33,
     marginTop: 10,
+  },
+  input_AddButton: {
+    height: 40,
+    margin: 7,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+    width: '100%',
   },
   //MenuButton-----------------------------------
   menuIcon_MenuButton: {
@@ -33,17 +40,17 @@ const style = StyleSheet.create({
   },
   // RefrigeratorScreen--------------------------
   checkBox_RefrigeratorScreen: {
-    flex: 0.05,
-    paddingRight: 15,
     margin: 10,
-    justifyContent: 'center',
+    marginLeft: 15,
+    marginRight: 5,
+    //padingLeft: 15,
+    //backgroundColor: 'red',
   },
   button_RefrigeratorScreen: {
     padding: 10,
     margin: 5,
     width: '45%',
     borderRadius: 10,
-    backgroundColor: '#FA8072',
   },
   button2_RefrigeratorScreen: {
     padding: 10,
@@ -75,6 +82,7 @@ const style = StyleSheet.create({
   input_RefrigeratorScreen: {
     height: 40,
     margin: 7,
+    paddingLeft: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
     width: '80%',
@@ -94,33 +102,20 @@ const style = StyleSheet.create({
   },
   itemView_RefrigeratorScreen: {
     flexDirection: 'row',
-    borderWidth: 0,
-    borderRadius: 0,
-    padding: 1,
-    marginBottom: 1,
-    borderBottomWidth: 1,
-    borderRadius: 0,
-    borderColor: '#ccc',
-  },
-  imgView_RefrigeratorScreen: {
-    width: '20%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  itemImg_RefrigeratorScreen: {
-    width: 70,
-    height: 70,
-    padding: 20,
-    margin: 10,
-    resizeMode: 'cover',
     backgroundColor: 'white',
   },
+  itemImg_RefrigeratorScreen: {
+    width: 60,
+    height: 60,
+    resizeMode: 'cover',
+  },
   itemImg2_RefrigeratorScreen: {
-    width: 85,
-    height: 85,
-    padding: 20,
-    margin: 10,
+    width: 65,
+    height: 65,
+
+    borderRadius: 10,
     borderWidth: 1,
+    borderColor: 'salmon',
     resizeMode: 'cover',
     backgroundColor: 'white',
   },
@@ -156,38 +151,67 @@ const style = StyleSheet.create({
   root_RecipeList: {
     flex: 1,
     padding: 5,
+    backgroundColor: 'white',
   },
   itemView_RecipeList: {
     flex: 1,
+    height: 60,
     flexDirection: 'row',
-    marginLeft: 25,
+    marginLeft: 18,
     marginRight: 25,
-    marginTop: 20,
+    marginTop: 25,
   },
   itemName_RecipeList: {
     fontSize: 17,
     fontWeight: 'bold',
   },
+  itemIntro_RecipeList: {
+    marginTop: 7,
+    fontSize: 12.5,
+    color: 'grey',
+  },
   itemSimilarity_RecipeList: {
     textAlign: 'right',
-    fontSize: 17,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#FA8072',
+  },
+  itemImage_RecipeList: {
+    height: 60,
+    width: 110,
+    resizeMode: 'contain',
+    borderColor: '#f5f5f5',
+    borderWidth:3,
+    marginRight:15
   },
   //RecipeInfo-----------------------------------
   root_RecipeInfo: {
     flex: 1,
     padding: 20,
+    backgroundColor: 'white',
   },
   subheading_RecipeInfo: {
     flex: 1,
     marginTop: 30,
+    marginBottom: 10,
     fontSize: 18,
     fontWeight: 'bold',
+    color: 'black',
   },
-  content_RecipeInfo: {
-    flex: 1,
-    marginTop: 20,
+  ingre_RecipeInfo: {
+    marginLeft: 20,
+    marginRight: 5,
+    fontSize: 16,
+    lineHeight: 30,
+    fontWeight: 'bold',
+  },
+  vol_RecipeInfo: {
+    marginLeft: 10,
+    fontSize: 15,
+    lineHeight: 30,
+    color: '#404040',
+  },
+  recipe_RecipeInfo: {
     marginLeft: 20,
     marginRight: 20,
     fontSize: 16,
@@ -475,9 +499,9 @@ const style = StyleSheet.create({
   },
   //BookMark-------------------------------------
   Icon_BookMark: {
-    fontSize: 30,
-    marginRight: 15,
-    marginTop: 5,
+    fontSize: 27,
+    marginRight: 10,
+    marginTop: 4,
   },
   //Searchbar------------------------------------
   searchbar_Searchbar: {
@@ -592,13 +616,13 @@ const style = StyleSheet.create({
     paddingTop: hp(1),
     paddingBottom: hp(1),
   },
-  Timer_Search_id:{
-      fontSize: wp('4%'),
-      color: 'black',
-      marginLeft: 17,
-      marginBottom: hp(-2),
-      paddingTop: hp(1),
-      paddingBottom: hp(1),
+  Timer_Search_id: {
+    fontSize: wp('4%'),
+    color: 'black',
+    marginLeft: 17,
+    marginBottom: hp(-2),
+    paddingTop: hp(1),
+    paddingBottom: hp(1),
   },
   btn2_Search_id: {
     width: '75%',
@@ -756,3 +780,4 @@ const style = StyleSheet.create({
 });
 
 export default style;
+

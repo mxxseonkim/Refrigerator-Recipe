@@ -6,9 +6,9 @@ export default function Searchbar(props) {
   //---------------------------- UI 부분 ----------------------------------------
   return (
     <SearchBar
-      inputContainerStyle={{backgroundColor: '#fff'}}
-      leftIconContainerStyle={{backgroundColor: '#fff'}}
-      inputStyle={{backgroundColor: '#fff'}}
+      inputContainerStyle={{backgroundColor: '#f5f5f5'}}
+      leftIconContainerStyle={{backgroundColor: '#f5f5f5'}}
+      inputStyle={{backgroundColor: '#f5f5f5'}}
       containerStyle={style.searchbar_Searchbar}
       // 부모에게서 ph, filterData(), search props로 부여받음
       placeholder={props.ph}
