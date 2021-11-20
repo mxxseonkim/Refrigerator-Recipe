@@ -147,11 +147,11 @@ export default function RecipeList({navigation, chk, mark, bookmarkList, setBook
             source={{uri:item.img}}
           />
         </View>
-        <View style={{ width: '45%', justifyContent: 'center' }}> 
+        <View style={{ width: '50%', justifyContent: 'center' }}> 
           <Text style={style.itemName_RecipeList}>{item.recipe_name}</Text>
-          <Text style={style.itemIntro_RecipeList}>{item.intro.slice(0,15)}</Text>
+          <Text style={style.itemIntro_RecipeList}>{item.intro}</Text>
         </View>
-        <View style={{width: '20%', justifyContent: 'center', }}>
+        <View style={{width: '15%', justifyContent: 'center', }}>
           <Text style={style.itemSimilarity_RecipeList}>
             {item.match_rate} %
           </Text>

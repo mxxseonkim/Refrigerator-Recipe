@@ -182,7 +182,7 @@ const style = StyleSheet.create({
     resizeMode: 'contain',
     borderColor: '#f5f5f5',
     borderWidth:3,
-    marginRight:20
+    marginRight:15
   },
   //RecipeInfo-----------------------------------
   root_RecipeInfo: {

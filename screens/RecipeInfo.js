@@ -8,9 +8,7 @@ export default function RecipeInfo({data}) {
   // props로 data와 mark를 전달 받음
   const videoId = data.recipe_youtube.split('v=')[1].split('&')[0];
   // data.url에서 'V='와 &사이의 문자열을 잘라서 저장
-  const ingredient = data.recipe_ingredient.replace(/\$/gi, '\n').replace(/@/gi, ' ');
   const ingre_list = data.recipe_ingredient.split(/\$/gi).map(e => e.split(/@/gi)).filter(e=>e);
-  console.log(ingre_list);
   // data.ingredient에서 /\$/gi 는 '\n'으로 바꾸고 /@/gi 는 ' '로 바꿈
 
   // ------------------------------ UI 부분 ---------------------------------------
