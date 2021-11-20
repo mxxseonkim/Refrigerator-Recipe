@@ -151,38 +151,67 @@ const style = StyleSheet.create({
   root_RecipeList: {
     flex: 1,
     padding: 5,
+    backgroundColor: 'white',
   },
   itemView_RecipeList: {
     flex: 1,
+    height: 60,
     flexDirection: 'row',
-    marginLeft: 25,
+    marginLeft: 18,
     marginRight: 25,
-    marginTop: 20,
+    marginTop: 25,
   },
   itemName_RecipeList: {
     fontSize: 17,
     fontWeight: 'bold',
   },
+  itemIntro_RecipeList: {
+    marginTop: 7,
+    fontSize: 12.5,
+    color: 'grey',
+  },
   itemSimilarity_RecipeList: {
     textAlign: 'right',
-    fontSize: 17,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#FA8072',
+  },
+  itemImage_RecipeList: {
+    height: 60,
+    width: 110,
+    resizeMode: 'contain',
+    borderColor: '#f5f5f5',
+    borderWidth:3,
+    marginRight:20
   },
   //RecipeInfo-----------------------------------
   root_RecipeInfo: {
     flex: 1,
     padding: 20,
+    backgroundColor: 'white',
   },
   subheading_RecipeInfo: {
     flex: 1,
     marginTop: 30,
+    marginBottom: 10,
     fontSize: 18,
     fontWeight: 'bold',
+    color: 'black',
   },
-  content_RecipeInfo: {
-    flex: 1,
-    marginTop: 20,
+  ingre_RecipeInfo: {
+    marginLeft: 20,
+    marginRight: 5,
+    fontSize: 16,
+    lineHeight: 30,
+    fontWeight: 'bold',
+  },
+  vol_RecipeInfo: {
+    marginLeft: 10,
+    fontSize: 15,
+    lineHeight: 30,
+    color: '#404040',
+  },
+  recipe_RecipeInfo: {
     marginLeft: 20,
     marginRight: 20,
     fontSize: 16,
@@ -737,3 +766,4 @@ const style = StyleSheet.create({
 });
 
 export default style;
+

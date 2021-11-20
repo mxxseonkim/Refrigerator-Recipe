@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {TouchableOpacity, Text, View, FlatList, ActivityIndicator} from 'react-native';
+import {TouchableOpacity, Text, View, FlatList, ActivityIndicator, Image} from 'react-native';
 import style from '../global/style';
 import Searchbar from '../components/Searchbar.js';
 
@@ -37,7 +37,8 @@ export default function RecipeList({navigation, chk, mark, bookmarkList, setBook
     ));
 
     const match_rate = (exist_list.length / ingre_list.length) * 100;
-    return match_rate.toFixed(1);
+    // return match_rate.toFixed(1);
+    return parseInt(match_rate);
   };
 
   //-------------------------- Data Select -------------------------------------
@@ -140,10 +141,17 @@ export default function RecipeList({navigation, chk, mark, bookmarkList, setBook
         onPress={() => {
           navigation.navigate('RecipeInfo', {data: item});
         }}>
-        <View style={{width: '80%'}}>
-          <Text style={style.itemName_RecipeList}>{item.recipe_name}</Text>
+        <View>
+          <Image
+            style={style.itemImage_RecipeList} 
+            source={{uri:item.img}}
+          />
         </View>
-        <View style={{width: '20%'}}>
+        <View style={{ width: '45%', justifyContent: 'center' }}> 
+          <Text style={style.itemName_RecipeList}>{item.recipe_name}</Text>
+          <Text style={style.itemIntro_RecipeList}>{item.intro.slice(0,15)}</Text>
+        </View>
+        <View style={{width: '20%', justifyContent: 'center', }}>
           <Text style={style.itemSimilarity_RecipeList}>
             {item.match_rate} %
           </Text>
