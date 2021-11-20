@@ -201,20 +201,30 @@ const style = StyleSheet.create({
     padding: 30,
     paddingTop: 40,
   },
-  pic_ClientScreen: {
-    height: 140,
-    width: 140,
+  img_ClientScreen: {
+    height: 120,
+    width: 120,
     marginRight: 20,
     borderRadius: 100,
     backgroundColor: 'white',
   },
-  nickname_ClientScreen: {
-    fontSize: 20,
+  pic_ClientScreen: {
+    height: 100,
+    width: 100,
+    marginRight: 20,
+    borderRadius: 100,
+    backgroundColor: 'white',
+  },
+  name_ClientScreen: {
+    fontSize: 23,
     fontWeight: 'bold',
     marginBottom: 10,
+    marginTop: 30,
+    marginLeft: 10,
   },
   text_ClientScreen: {
-    fontSize: 14,
+    marginLeft: 10,
+    fontSize: 18,
   },
   menuItem_ClientScreen: {
     flex: 1,
@@ -257,8 +267,10 @@ const style = StyleSheet.create({
     paddingBottom: hp(2),
   },
   Text_LoginScreen: {
-    fontSize: wp('4%'),
+    fontSize: wp('4.3%'),
     paddingLeft: wp(1),
+    marginTop: 10,
+    marginBottom: 20,
   },
   formArea_LoginScreen: {
     justifyContent: 'center',
@@ -277,6 +289,8 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: hp(1.5),
+    marginTop: 10,
+    marginBottom: 10,
   },
   btn_LoginScreen: {
     flex: 1,
@@ -444,7 +458,7 @@ const style = StyleSheet.create({
   },
   //SplashScreen---------------------------------
   img_SplashScreen: {
-    width: wp(55),
+    width: wp(40),
     height: hp(40),
     resizeMode: 'contain',
     margin: 30,
