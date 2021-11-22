@@ -202,7 +202,15 @@ const style = StyleSheet.create({
     fontWeight: 'bold',
     color: 'black',
   },
-  ingre_RecipeInfo: {
+  ingre_RecipeInfo_no: {
+    marginLeft: 20,
+    marginRight: 5,
+    fontSize: 16,
+    lineHeight: 30,
+    fontWeight: 'bold',
+    color: 'darkgrey',
+  },
+  ingre_RecipeInfo_yes: {
     marginLeft: 20,
     marginRight: 5,
     fontSize: 16,

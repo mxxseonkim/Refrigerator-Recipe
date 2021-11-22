@@ -37,8 +37,13 @@ export default function RecipeList({navigation, chk, mark, bookmarkList, setBook
     ));
 
     const match_rate = (exist_list.length / ingre_list.length) * 100;
-    // return match_rate.toFixed(1);
-    return parseInt(match_rate);
+
+    return {
+      rate: parseInt(match_rate),
+      need_ingre_list: ingre_list
+        .filter(e => !exist_list.includes(e))
+        .map(e => e.name)
+    };
   };
 
   //-------------------------- Data Select -------------------------------------
@@ -62,7 +67,9 @@ export default function RecipeList({navigation, chk, mark, bookmarkList, setBook
     let recipe_data = await DataSet.getData(dataObj);
 
     const recipe_data_with_match_rate = recipe_data.map(function (e) {
-      e['match_rate'] = calMatchRate(e['recipe_developerArea']);
+      match = calMatchRate(e['recipe_developerArea'])
+      e['match_rate'] = match.rate;
+      e['need_ingre_list'] = match.need_ingre_list;
       return e;
     });
     const recipe_data_sorted = recipe_data_with_match_rate.sort((a, b) => {
@@ -167,7 +174,7 @@ export default function RecipeList({navigation, chk, mark, bookmarkList, setBook
         search={search}
         setSearch={setSearch}
         filterData={filterData}
-        ph="궁금한 레시피를 검색해보셈"
+        ph="궁금한 레시피를 검색해보세요"
       />
       {isLoading ? (
         <View style={style.ActivityIndicatorView_RefrigeratorScreen}>
