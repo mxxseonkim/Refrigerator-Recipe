@@ -1,6 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { TextInput, Modal, StyleSheet, Pressable, View, ScrollView, Text, FlatList, Image, Alert } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import React, {useEffect, useState} from 'react';
+import {
+  TextInput,
+  Modal,
+  StyleSheet,
+  Pressable,
+  View,
+  ScrollView,
+  Text,
+  FlatList,
+  Image,
+  Alert,
+} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import ImagePicker from 'react-native-image-crop-picker';
 import style from '../global/style';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -10,7 +21,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-export default function ClientScreen({ navigation }) {
+export default function ClientScreen({navigation}) {
   //DB에서 데이터가져오기 - 닉네임, 자기소개
   const [uri, seturi] = useState('http://54.180.126.3/img/user.png');
   const [memPw, setMemPw] = useState('');
@@ -20,7 +31,7 @@ export default function ClientScreen({ navigation }) {
   const [memNewPw, setMemNewPw] = useState('');
   //새 비밀번호
   const [memNewPwchk, setMemNewPwchk] = useState('');
-  //새 비밀번호 확인 
+  //새 비밀번호 확인
   const [memEmail, setMemEmail] = useState('');
   //회원 이메일
   const [memName, setMemName] = useState('');
@@ -63,15 +74,15 @@ export default function ClientScreen({ navigation }) {
     console.log(data);
     console.log('여기 나옴?');
     setMemPw(data.user_pw);
-    console.log(data.user_pw)
+    console.log(data.user_pw);
     setMemEmail(data.user_email);
     setMemName(data.user_name);
     setMemNickname(data.user_nickname);
-  }, [data])
+  }, [data]);
 
   // -------------------- 갤러리에서 사진 선택해서 설정 --------------------------
   const pickImage = () => {
-    ImagePicker.openPicker({ width: 120, height: 120, cropping: true }).then(
+    ImagePicker.openPicker({width: 120, height: 120, cropping: true}).then(
       image => {
         //갤러리에서 받은 이미지 경로로 설정
         seturi(image.path);
@@ -82,10 +93,10 @@ export default function ClientScreen({ navigation }) {
   // -------------------- 회원 menu - flatlist에 들어가는 부분 -------------------
 
   const menu = [
-    { key: 0, menu: '프로필 수정' },
-    { key: 1, menu: '비밀번호 변경' },
-    { key: 2, menu: '회원 탈퇴' },
-    { key: 3, menu: '로그아웃' }
+    {key: 0, menu: '프로필 수정'},
+    {key: 1, menu: '비밀번호 변경'},
+    {key: 2, menu: '회원 탈퇴'},
+    {key: 3, menu: '로그아웃'},
   ];
 
   const clickMenu = key => {
@@ -159,8 +170,8 @@ export default function ClientScreen({ navigation }) {
             },
           },
         ],
-        { cancelable: false },
-      )
+        {cancelable: false},
+      );
     }
   };
 
@@ -168,7 +179,7 @@ export default function ClientScreen({ navigation }) {
     setModalMoVisible(false);
     setMemNickname(data.user_nickname);
     setMemEmail(data.user_email);
-  }
+  };
 
   const modifyYesButton = () => {
     if (!memNickname) {
@@ -190,18 +201,24 @@ export default function ClientScreen({ navigation }) {
 
     let ChangeInfo = {
       qry:
-        'UPDATE member SET user_nickname = "' + memNickname + '", user_email = "' + memEmail + '" where user_id = "' + memberID.userID + '"',
+        'UPDATE member SET user_nickname = "' +
+        memNickname +
+        '", user_email = "' +
+        memEmail +
+        '" where user_id = "' +
+        memberID.userID +
+        '"',
     };
 
     DataSet.setData(ChangeInfo);
 
     setModalMoVisible(false);
-  }
+  };
 
   const ChangeNoButton = () => {
     setModalChaVisible(false);
     setMemPw(data.user_pw);
-  }
+  };
 
   const ChangeYesButton = () => {
     if (memPw != memRecentPw) {
@@ -221,23 +238,23 @@ export default function ClientScreen({ navigation }) {
       return;
     }
 
-
     let ChangePw = {
       qry:
-        'UPDATE member SET user_pw = "' + memNewPw + '" where user_id = "' + memberID.userID + '"',
+        'UPDATE member SET user_pw = "' +
+        memNewPw +
+        '" where user_id = "' +
+        memberID.userID +
+        '"',
     };
 
     DataSet.setData(ChangePw);
 
     setModalChaVisible(false);
-
-  }
-
-
+  };
 
   // ------------------------------ UI 부분 ------------------------------------
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({item}) => {
     return (
       <TouchableOpacity
         style={style.menuItem_ClientScreen}
@@ -254,9 +271,9 @@ export default function ClientScreen({ navigation }) {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       <View style={style.profile_ClientScreen}>
-        <Image style={style.img_ClientScreen} source={{ uri: uri }} />
+        <Image style={style.img_ClientScreen} source={{uri: uri}} />
         <View>
           <Text style={style.name_ClientScreen}>{memName}</Text>
           <Text style={style.text_ClientScreen}>{memNickname}</Text>
@@ -270,89 +287,85 @@ export default function ClientScreen({ navigation }) {
           }}>
           <ScrollView style={styles.container_ClientScreen}>
             <View style={styles.topView_ClientScreen}>
-              <Text style={styles.topText_ClientScreen}>
-                개인정보 수정
-              </Text>
+              <Text style={styles.topText_ClientScreen}>개인정보 수정</Text>
             </View>
             <View style={styles.pickImage_ClientScreen}>
               <Pressable onPress={pickImage}>
-                <Image style={style.pic_ClientScreen} source={{ uri: uri }} />
+                <Image style={style.pic_ClientScreen} source={{uri: uri}} />
               </Pressable>
             </View>
             <View style={styles.info_ClientScreen}>
-              <Text style={styles.Text_ClientScreen}>
-                이름
-              </Text>
+              <Text style={styles.Text_ClientScreen}>이름</Text>
               <TextInput
                 style={styles.textForm_ClientScreen}
                 placeholder={memName}
                 //autoCorrect={false}
-                backgroundColor='#E5E4E2'
+                backgroundColor="#E5E4E2"
                 editable={false}
-                placeholderTextColor='black'
+                placeholderTextColor="black"
                 //onChangeText={memName => setMemNickname(memName)}
                 returnKeyType="done"
               />
             </View>
             <View style={styles.info_ClientScreen}>
-              <Text style={styles.Text_ClientScreen}>
-                아이디
-              </Text>
+              <Text style={styles.Text_ClientScreen}>아이디</Text>
               <TextInput
                 style={styles.textForm_ClientScreen}
                 placeholder={memberID.userID}
                 //autoCorrect={false}
                 editable={false}
-                backgroundColor='#E5E4E2'
-                placeholderTextColor='black'
+                backgroundColor="#E5E4E2"
+                placeholderTextColor="black"
                 onChangeText={memNickname => setMemNickname(memNickname)}
                 returnKeyType="done"
               />
             </View>
             <View style={styles.info_ClientScreen}>
-              <Text style={styles.Text_ClientScreen}>
-                이메일
-              </Text>
+              <Text style={styles.Text_ClientScreen}>이메일</Text>
               <TextInput
                 style={styles.textForm_ClientScreen}
                 //placeholder={memEmail}
                 //autoCorrect={false}
-                backgroundColor='white'
-                placeholderTextColor='black'
+                backgroundColor="white"
+                placeholderTextColor="black"
                 defaultValue={memEmail}
                 onChangeText={memEmail => setMemEmail(memEmail)}
                 returnKeyType="done"
               />
             </View>
             <View style={styles.info_ClientScreen}>
-              <Text style={styles.Text_ClientScreen}>
-                닉네임
-              </Text>
+              <Text style={styles.Text_ClientScreen}>닉네임</Text>
               <TextInput
                 style={styles.textForm_ClientScreen}
                 //placeholder={memNickname}
                 //autoCorrect={false}
-                backgroundColor='white'
+                backgroundColor="white"
                 defaultValue={memNickname}
                 onChangeText={memNickname => setMemNickname(memNickname)}
                 returnKeyType="done"
-                placeholderTextColor='black'
+                placeholderTextColor="black"
               />
             </View>
             <View style={styles.btnArea_ClientScreen}>
               <Pressable
                 style={styles.btn1_ClientScreen}
-                onPress={modifyNoButton}
-              >
-                <Text style={(styles.Text_ClientScreen, { color: 'white', fontSize: wp('4.5%') })}>
+                onPress={modifyNoButton}>
+                <Text
+                  style={
+                    (styles.Text_ClientScreen,
+                    {color: 'white', fontSize: wp('4.5%')})
+                  }>
                   취소
                 </Text>
               </Pressable>
               <Pressable
                 style={styles.btn2_ClientScreen}
-                onPress={modifyYesButton}
-              >
-                <Text style={(styles.Text_ClientScreen, { color: 'white', fontSize: wp('4.5%') })}>
+                onPress={modifyYesButton}>
+                <Text
+                  style={
+                    (styles.Text_ClientScreen,
+                    {color: 'white', fontSize: wp('4.5%')})
+                  }>
                   수정
                 </Text>
               </Pressable>
@@ -369,50 +382,45 @@ export default function ClientScreen({ navigation }) {
           }}>
           <ScrollView style={styles.container_ClientScreen}>
             <View style={styles.Change_ClientScreen}>
-              <Text style={styles.Title_ClientScreen}>
-                비밀번호 변경
-              </Text>
+              <Text style={styles.Title_ClientScreen}>비밀번호 변경</Text>
             </View>
             <View style={styles.info_ClientScreen}>
-              <Text style={styles.Text_ClientScreen}>
-                현재 비밀번호
-              </Text>
+              <Text style={styles.Text_ClientScreen}>현재 비밀번호</Text>
               <TextInput
                 style={styles.textForm2_ClientScreen}
                 //placeholder={"현재 비밀번호"}
                 //autoCorrect={false}
-                backgroundColor='white'
+                secureTextEntry={true}
+                backgroundColor="white"
                 editable={true}
-                placeholderTextColor='#D1D0CE'
+                placeholderTextColor="#D1D0CE"
                 onChangeText={memRecentPw => setMemRecentPw(memRecentPw)}
                 returnKeyType="done"
               />
             </View>
             <View style={styles.info_ClientScreen}>
-              <Text style={styles.Text_ClientScreen}>
-                새 비밀번호
-              </Text>
+              <Text style={styles.Text_ClientScreen}>새 비밀번호</Text>
               <TextInput
                 style={styles.textForm2_ClientScreen}
                 placeholder={'비밀번호(4자 이상,영문,숫자 포함)'}
                 //autoCorrect={false}
                 editable={true}
-                backgroundColor='white'
-                placeholderTextColor='#D1D0CE'
+                secureTextEntry={true}
+                backgroundColor="white"
+                placeholderTextColor="#D1D0CE"
                 onChangeText={memNewPw => setMemNewPw(memNewPw)}
                 returnKeyType="done"
               />
             </View>
             <View style={styles.info_ClientScreen}>
-              <Text style={styles.Text_ClientScreen}>
-                새 비밀번호 확인
-              </Text>
+              <Text style={styles.Text_ClientScreen}>새 비밀번호 확인</Text>
               <TextInput
                 style={styles.textForm2_ClientScreen}
                 //placeholder={memEmail}
                 //autoCorrect={false}
-                backgroundColor='white'
-                placeholderTextColor='#D1D0CE'
+                backgroundColor="white"
+                secureTextEntry={true}
+                placeholderTextColor="#D1D0CE"
                 //defaultValue={memEmail}
                 onChangeText={memNewPwchk => setMemNewPwchk(memNewPwchk)}
                 returnKeyType="done"
@@ -421,17 +429,23 @@ export default function ClientScreen({ navigation }) {
             <View style={styles.btnArea_ClientScreen}>
               <Pressable
                 style={styles.btn1_ClientScreen}
-                onPress={ChangeNoButton}
-              >
-                <Text style={(styles.Text_ClientScreen, { color: 'white', fontSize: wp('4.5%') })}>
+                onPress={ChangeNoButton}>
+                <Text
+                  style={
+                    (styles.Text_ClientScreen,
+                    {color: 'white', fontSize: wp('4.5%')})
+                  }>
                   취소
                 </Text>
               </Pressable>
               <Pressable
                 style={styles.btn2_ClientScreen}
-                onPress={ChangeYesButton}
-              >
-                <Text style={(styles.Text_ClientScreen, { color: 'white', fontSize: wp('4.5%') })}>
+                onPress={ChangeYesButton}>
+                <Text
+                  style={
+                    (styles.Text_ClientScreen,
+                    {color: 'white', fontSize: wp('4.5%')})
+                  }>
                   변경
                 </Text>
               </Pressable>
@@ -439,7 +453,6 @@ export default function ClientScreen({ navigation }) {
           </ScrollView>
         </Modal>
       </View>
-
 
       <View style={style.menuList_ClientScreen}>
         <FlatList
@@ -453,7 +466,6 @@ export default function ClientScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-
   container_ClientScreen: {
     flex: 1, //전체의 공간을 차지한다는 의미
     flexDirection: 'column',
@@ -463,8 +475,8 @@ const styles = StyleSheet.create({
   },
 
   pickImage_ClientScreen: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 30,
     marginBottom: 20,
   },
@@ -532,8 +544,8 @@ const styles = StyleSheet.create({
   Change_ClientScreen: {
     flex: 1,
     backgroundColor: 'white',
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 45,
     marginBottom: 30,
   },
@@ -546,8 +558,8 @@ const styles = StyleSheet.create({
   topView_ClientScreen: {
     flex: 1,
     backgroundColor: 'white',
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 25,
   },
 

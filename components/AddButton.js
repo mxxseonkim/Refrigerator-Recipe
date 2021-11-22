@@ -17,7 +17,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import style from '../global/style';
-// import RNFS, {resumeDownload} from 'react-native-fs';
 
 Icon.loadFont();
 
@@ -69,6 +68,7 @@ export default function AddButton({onSlctChk, Chk}) {
 
   // 라벨 인식 함수
   const labalArr = async imagePath => {
+    //console.log(imagePath);
     let tmp_detectionArr = await DataSet.labelDetection(imagePath);
     let tmp2_detectionArr = [];
     for (let i = 0; i < tmp_detectionArr.length; i++) {
@@ -77,7 +77,6 @@ export default function AddButton({onSlctChk, Chk}) {
         prob: tmp_detectionArr[i].score,
       });
     }
-
     let detectionArr = await DataSet.textTranslation(tmp2_detectionArr);
 
     let resultArr = [];
@@ -91,6 +90,7 @@ export default function AddButton({onSlctChk, Chk}) {
         set = new Set(resultArr);
       }
     }
+    console.log(resultArr);
     return Array.from(set);
   };
 

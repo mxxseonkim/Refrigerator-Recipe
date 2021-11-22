@@ -88,9 +88,16 @@ const ManageStackScreen = ({navigation, Chk, slctChk}) => {
       />
       <ManageStack.Screen
         name="CameraResult"
-        component={CameraResultScreen}
+        children={({route}) => (
+          <CameraResultScreen
+            //Chk, Chk1, onDeltChk, onSlctChk를 props로 전달
+            detectionArr={route.params.detectionArr}
+            Chk={Chk}
+            onSlctChk={onSlctChk}
+          />
+        )}
         options={{
-          title: '영수증 인식 결과',
+          title: '식재료 추가',
           headerStyle: {
             backgroundColor: 'salmon',
             elevation: 0, //for android
@@ -124,7 +131,7 @@ const RecipeStackScreen = ({navigation, Chk}) => {
     setListMark(pre => !pre);
   };
 
-  const onSetBookmarkList = (newList) => {
+  const onSetBookmarkList = newList => {
     setBookmarkList(newList);
   };
 
@@ -161,11 +168,8 @@ const RecipeStackScreen = ({navigation, Chk}) => {
           //header 왼쪽에 MenuButton 컴포넌트 등록
           headerLeft: () => <MenuButton />,
           headerRight: () => (
-            <BookMarkList
-              mark={listMark}
-              setMark={onSetListMark}
-            />
-          )
+            <BookMarkList mark={listMark} setMark={onSetListMark} />
+          ),
         }}
       />
       <RecipeStack.Screen
@@ -187,7 +191,7 @@ const RecipeStackScreen = ({navigation, Chk}) => {
               bookmarkList={bookmarkList}
               setBookmarkList={onSetBookmarkList}
             />
-          )
+          ),
         })}
       />
     </RecipeStack.Navigator>

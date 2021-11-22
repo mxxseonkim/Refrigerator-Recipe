@@ -19,7 +19,6 @@ import {
   ScrollView,
 } from 'react-native';
 import style from '../global/style';
-import {it} from 'jest-circus';
 
 export default function RefrigeratorScreen({
   propsType,
@@ -214,37 +213,70 @@ export default function RefrigeratorScreen({
     let leftValue1 = 0;
     let leftValue2 = 0;
     let dotColor = '#AA9E9C';
+    // if (elapsedDay1 <= 0) {
+    //   leftValue1 = -3;
+    //   leftValue2 = -3;
+    //   dotColor = '#AA9E9C';
+    // } else if (elapsedDay1 == 1) {
+    //   leftValue1 = 28;
+    //   leftValue2 = 31;
+    //   dotColor = '#C29F9B';
+    // } else if (elapsedDay1 == 2) {
+    //   leftValue1 = 60;
+    //   leftValue2 = 68;
+    //   dotColor = '#D0A6A2';
+    // } else if (elapsedDay1 == 3) {
+    //   leftValue1 = 90;
+    //   leftValue2 = 106;
+    //   dotColor = '#D4A29D';
+    // } else if (elapsedDay1 == 4) {
+    //   leftValue1 = 125;
+    //   leftValue2 = 142;
+    //   dotColor = '#DE9C95';
+    // } else if (elapsedDay1 == 5) {
+    //   leftValue1 = 158;
+    //   leftValue2 = 178;
+    //   dotColor = '#E7968D';
+    // } else if (elapsedDay1 == 6) {
+    //   leftValue1 = 190;
+    //   leftValue2 = 214;
+    //   dotColor = '#E98479';
+    // } else if (elapsedDay1 >= 7) {
+    //   leftValue1 = 223;
+    //   leftValue2 = 250;
+    //   dotColor = '#FA8072';
+    // }
     if (elapsedDay1 <= 0) {
-      leftValue1 = -3;
-      leftValue2 = -3;
+      leftValue1 = -5;
+      leftValue2 = -5;
       dotColor = '#AA9E9C';
     } else if (elapsedDay1 == 1) {
       leftValue1 = 28;
       leftValue2 = 31;
       dotColor = '#C29F9B';
     } else if (elapsedDay1 == 2) {
-      leftValue1 = 60;
-      leftValue2 = 68;
+      leftValue1 = 66;
+      leftValue2 = 74;
       dotColor = '#D0A6A2';
     } else if (elapsedDay1 == 3) {
-      leftValue1 = 90;
-      leftValue2 = 106;
+      leftValue1 = 105;
+      leftValue2 = 116;
       dotColor = '#D4A29D';
     } else if (elapsedDay1 == 4) {
-      leftValue1 = 125;
-      leftValue2 = 142;
+      leftValue1 = 139;
+      leftValue2 = 153;
       dotColor = '#DE9C95';
     } else if (elapsedDay1 == 5) {
-      leftValue1 = 158;
-      leftValue2 = 178;
+      leftValue1 = 175;
+      leftValue2 = 195;
       dotColor = '#E7968D';
     } else if (elapsedDay1 == 6) {
-      leftValue1 = 190;
-      leftValue2 = 214;
+      leftValue1 = 210;
+      leftValue2 = 234;
       dotColor = '#E98479';
     } else if (elapsedDay1 >= 7) {
-      leftValue1 = 223;
-      leftValue2 = 250;
+      leftValue1 = 245;
+      leftValue2 = 273;
       dotColor = '#FA8072';
     }
 
