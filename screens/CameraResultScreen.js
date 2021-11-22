@@ -15,27 +15,26 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {useNavigation} from '@react-navigation/core';
 
 //import Icon from 'react-native-vector-icons/Ionicons';
-export default function CameraResultScreen({route, cameraNavigation}) {
+export default function CameraResultScreen({route}) {
+  const detectionResult = route.params.detectionArr;
   const [isDatePickerVisible1, setDatePickerVisibility1] = useState(false);
   const [isDatePickerVisible2, setDatePickerVisibility2] = useState(false);
-
   const [data, setData] = useState([]);
+  const tmpData = [];
+
   useState(async () => {
-    let detectionArr = route.params.detectionArr;
-    for (let i = 0; i < detectionArr.length; i++) {
-      setData([
-        ...data,
-        {
-          no: 0,
-          name: detectionArr[i].ingredient,
-          number: null,
-          startDate: '-',
-          endDate: '-',
-          saveType: 'empty',
-          divType: 'empty',
-        },
-      ]);
+    for (let i = 0; i < detectionResult.length; i++) {
+      tmpData.push({
+        no: i,
+        name: detectionResult[i],
+        number: null,
+        startDate: '-',
+        endDate: '-',
+        saveType: 'empty',
+        divType: 'empty',
+      });
     }
+    setData(tmpData);
   });
   let maxAryNum;
   const navigation = useNavigation();
@@ -342,9 +341,7 @@ export default function CameraResultScreen({route, cameraNavigation}) {
                 divType: 'empty',
               },
             ]);
-            console.log(data);
             maxAryNum = maxAryNum + 1;
-            console.log(maxAryNum);
           }}
           style={{justifyContent: 'center', height: 50}}>
           <Text style={{color: 'gray', textAlign: 'center', fontSize: 15}}>

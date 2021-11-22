@@ -48,9 +48,11 @@ export default function AddButton({onSlctChk, Chk}) {
   var onlyKor = /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
   //한글만 남기는 정규식
   const [imgTobase64, setImgTobase64] = useState(''); // imagePath -> base64 유형으로 인코딩 했을 때 결과값 저장 변수
-  const [imagePath, setImagePath] = useState('../imgpath/img.jpg');
+  const [imagePath, setImagePath] = useState(
+    '/Users/xiu0327/newUpdate_1118/Refrigerator-Recipe/imgpath/receipt3.jpeg',
+  );
+
   const [ingredientData, setIngredientData] = useState(); // 개발자 재료 데이터
-  const [detectionArr, setDetectionArr] = useState([]);
 
   useState(async () => {
     let dataObj = {
@@ -67,7 +69,6 @@ export default function AddButton({onSlctChk, Chk}) {
     let detectionArr = tmp_detectionArr.map(ingredient =>
       ingredient.replace(onlyKor, ''),
     );
-    console.log(detectionArr);
     let resultArr = [];
     let set = [];
     // 텍스트 인식 결과값을 배열로 저장하는 변수
@@ -79,18 +80,14 @@ export default function AddButton({onSlctChk, Chk}) {
         resultArr.push(found);
         set = new Set(resultArr);
       }
-      //console.log(found);
     }
-    console.log(Array.from(set));
-    console.log('여기나옴 2');
-    setDetectionArr(Array.from(set));
+    return Array.from(set);
   };
 
   // 라벨 인식 함수
   const labalArr = async () => {
     let tmp_detectionArr = await DataSet.labelDetection(imgTobase64);
     let tmp2_detectionArr = [];
-    //console.log(tmp_detectionArr);
     for (let i = 0; i < tmp_detectionArr.length; i++) {
       tmp2_detectionArr.push({
         ingredient: tmp_detectionArr[i].description,
@@ -99,7 +96,6 @@ export default function AddButton({onSlctChk, Chk}) {
     }
 
     let detectionArr = await DataSet.textTranslation(tmp2_detectionArr);
-    console.log(detectionArr);
 
     let resultArr = [];
     let set = [];
@@ -111,25 +107,21 @@ export default function AddButton({onSlctChk, Chk}) {
         resultArr.push(found);
         set = new Set(resultArr);
       }
-      //console.log(found);
     }
-    console.log(Array.from(set));
-    setDetectionArr(Array.from(set));
+    return Array.from(set);
   };
 
   // -------------------- 카메라, 갤러리에서 사진 선택해서 설정 --------------------------
 
-  const cameraImage = () => {
+  const cameraImage = async () => {
     ImagePicker.openCamera({width: 85, height: 85, cropping: true})
       .then(image => {
         console.log(image.path);
-        console.log('여기나옴?');
-        setImagePath(image.path);
-        return image.path;
       })
       .catch(e => {
         console.log(e);
       });
+    return result;
   };
 
   // -------------------- 이미지 경로 -> base64 format으로 인코딩 --------------------------
@@ -367,11 +359,9 @@ export default function AddButton({onSlctChk, Chk}) {
               ]}
               onPress={async () => {
                 setModalVisible(!modalVisible);
-                cameraImage();
-                filterArr();
-                navigation.navigate('CameraResult', {
-                  detectionArr: detectionArr,
-                });
+                //cameraImage();
+                let result = await filterArr();
+                navigation.navigate('CameraResult', {detectionArr: result});
               }}>
               <Text
                 style={{
@@ -397,13 +387,17 @@ export default function AddButton({onSlctChk, Chk}) {
                   justifyContent: 'center',
                 },
               ]}
-              onPress={() => {
+              onPress={async () => {
                 setModalVisible(!modalVisible);
-                cameraImage();
-                labalArr();
-                navigation.navigate('CameraResult', {
-                  detectionArr: detectionArr,
-                });
+                //cameraImage();
+                let tmpResult = await labalArr();
+                let result = [];
+                for (let i = 0; i < tmpResult.length; i++) {
+                  if (tmpResult[i].prob >= 0.3)
+                    result.push(tmpResult[i].ingredient);
+                }
+                console.log(result);
+                navigation.navigate('CameraResult', {detectionArr: result});
               }}>
               <Text
                 style={{
