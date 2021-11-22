@@ -3,7 +3,6 @@ import {
   View,
   ScrollView,
   TextInput,
-  FlatList,
   Text,
   Image,
   TouchableOpacity,
@@ -13,21 +12,27 @@ import RNPickerSelect from 'react-native-picker-select';
 import style from '../global/style';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {useNavigation} from '@react-navigation/core';
+import Autocomplete from 'react-native-autocomplete-input';
 
 //import Icon from 'react-native-vector-icons/Ionicons';
 export default function CameraResultScreen({route}) {
   const detectionResult = route.params.detectionArr;
-  const [isDatePickerVisible1, setDatePickerVisibility1] = useState(false);
-  const [isDatePickerVisible2, setDatePickerVisibility2] = useState(false);
   const [data, setData] = useState([]);
   const tmpData = [];
+  const [adjustZIndex, setAdjustZIndex] = useState();
+  const [maxAryNum, setMaxAryNum] = useState(0);
+  const [filteredData, setFilteredData] = useState([]);
+  const [selectedItem, setSelectedItem] = useState({});
+  const [MasterData, setMasterData] = useState([]);
+  const navigation = useNavigation();
 
+  // 영수증으로 인식된 텍스트로 data 초기화
   useState(async () => {
     for (let i = 0; i < detectionResult.length; i++) {
       tmpData.push({
         no: i,
         name: detectionResult[i],
-        number: null,
+        number: '',
         startDate: '-',
         endDate: '-',
         saveType: 'empty',
@@ -36,24 +41,192 @@ export default function CameraResultScreen({route}) {
     }
     setData(tmpData);
   });
-  let maxAryNum;
-  const navigation = useNavigation();
 
+  // maxAryNum 초기화
   useEffect(() => {
-    maxAryNum = data.length;
+    setMaxAryNum(data.length);
   }, []);
 
-  const setDate = (_date, no) => {};
-  const setType = (_type, no) => {};
-  const setNumber = (_number, no) => {};
-  const setAdd = () => {};
+  //식재료 데이터 불러오기
+  useEffect(async () => {
+    // DB 연결 전 loading 시작
+    let dataObj = {
+      qry: 'SELECT * FROM developer_ingredient',
+    };
+    let json = await DataSet.getData(dataObj);
+    // json을 받아서 값이 false(값이 없음)이면 Data의 값을 빈배열을 배정
+    // false가 아니면 받아온 json을 배정
+    if (json !== false) {
+      setMasterData(json);
+    } else {
+      setMasterData([]);
+    }
+    // DB 연결 전 loading 해제
+  }, []);
+
+  //------------------ 식재료 검색 키워드로 필터링 하는 함수 ----------------------------
+
+  const filterData = text => {
+    if (text) {
+      //Making the Search as Case Insensitive.
+      const regex = new RegExp(`${text.trim()}`, 'i');
+      const newData = MasterData.filter(function (data) {
+        return data.d_ingredientName.search(regex) >= 0;
+      });
+      if (Array.isArray(newData) && newData.length === 0) {
+        setAdjustZIndex(0);
+      } else {
+        setAdjustZIndex(1);
+      }
+      setFilteredData(newData);
+      setText(text);
+    } else {
+      setAdjustZIndex(0);
+      setFilteredData([]);
+      setText(text);
+    }
+  };
+
+  const ingredient_find = text => {
+    if (text) {
+      for (let i = 0; i < MasterData.length; i++) {
+        if (text === MasterData[i].d_ingredientName) {
+          return MasterData[i];
+        }
+      }
+    }
+    return null;
+  };
+
+  function isEmptyObj(obj) {
+    if (obj.constructor === Object && Object.keys(obj).length === 0) {
+      return true;
+    }
+    return false;
+  }
+
+  const onSetStartDate = (_date, no) => {
+    setData(
+      data.map(item => (item.no === no ? {...item, startDate: _date} : item)),
+    );
+  };
+
+  const onSetEndDate = (_date, no) => {
+    setData(
+      data.map(item => (item.no === no ? {...item, endDate: _date} : item)),
+    );
+  };
+
+  const onSetSaveType = (_type, no) => {
+    setData(
+      data.map(item => (item.no === no ? {...item, saveType: _type} : item)),
+    );
+  };
+
+  const onSetDivType = (_type, no) => {
+    setData(
+      data.map(item => (item.no === no ? {...item, divType: _type} : item)),
+    );
+  };
+  const onSetNumber = (_number, no) => {
+    setData(
+      data.map(item => (item.no === no ? {...item, number: _number} : item)),
+    );
+  };
+
+  // AddBox 삭제
   const onDelete = no => {
     setData(data.filter(element => element.no !== no));
   };
 
-  const onInsert = () => {};
+  const onInsert = () => {
+    // // for (let i = 0; i < data.length; i++) {
+    // //   if (!text) {
+    // //     alert('식재료명을 입력해주세요');
+    // //     onCancle();
+    // //     return;
+    // //   }
+    // //   if (ingredient_find(text) === null) {
+    // //     alert('리스트에 등록된 식재료만 등록 가능합니다.');
+    // //     onCancle();
+    // //     return;
+    // //   }
+    // //   if (!number) {
+    // //     alert('용량을 입력해주세요');
+    // //     onCancle();
+    // //     return;
+    // //   }
+    // //   if (!number_rule.test(number)) {
+    // //     alert('용량을 형식에 맞게 입력해주세요');
+    // //     onCancle();
+    // //     return;
+    // //   }
+    // //   if (startDate === '-') {
+    // //     alert('구매일자를 입력해주세요');
+    // //     onCancle();
+    // //     return;
+    // //   }
+    // //   if (endDate === '-') {
+    // //     alert('유통기한을 입력해주세요');
+    // //     onCancle();
+    // //     return;
+    // //   }
+    // //   if (
+    // //     endDate.replace('-', '').replace('-', '') <
+    // //     startDate.replace('-', '').replace('-', '')
+    // //   ) {
+    // //     alert('유통기한이 구매일자보다 빠릅니다.');
+    // //     onCancle();
+    // //     return;
+    // //   }
+    // //   if (saveType === 'empty') {
+    // //     alert('보관방법을 선택해주세요');
+    // //     onCancle();
+    // //     return;
+    // //   }
+    // //   if (divType === 'empty') {
+    // //     alert('분류방법을 선택해주세요');
+    // //     onCancle();
+    // //     return;
+    // //   }
+    // //   let dataObj = {
+    // //     qry:
+    // //       'INSERT INTO ' +
+    // //       memberID.userID +
+    // //       ' (ingredient_name, ingredient_vol, ingredient_vol_unit,  ingredient_buyDate, ingredient_expiryDate, ingredient_type, ingredient_divtype, ingredient_delChecked) VALUES ("' +
+    // //       text +
+    // //       '", "' +
+    // //       number +
+    // //       '", "' +
+    // //       selectedItem.d_ingredientUnit +
+    // //       '", "' +
+    // //       startDate +
+    // //       '", "' +
+    // //       endDate +
+    // //       '", "' +
+    // //       saveType +
+    // //       '", "' +
+    // //       divType +
+    // //       '", "0")',
+    // //   };
+    // //   // DB 전송
+    // //   DataSet.setData(dataObj);
+    // //   // 변수 값 초기화
+    // //   onSlctChk(!Chk);
+    // }
+  };
 
   const RenderItem = ({item}) => {
+    const [no, setNo] = useState(item.no);
+    const [text, setText] = useState(item.name);
+    const [number, setNumber] = useState(item.number);
+    const [saveType, setSaveType] = useState(item.saveType);
+    const [divType, setDivType] = useState(item.divType);
+    const [startDate, setStartDate] = useState(item.startDate);
+    const [endDate, setEndDate] = useState(item.endDate);
+    const [isDatePickerVisible1, setDatePickerVisibility1] = useState(false);
+    const [isDatePickerVisible2, setDatePickerVisibility2] = useState(false);
+
     return (
       <View style={{flexDirection: 'column', margin: 10}}>
         <View style={{flexDirection: 'row'}}>
@@ -68,9 +241,9 @@ export default function CameraResultScreen({route}) {
             }}>
             <TouchableOpacity
               onPress={() => {
-                onDelete(item.no);
-                console.log(data);
-                console.log(maxAryNum);
+                onDelete(no);
+                //console.log(data);
+                //console.log(maxAryNum);
               }}>
               <Image
                 style={{
@@ -90,21 +263,81 @@ export default function CameraResultScreen({route}) {
               borderWidth: 2,
               borderColor: 'silver',
               borderTopLeftRadius: 10,
-              padding: 2,
             }}>
-            <TextInput
+            <View
               style={{
+                width: '100%',
                 height: 30,
-                padding: 0,
-                paddingLeft: 5,
-              }}
-              onChangeText={() => {
-                console.log('text 변경');
-              }}
-              value={item.name}
-              keyboardType="default"
-              placeholder="식재료"
-            />
+              }}>
+              <Autocomplete
+                style={{
+                  fontSize: 5,
+                  fontWeight: 'bold',
+                }}
+                autoCapitalize="none"
+                autoCorrect={false}
+                data={filteredData}
+                containerStyle={{
+                  backgroundColor: 'red',
+                  flex: 1,
+                  position: 'absolute',
+                  height: 30,
+                  width: '100%',
+                  zIndex: adjustZIndex,
+                }}
+                autoCorrect={false}
+                inputContainerStyle={{
+                  backgroundColor: 'blue',
+                  borderColor: 'white',
+                  width: '100%',
+                }}
+                listContainerStyle={{
+                  height: 93,
+                  width: '100%',
+                  opacity: 1,
+                  flex: 1,
+                  backgroundColor: 'white',
+                }}
+                defaultValue={
+                  JSON.stringify(selectedItem) === '{}'
+                    ? ''
+                    : selectedItem.d_ingredientName
+                }
+                onChangeText={query => {
+                  filterData(query);
+                  var tmp = ingredient_find(query);
+                  if (tmp !== null) {
+                    setSelectedItem(tmp);
+                  }
+                }}
+                placeholder="식재료"
+                hideResults={ingredient_find(text) !== null ? true : false}
+                flatListProps={{
+                  keyExtractor: (item, index) => index.toString(),
+                  renderItem: ({item}) => (
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: 'white',
+                        width: '100%',
+                        height: 30,
+                        justifyContent: 'center',
+                        borderBottomColor: '#eee',
+                        borderBottomWidth: 1,
+                      }}
+                      onPress={() => {
+                        setSelectedItem(item);
+                        setText(item.d_ingredientName);
+                        setFilteredData([]);
+                        setAdjustZIndex(0);
+                      }}>
+                      <Text style={style.text_RefrigeratorScreen}>
+                        {item.d_ingredientName}
+                      </Text>
+                    </TouchableOpacity>
+                  ),
+                }}
+              />
+            </View>
           </View>
           <View
             style={{
@@ -119,10 +352,14 @@ export default function CameraResultScreen({route}) {
                 padding: 0,
                 paddingLeft: 5,
               }}
-              onChangeText={() => {
-                console.log('text 변경');
+              onChangeText={number => {
+                setNumber(number);
               }}
-              value={item.number}
+              onEndEditing={() => {
+                onSetNumber(number, no);
+                console.log(data);
+              }}
+              value={number}
               keyboardType="number-pad"
               placeholder="용량"
             />
@@ -139,9 +376,7 @@ export default function CameraResultScreen({route}) {
             <RNPickerSelect
               style={{
                 inputAndroid:
-                  item.saveType === 'empty'
-                    ? {color: 'gray'}
-                    : {color: 'black'},
+                  saveType === 'empty' ? {color: 'gray'} : {color: 'black'},
                 inputIOS: {
                   height: 30,
                   padding: 2,
@@ -152,11 +387,13 @@ export default function CameraResultScreen({route}) {
                 },
               }}
               useNativeAndroidPickerStyle={false}
-              onValueChange={() => {
-                console.log('보관선택');
+              onValueChange={value => {
+                setSaveType(value);
+                onSetSaveType(value, no);
+                //console.log(data);
               }}
               placeholder={{}}
-              value={item.saveType}
+              value={saveType}
               items={[
                 {
                   label: '보관방법',
@@ -186,13 +423,15 @@ export default function CameraResultScreen({route}) {
               onPress={() => {
                 setDatePickerVisibility1(true);
               }}>
-              <Text style={{textAlign: 'center'}}>{item.startDate}</Text>
+              <Text style={{textAlign: 'center'}}>{startDate.substr(2)}</Text>
             </TouchableOpacity>
             <DateTimePickerModal
               isVisible={isDatePickerVisible1}
               mode="date"
               onConfirm={date => {
-                date.toISOString().split('T')[0];
+                setStartDate(date.toISOString().split('T')[0]);
+                onSetStartDate(date.toISOString().split('T')[0], no);
+                console.log(data);
                 setDatePickerVisibility1(false);
               }}
               onCancel={() => {
@@ -222,15 +461,17 @@ export default function CameraResultScreen({route}) {
             }}>
             <TouchableOpacity
               onPress={() => {
-                setDatePickerVisibility1(true);
+                setDatePickerVisibility2(true);
               }}>
-              <Text style={{textAlign: 'center'}}>{item.endDate}</Text>
+              <Text style={{textAlign: 'center'}}>{endDate.substr(2)}</Text>
             </TouchableOpacity>
             <DateTimePickerModal
               isVisible={isDatePickerVisible2}
               mode="date"
               onConfirm={date => {
-                date.toISOString().split('T')[0];
+                setEndDate(date.toISOString().split('T')[0]);
+                onSetEndDate(date.toISOString().split('T')[0], no);
+                console.log(data);
                 setDatePickerVisibility2(false);
               }}
               onCancel={() => {
@@ -251,7 +492,7 @@ export default function CameraResultScreen({route}) {
             <RNPickerSelect
               style={{
                 inputAndroid:
-                  item.divType === 'empty' ? {color: 'gray'} : {color: 'black'},
+                  divType === 'empty' ? {color: 'gray'} : {color: 'black'},
                 inputIOS: {
                   height: 30,
                   padding: 2,
@@ -261,12 +502,14 @@ export default function CameraResultScreen({route}) {
                   padding: 2,
                 },
               }}
-              onValueChange={() => {
-                console.log('분류선택');
+              onValueChange={value => {
+                setDivType(value);
+                onSetDivType(value, no);
+                //onsole.log(data);
               }}
               useNativeAndroidPickerStyle={false}
               placeholder={{}}
-              value={item.divType}
+              value={divType}
               items={[
                 {
                   label: '분류방법',
@@ -319,6 +562,7 @@ export default function CameraResultScreen({route}) {
           borderBottomRightRadius: 0,
         }}>
         <ScrollView
+          keyboardDismissMode="on-drag"
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           style={{height: 430}}>
@@ -333,15 +577,18 @@ export default function CameraResultScreen({route}) {
               ...data,
               {
                 no: maxAryNum,
-                name: null,
-                number: null,
+                name: '',
+                number: '',
                 startDate: '-',
                 endDate: '-',
                 saveType: 'empty',
                 divType: 'empty',
               },
             ]);
-            maxAryNum = maxAryNum + 1;
+            console.log(maxAryNum);
+            let tmp_max = maxAryNum + 1;
+            setMaxAryNum(tmp_max);
+            console.log(maxAryNum);
           }}
           style={{justifyContent: 'center', height: 50}}>
           <Text style={{color: 'gray', textAlign: 'center', fontSize: 15}}>
@@ -378,6 +625,8 @@ export default function CameraResultScreen({route}) {
           <Pressable
             onPress={() => {
               navigation.navigate('ManageTab');
+              console.log('추가 시작');
+              onInsert();
             }}
             style={({pressed}) => [
               {

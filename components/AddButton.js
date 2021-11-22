@@ -17,7 +17,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import style from '../global/style';
-import RNFS from 'react-native-fs';
+// import RNFS, {resumeDownload} from 'react-native-fs';
 
 Icon.loadFont();
 
@@ -38,55 +38,38 @@ export default function AddButton({onSlctChk, Chk}) {
   const [selectedItem, setSelectedItem] = useState({});
   const [adjustZIndex, setAdjustZIndex] = useState();
   const navigation = useNavigation();
-
   const refRBSheet = useRef(); // BottomSheet
-
   const numberInputRef = createRef();
-
   var number_rule = /^([0-9]){1,6}$/; // id 5~25자
 
   var onlyKor = /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
   //한글만 남기는 정규식
-  const [imgTobase64, setImgTobase64] = useState(''); // imagePath -> base64 유형으로 인코딩 했을 때 결과값 저장 변수
-  const [imagePath, setImagePath] = useState(
-    '/Users/xiu0327/newUpdate_1118/Refrigerator-Recipe/imgpath/receipt3.jpeg',
-  );
-
-  const [ingredientData, setIngredientData] = useState(); // 개발자 재료 데이터
-
-  useState(async () => {
-    let dataObj = {
-      qry: 'SELECT * FROM `developer_ingredient`',
-    };
-    // 쿼리 전송후 json으로 전달 받음
-    let json = await DataSet.getData(dataObj);
-    setIngredientData(json);
-  }, []);
 
   // 텍스트 인식 함수
-  const filterArr = async () => {
-    let tmp_detectionArr = await DataSet.textDetection(imgTobase64);
+  const filterArr = async imagePath => {
+    let tmp_detectionArr = await DataSet.textDetection(imagePath);
     let detectionArr = tmp_detectionArr.map(ingredient =>
       ingredient.replace(onlyKor, ''),
     );
     let resultArr = [];
     let set = [];
     // 텍스트 인식 결과값을 배열로 저장하는 변수
-    for (let i = 0; i < ingredientData.length; i++) {
+    for (let i = 0; i < MasterData.length; i++) {
       const found = detectionArr.find(function (element) {
-        return element == ingredientData[i].d_ingredientName;
+        return element == MasterData[i].d_ingredientName;
       });
       if (found != undefined) {
         resultArr.push(found);
         set = new Set(resultArr);
       }
     }
+    console.log(resultArr);
     return Array.from(set);
   };
 
   // 라벨 인식 함수
-  const labalArr = async () => {
-    let tmp_detectionArr = await DataSet.labelDetection(imgTobase64);
+  const labalArr = async imagePath => {
+    let tmp_detectionArr = await DataSet.labelDetection(imagePath);
     let tmp2_detectionArr = [];
     for (let i = 0; i < tmp_detectionArr.length; i++) {
       tmp2_detectionArr.push({
@@ -99,9 +82,9 @@ export default function AddButton({onSlctChk, Chk}) {
 
     let resultArr = [];
     let set = [];
-    for (let i = 0; i < ingredientData.length; i++) {
+    for (let i = 0; i < MasterData.length; i++) {
       const found = detectionArr.find(function (element) {
-        return element.ingredient == ingredientData[i].d_ingredientName;
+        return element.ingredient == MasterData[i].d_ingredientName;
       });
       if (found != undefined) {
         resultArr.push(found);
@@ -110,24 +93,6 @@ export default function AddButton({onSlctChk, Chk}) {
     }
     return Array.from(set);
   };
-
-  // -------------------- 카메라, 갤러리에서 사진 선택해서 설정 --------------------------
-
-  const cameraImage = async () => {
-    ImagePicker.openCamera({width: 85, height: 85, cropping: true})
-      .then(image => {
-        console.log(image.path);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-    return result;
-  };
-
-  // -------------------- 이미지 경로 -> base64 format으로 인코딩 --------------------------
-  RNFS.readFile(imagePath, 'base64').then(res => {
-    setImgTobase64(res);
-  });
 
   // --------------------- 식재료 자동완성 배열 검색 -----------------------------------
 
@@ -359,8 +324,13 @@ export default function AddButton({onSlctChk, Chk}) {
               ]}
               onPress={async () => {
                 setModalVisible(!modalVisible);
-                //cameraImage();
-                let result = await filterArr();
+                const imagePath = await ImagePicker.openCamera({
+                  width: 768,
+                  height: 1024,
+                  includeBase64: true,
+                  cropping: true,
+                }).catch(e => console.log(e));
+                let result = await filterArr(imagePath.data);
                 navigation.navigate('CameraResult', {detectionArr: result});
               }}>
               <Text
@@ -389,8 +359,14 @@ export default function AddButton({onSlctChk, Chk}) {
               ]}
               onPress={async () => {
                 setModalVisible(!modalVisible);
-                //cameraImage();
-                let tmpResult = await labalArr();
+                const imagePath = await ImagePicker.openCamera({
+                  width: 768,
+                  height: 1024,
+                  includeBase64: true,
+                  cropping: true,
+                }).catch(e => console.log(e));
+
+                let tmpResult = await labalArr(imagePath.data);
                 let result = [];
                 for (let i = 0; i < tmpResult.length; i++) {
                   if (tmpResult[i].prob >= 0.3)

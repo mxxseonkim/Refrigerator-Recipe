@@ -94,11 +94,10 @@ const labelDetection = async imgPath => {
 //------------ 텍스트 인식 ------------
 
 const textDetection = async imgPath => {
-  console.log(imgPath);
   let url =
     googleVisionKey.googleCloud.api + googleVisionKey.googleCloud.apiKey;
   let tmp = '';
-  await fetch(url, {
+  const response = await fetch(url, {
     method: 'POST',
     body: JSON.stringify({
       requests: [
@@ -110,14 +109,11 @@ const textDetection = async imgPath => {
         },
       ],
     }),
-  })
-    .then(res => res.json())
-    .then(data => {
-      tmp = data.responses[0].fullTextAnnotation.text;
-    })
-    .catch(err => console.log('error : ', err));
-
+  });
+  const res = await response.json();
+  tmp = res.responses[0].fullTextAnnotation.text;
   let result = tmp.split('\n');
+  console.log(result);
   return result;
 };
 

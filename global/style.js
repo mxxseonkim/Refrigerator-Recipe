@@ -43,8 +43,6 @@ const style = StyleSheet.create({
     margin: 10,
     marginLeft: 15,
     marginRight: 5,
-    //padingLeft: 15,
-    //backgroundColor: 'red',
   },
   button_RefrigeratorScreen: {
     padding: 10,
@@ -107,7 +105,13 @@ const style = StyleSheet.create({
   itemImg_RefrigeratorScreen: {
     width: 60,
     height: 60,
+    //backgroundColor: 'red',
     resizeMode: 'cover',
+  },
+  itemTextView_RefrigeratorScreen: {
+    flexDirection: 'column',
+    width: '75%',
+    paddingVertical: 15,
   },
   itemImg2_RefrigeratorScreen: {
     width: 65,
