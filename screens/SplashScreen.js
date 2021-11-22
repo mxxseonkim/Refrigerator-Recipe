@@ -7,28 +7,28 @@ export default function SplashScreen({navigation}) {
   const [animating, setAnimating] = useState(true);
   const memberID = require('../global/Global');
 
-  //-------------- ë¡œì»¬ì— user_idê°€ ì €ì¥ ë˜ì–´ ìˆëŠ”ì§€ í™•ì¸í•˜ëŠ” í•¨ìˆ˜ -----------------------
+  //-------------- ë¡œì»¬?— user_idê°? ????¥ ?˜?–´ ?ˆ?Š”ì§? ?™•?¸?•˜?Š” ?•¨?ˆ˜ -----------------------
 
   useEffect(() => {
     setTimeout(async () => {
       setAnimating(false);
       const value = await AsyncStorage.getItem('user_id');
-      // user_idê°€ ìˆìœ¼ë©´ (nullì´ ì•„ë‹ˆë©´)
+      // user_idê°? ?ˆ?œ¼ë©? (null?´ ?•„?‹ˆë©?)
       if (value !== null) {
-        // memberID.userIDì— ê°’ ì‚½ì… -> í…Œì´ë¸” ëª…
+        // memberID.userID?— ê°? ?‚½?… -> ?…Œ?´ë¸? ëª?
         memberID.userID = value;
       }
-      // user_id - ì—†ìœ¼ë©´ (null) Auth ì´ë™ / ìˆìœ¼ë©´ DrawerTab ì´ë™
+      // user_id - ?—†?œ¼ë©? (null) Auth ?´?™ / ?ˆ?œ¼ë©? DrawerTab ?´?™
       navigation.replace(value === null ? 'Auth' : 'DrawerTab');
     }, 3000);
   }, []);
 
-  //---------------------------UI ë¶€ë¶„-------------------------------------------------
+  //---------------------------UI ë¶?ë¶?-------------------------------------------------
 
   return (
     <View style={style.container_SplashScreen}>
       <Image
-        source={require('C:/Users/Administrator/react-native/Refrigerator-recipe/Refrigerator-Recipe-1/imgpath/logo.gif')}
+        source={require('../imgpath/logo.gif')}
         style={style.img_SplashScreen}
       />
       <ActivityIndicator

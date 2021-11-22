@@ -17,7 +17,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import style from '../global/style';
-import RNFS from 'react-native-fs';
+// import RNFS from 'react-native-fs';
 
 Icon.loadFont();
 
@@ -25,16 +25,16 @@ export default function AddButton({onSlctChk, Chk}) {
   const DataSet = require('../global/DataSet');
   const memberID = require('../global/Global');
   const [modalVisible, setModalVisible] = useState(false);
-  const [text, setText] = useState(null); // 이름
-  const [number, setNumber] = useState(null); // 용량
+  const [text, setText] = useState(null); // ?���?
+  const [number, setNumber] = useState(null); // ?��?��
   const [isDatePickerVisible1, setDatePickerVisibility1] = useState(false);
   const [isDatePickerVisible2, setDatePickerVisibility2] = useState(false);
-  const [startDate, setStartDate] = useState('-'); // 구매일자
-  const [endDate, setEndDate] = useState('-'); // 유통기한
-  const [divType, setDivType] = useState('empty'); // 분류방법 선택
-  const [saveType, setSaveType] = useState('empty'); // 보관방법 선택
-  const [MasterData, setMasterData] = useState([]); // 전체 재료 데이터
-  const [filteredData, setFilteredData] = useState([]); // 재료검색 키워드에 필터링된 데이터
+  const [startDate, setStartDate] = useState('-'); // 구매?��?��
+  const [endDate, setEndDate] = useState('-'); // ?��?��기한
+  const [divType, setDivType] = useState('empty'); // 분류방법 ?��?��
+  const [saveType, setSaveType] = useState('empty'); // 보�??방법 ?��?��
+  const [MasterData, setMasterData] = useState([]); // ?���? ?���? ?��?��?��
+  const [filteredData, setFilteredData] = useState([]); // ?��료�???�� ?��?��?��?�� ?��?��링된 ?��?��?��
   const [selectedItem, setSelectedItem] = useState({});
   const [adjustZIndex, setAdjustZIndex] = useState();
   const navigation = useNavigation();
@@ -43,30 +43,30 @@ export default function AddButton({onSlctChk, Chk}) {
 
   const numberInputRef = createRef();
 
-  var number_rule = /^([0-9]){1,6}$/; // id 5~25자
+  var number_rule = /^([0-9]){1,6}$/; // id 5~25?��
 
   var onlyKor= /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
-  //한글만 남기는 정규식
-  const [imgTobase64, setImgTobase64] = useState(''); // imagePath -> base64 유형으로 인코딩 했을 때 결과값 저장 변수
-  const [imagePath, setImagePath] = useState('/Users/xiu0327/newUpdate_1118/Refrigerator-Recipe/imgpath/receipt3.jpeg');
-  const [ingredientData, setIngredientData] = useState(); // 개발자 재료 데이터
+  //?���?�? ?��기는 ?��규식
+  const [imgTobase64, setImgTobase64] = useState(''); // imagePath -> base64 ?��?��?���? ?��코딩 ?��?�� ?�� 결과�? ????�� �??��
+  const [imagePath, setImagePath] = useState('../imgpath/receipt3.jpeg');
+  const [ingredientData, setIngredientData] = useState(); // 개발?�� ?���? ?��?��?��
 
   useState(async () => {
     let dataObj = {
       qry: 'SELECT * FROM `developer_ingredient`',
     };
-    // 쿼리 전송후 json으로 전달 받음
+    // 쿼리 ?��?��?�� json?���? ?��?�� 받음
     let json = await DataSet.getData(dataObj);
     setIngredientData(json);
   }, []);
 
-  // 텍스트 인식 함수
+  // ?��?��?�� ?��?�� ?��?��
   const filterArr = async () => {
     let tmp_detectionArr = await DataSet.textDetection(imgTobase64);
     let detectionArr = tmp_detectionArr.map((ingredient) => ingredient.replace(onlyKor, ''));
     let resultArr = [];
     let set = [];
-    // 텍스트 인식 결과값을 배열로 저장하는 변수
+    // ?��?��?�� ?��?�� 결과값을 배열�? ????��?��?�� �??��
     for(let i = 0; i<ingredientData.length; i++){
       const found = detectionArr.find(function (element) {
         return element == ingredientData[i].d_ingredientName
@@ -79,7 +79,7 @@ export default function AddButton({onSlctChk, Chk}) {
     return Array.from(set);
   }
 
-  // 라벨 인식 함수
+  // ?���? ?��?�� ?��?��
   const labalArr = async () => {
     let tmp_detectionArr = await DataSet.labelDetection(imgTobase64);
     let tmp2_detectionArr = [];
@@ -103,7 +103,7 @@ export default function AddButton({onSlctChk, Chk}) {
     return Array.from(set);
   }
 
-  // -------------------- 카메라, 갤러리에서 사진 선택해서 설정 --------------------------
+  // -------------------- 카메?��, 갤러리에?�� ?���? ?��?��?��?�� ?��?�� --------------------------
 
   const cameraImage = async () => {
     ImagePicker.openCamera({width: 85, height: 85, cropping: true})
@@ -116,13 +116,13 @@ export default function AddButton({onSlctChk, Chk}) {
       return result;
   };
 
-  // -------------------- 이미지 경로 -> base64 format으로 인코딩 --------------------------
-  RNFS.readFile(imagePath, 'base64')
-  .then(res =>{
-    setImgTobase64(res);
-  });
+  // -------------------- ?��미�?? 경로 -> base64 format?���? ?��코딩 --------------------------
+  // RNFS.readFile(imagePath, 'base64')
+  // .then(res =>{
+  //   setImgTobase64(res);
+  // });
 
-  // --------------------- 식재료 자동완성 배열 검색 -----------------------------------
+  // --------------------- ?��?���? ?��?��?��?�� 배열 �??�� -----------------------------------
 
   const ingredient_find = text => {
     if (text) {
@@ -139,50 +139,50 @@ export default function AddButton({onSlctChk, Chk}) {
 
   //onSelect
   useEffect(async () => {
-    // DB 연결 전 loading 시작
+    // DB ?���? ?�� loading ?��?��
     let dataObj = {
       qry: 'SELECT * FROM developer_ingredient',
     };
     let json = await DataSet.getData(dataObj);
-    // json을 받아서 값이 false(값이 없음)이면 Data의 값을 빈배열을 배정
-    // false가 아니면 받아온 json을 배정
+    // json?�� 받아?�� 값이 false(값이 ?��?��)?���? Data?�� 값을 빈배?��?�� 배정
+    // false�? ?��?���? 받아?�� json?�� 배정
     if (json !== false) {
       setMasterData(json);
     } else {
       setMasterData([]);
     }
-    // DB 연결 전 loading 해제
+    // DB ?���? ?�� loading ?��?��
   }, []);
 
   const onInsert = () => {
-    // alert로 입력 제한
+    // alert�? ?��?�� ?��?��
     if (!text) {
-      alert('식재료명을 입력해주세요');
+      alert('?��?��료명?�� ?��?��?��주세?��');
       onCancle();
       return;
     }
     if (ingredient_find(text) === null) {
-      alert('리스트에 등록된 식재료만 등록 가능합니다.');
+      alert('리스?��?�� ?��록된 ?��?��료만 ?���? �??��?��?��?��.');
       onCancle();
       return;
     }
     if (!number) {
-      alert('용량을 입력해주세요');
+      alert('?��?��?�� ?��?��?��주세?��');
       onCancle();
       return;
     }
     if (!number_rule.test(number)) {
-      alert('용량을 형식에 맞게 입력해주세요');
+      alert('?��?��?�� ?��?��?�� 맞게 ?��?��?��주세?��');
       onCancle();
       return;
     }
     if (startDate === '-') {
-      alert('구매일자를 입력해주세요');
+      alert('구매?��?���? ?��?��?��주세?��');
       onCancle();
       return;
     }
     if (endDate === '-') {
-      alert('유통기한을 입력해주세요');
+      alert('?��?��기한?�� ?��?��?��주세?��');
       onCancle();
       return;
     }
@@ -190,17 +190,17 @@ export default function AddButton({onSlctChk, Chk}) {
       endDate.replace('-', '').replace('-', '') <
       startDate.replace('-', '').replace('-', '')
     ) {
-      alert('유통기한이 구매일자보다 빠릅니다.');
+      alert('?��?��기한?�� 구매?��?��보다 빠릅?��?��.');
       onCancle();
       return;
     }
     if (saveType === 'empty') {
-      alert('보관방법을 선택해주세요');
+      alert('보�??방법?�� ?��?��?��주세?��');
       onCancle();
       return;
     }
     if (divType === 'empty') {
-      alert('분류방법을 선택해주세요');
+      alert('분류방법?�� ?��?��?��주세?��');
       onCancle();
       return;
     }
@@ -226,17 +226,17 @@ export default function AddButton({onSlctChk, Chk}) {
         '", "0")',
     };
 
-    // DB 전송
+    // DB ?��?��
     DataSet.setData(dataObj);
-    // 변수 값 초기화
+    // �??�� �? 초기?��
     onCancle();
-    // insert 이후 RefrigeratorScreen의 onSelect(useEffect)를 실행하기 위해 onSlctChk(!Chk) => State 끌어올리기
-    // 실질적으로 실행되는 곳은 TabStackRouter[ManageStack]의 onSlctChk함수
+    // insert ?��?�� RefrigeratorScreen?�� onSelect(useEffect)�? ?��?��?���? ?��?�� onSlctChk(!Chk) => State ?��?��?��리기
+    // ?��질적?���? ?��?��?��?�� 곳�?? TabStackRouter[ManageStack]?�� onSlctChk?��?��
     onSlctChk(!Chk);
   };
 
   const onCancle = () => {
-    // 변수 값들 초기화 함수
+    // �??�� 값들 초기?�� ?��?��
     onSetText(null);
     onSetNumber(null);
     onSetStartDate('-');
@@ -247,29 +247,29 @@ export default function AddButton({onSlctChk, Chk}) {
     setSelectedItem({});
   };
 
-  //---------------------- UI 값 변경 함수 -------------------------------------
+  //---------------------- UI �? �?�? ?��?�� -------------------------------------
 
-  // 이름 변수 변경
+  // ?���? �??�� �?�?
   const onSetText = _text => {
     setText(_text);
   };
 
-  // 용량 변수 변경
+  // ?��?�� �??�� �?�?
   const onSetNumber = _number => {
     setNumber(_number);
   };
 
-  // 구매일자 변수 변경
+  // 구매?��?�� �??�� �?�?
   const onSetStartDate = _date => {
     setStartDate(_date);
   };
 
-  // 유통기한 변수 변경
+  // ?��?��기한 �??�� �?�?
   const onSetEndDate = _date => {
     setEndDate(_date);
   };
 
-  //------------------ 식재료 검색 키워드로 필터링 하는 함수 ----------------------------
+  //------------------ ?��?���? �??�� ?��?��?���? ?��?���? ?��?�� ?��?�� ----------------------------
 
   const filterData = text => {
     if (text) {
@@ -299,7 +299,7 @@ export default function AddButton({onSlctChk, Chk}) {
     return false;
   }
 
-  //---------------------- UI 부분 ---------------------------------------------
+  //---------------------- UI �?�? ---------------------------------------------
 
   return (
     <TouchableOpacity
@@ -363,7 +363,7 @@ export default function AddButton({onSlctChk, Chk}) {
                   textAlign: 'center',
                   fontSize: 15,
                 }}>
-                영수증 인식
+                ?��?���? ?��?��
               </Text>
             </Pressable>
             <Pressable
@@ -398,7 +398,7 @@ export default function AddButton({onSlctChk, Chk}) {
                   textAlign: 'center',
                   fontSize: 15,
                 }}>
-                이미지 인식
+                ?��미�?? ?��?��
               </Text>
             </Pressable>
             <Pressable
@@ -429,7 +429,7 @@ export default function AddButton({onSlctChk, Chk}) {
                   textAlign: 'center',
                   fontSize: 15,
                 }}>
-                사용자 추가
+                ?��?��?�� 추�??
               </Text>
             </Pressable>
           </View>
@@ -467,7 +467,7 @@ export default function AddButton({onSlctChk, Chk}) {
                     style.textView_RefrigeratorScreen,
                     {flexDirection: 'row', width: '30%'},
                   ]}>
-                  <Text style={style.text_RefrigeratorScreen}>식재료명</Text>
+                  <Text style={style.text_RefrigeratorScreen}>?��?��료명</Text>
                 </View>
                 <View
                   style={{
@@ -517,7 +517,7 @@ export default function AddButton({onSlctChk, Chk}) {
                         setSelectedItem(tmp);
                       }
                     }}
-                    placeholder="입력해주세요"
+                    placeholder="?��?��?��주세?��"
                     hideResults={ingredient_find(text) !== null ? true : false}
                     flatListProps={{
                       keyExtractor: (item, index) => index.toString(),
@@ -553,7 +553,7 @@ export default function AddButton({onSlctChk, Chk}) {
                     {flexDirection: 'row', width: '30%'},
                   ]}>
                   <Text style={style.text_RefrigeratorScreen}>
-                    용량{' '}
+                    ?��?��{' '}
                     {!isEmptyObj(selectedItem) &&
                       '(' + selectedItem.d_ingredientUnit + ')'}
                   </Text>
@@ -576,7 +576,7 @@ export default function AddButton({onSlctChk, Chk}) {
                       value={number}
                       keyboardType="number-pad"
                       ref={numberInputRef}
-                      placeholder="입력해주세요"
+                      placeholder="?��?��?��주세?��"
                     />
                   </View>
                 </View>
@@ -589,7 +589,7 @@ export default function AddButton({onSlctChk, Chk}) {
                 style.textView_RefrigeratorScreen,
                 {flexDirection: 'row', width: '20%'},
               ]}>
-              <Text style={style.text_RefrigeratorScreen}>구매일자</Text>
+              <Text style={style.text_RefrigeratorScreen}>구매?��?��</Text>
             </View>
             <View style={{width: '80%', flexDirection: 'row'}}>
               <View
@@ -626,7 +626,7 @@ export default function AddButton({onSlctChk, Chk}) {
           </View>
           <View style={{flexDirection: 'row'}}>
             <View style={[style.textView_RefrigeratorScreen, {width: '20%'}]}>
-              <Text style={style.text_RefrigeratorScreen}>유통기한</Text>
+              <Text style={style.text_RefrigeratorScreen}>?��?��기한</Text>
             </View>
             <View style={{width: '80%', flexDirection: 'row'}}>
               <View
@@ -667,7 +667,7 @@ export default function AddButton({onSlctChk, Chk}) {
                 style.textView_RefrigeratorScreen,
                 {flexDirection: 'row', width: '20%'},
               ]}>
-              <Text style={style.text_RefrigeratorScreen}>보관방법</Text>
+              <Text style={style.text_RefrigeratorScreen}>보�??방법</Text>
             </View>
             <View style={{width: '60%'}}>
               <RNPickerSelect
@@ -682,14 +682,14 @@ export default function AddButton({onSlctChk, Chk}) {
                 value={saveType}
                 items={[
                   {
-                    label: '보관방법 선택',
+                    label: '보�??방법 ?��?��',
                     value: 'empty',
-                    inputLabel: '보관방법 선택',
+                    inputLabel: '보�??방법 ?��?��',
                   },
-                  {label: '냉장', value: 'cold', inputLabel: '냉장'},
-                  {label: '냉동', value: 'frozen', inputLabel: '냉동'},
-                  {label: '조미료', value: 'condi', inputLabel: '조미료'},
-                  {label: '실온', value: 'room', inputLabel: '실온'},
+                  {label: '?��?��', value: 'cold', inputLabel: '?��?��'},
+                  {label: '?��?��', value: 'frozen', inputLabel: '?��?��'},
+                  {label: '조�?�료', value: 'condi', inputLabel: '조�?�료'},
+                  {label: '?��?��', value: 'room', inputLabel: '?��?��'},
                 ]}></RNPickerSelect>
             </View>
           </View>
@@ -714,20 +714,20 @@ export default function AddButton({onSlctChk, Chk}) {
                 value={divType}
                 items={[
                   {
-                    label: '분류방법 선택',
+                    label: '분류방법 ?��?��',
                     value: 'empty',
-                    inputLabel: '분류방법 선택',
+                    inputLabel: '분류방법 ?��?��',
                   },
                   {label: '곡류', value: 'cereals', inputLabel: '곡류'},
-                  {label: '어육류', value: 'meat', inputLabel: '어육류'},
-                  {label: '채소류', value: 'vegetables', inputLabel: '채소류'},
+                  {label: '?��?���?', value: 'meat', inputLabel: '?��?���?'},
+                  {label: '채소�?', value: 'vegetables', inputLabel: '채소�?'},
                   {
-                    label: '유지 및 당류',
+                    label: '?���? �? ?���?',
                     value: 'oilfat',
-                    inputLabel: '유지 및 당류',
+                    inputLabel: '?���? �? ?���?',
                   },
-                  {label: '유제품류', value: 'milk', inputLabel: '유제품류'},
-                  {label: '과일류', value: 'fruit', inputLabel: '과일류'},
+                  {label: '?��?��?���?', value: 'milk', inputLabel: '?��?��?���?'},
+                  {label: '과일�?', value: 'fruit', inputLabel: '과일�?'},
                 ]}></RNPickerSelect>
             </View>
           </View>
@@ -741,10 +741,10 @@ export default function AddButton({onSlctChk, Chk}) {
               ]}
               onPress={() => {
                 refRBSheet.current.close();
-                // 추가 버튼을 눌려서 onInsert() 함수 실행
+                // 추�?? 버튼?�� ?��?��?�� onInsert() ?��?�� ?��?��
                 onInsert();
               }}>
-              <Text style={style.textStyle_RefrigeratorScreen}>추가</Text>
+              <Text style={style.textStyle_RefrigeratorScreen}>추�??</Text>
             </Pressable>
             <Pressable
               style={({pressed}) => [

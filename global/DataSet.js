@@ -1,7 +1,7 @@
-import googleVisionKey from '/Users/xiu0327/newUpdate_1118/Refrigerator-Recipe/googleKey/googleVisionKey.json';
-import googleTranslationKey from '/Users/xiu0327/newUpdate_1118/Refrigerator-Recipe/googleKey/googleTranslationKey.json';
+import googleVisionKey from '../googleKey/googleVisionKey.json';
+import googleTranslationKey from '../googleKey/googleTranslationKey.json';
 
-//--------------- Data select - ì¿¼ë¦¬ ì†¡ì‹  ë° json ìˆ˜ì‹  ---------------------
+//--------------- Data select - ì¿¼ë¦¬ ?†¡?‹  ë°? json ?ˆ˜?‹  ---------------------
 const getData = async dataObj => {
   try {
     //console.log(dataObj.qry);
@@ -17,7 +17,7 @@ const getData = async dataObj => {
   }
 };
 
-//---------------  Data Insert/Update/delete - ì¿¼ë¦¬ ì†¡ì‹  ------------------
+//---------------  Data Insert/Update/delete - ì¿¼ë¦¬ ?†¡?‹  ------------------
 const setData = async dataObj => {
   try {
     //console.log(dataObj.qry);
@@ -31,7 +31,7 @@ const setData = async dataObj => {
   }
 };
 
-//------------ Data select Check(True/False) - ì¿¼ë¦¬ ì†¡ì‹  ë° json ìˆ˜ì‹  ----------
+//------------ Data select Check(True/False) - ì¿¼ë¦¬ ?†¡?‹  ë°? json ?ˆ˜?‹  ----------
 const overlabCheck = async dataObj => {
   try {
     const response = await fetch('http://54.180.126.3/phpdir/id_check.php', {
@@ -47,7 +47,7 @@ const overlabCheck = async dataObj => {
   }
 };
 
-//------------ ì•„ì´ë”” ë° ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸° ë•Œ ì´ë©”ì¼ ì†¡ìˆ˜ì‹  ------------
+//------------ ?•„?´?”” ë°? ë¹„ë??ë²ˆí˜¸ ì°¾ê¸° ?•Œ ?´ë©”ì¼ ?†¡?ˆ˜?‹  ------------
 const sendUserEmail = async dataObj => {
   try {
     const response = await fetch(
@@ -66,7 +66,7 @@ const sendUserEmail = async dataObj => {
   }
 };
 
-//------------ ì´ë¯¸ì§€ ì¸ì‹ ------------
+//------------ ?´ë¯¸ì?? ?¸?‹ ------------
 
 const labelDetection = async (imgPath) => {
   let url = googleVisionKey.googleCloud.api + googleVisionKey.googleCloud.apiKey;
@@ -97,7 +97,7 @@ const labelDetection = async (imgPath) => {
 }
 
 
-//------------ í…ìŠ¤íŠ¸ ì¸ì‹ ------------
+//------------ ?…?Š¤?Š¸ ?¸?‹ ------------
 
 const textDetection = async (imgPath) => {
   let url = googleVisionKey.googleCloud.api + googleVisionKey.googleCloud.apiKey;
@@ -130,7 +130,7 @@ const textDetection = async (imgPath) => {
 
 
 
-//------------ í…ìŠ¤íŠ¸ ë²ˆì—­ ------------
+//------------ ?…?Š¤?Š¸ ë²ˆì—­ ------------
 
 const textTranslation = async (textArr) =>{
   let result = [];
