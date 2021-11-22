@@ -8,13 +8,13 @@ import Search_pw2 from '../screens/Search_pw2';
 import 'react-native-gesture-handler';
 import {createStackNavigator} from '@react-navigation/stack';
 
-//Stack 네비게이터 정의/생성
+//Stack ?��비게?��?�� ?��?��/?��?��
 const Stack = createStackNavigator();
 
 export default function AuthStack() {
   return (
-    // 첫화면/기본화면 Login 설정
-    // Login, Register 컴포넌트 스크린 등록
+    // 첫화�?/기본?���? Login ?��?��
+    // Login, Register 컴포?��?�� ?��?���? ?���?
     <Stack.Navigator initialRouteName="Login">
       <Stack.Screen
         name="Login"
