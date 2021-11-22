@@ -1,4 +1,8 @@
 import React, {useState, createRef} from 'react';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import 'react-native-gesture-handler';
 import Loader from '../components/Loader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -89,8 +93,7 @@ export default function LoginScreen({navigation}) {
         />
       </View>
       <View style={style.TextArea_LoginScreen}>
-        <Text style={style.Text_LoginScreen}>앱을 이용하기 위해</Text>
-        <Text style={style.Text_LoginScreen}>로그인이 필요해요</Text>
+        <Text style={style.Text_LoginScreen}>서비스 이용을 위해 로그인이 필요해요.</Text>
       </View>
       <View style={style.formArea_LoginScreen}>
         <TextInput
@@ -139,7 +142,7 @@ export default function LoginScreen({navigation}) {
           <TouchableOpacity
             style={style.btn_LoginScreen}
             onPress={handleSubmitButton}>
-            <Text style={(style.Text_LoginScreen, {color: 'white'})}>
+            <Text style={(style.Text_LoginScreen, {color: 'white', fontSize: wp('4.5%')})}>
               로그인
             </Text>
           </TouchableOpacity>

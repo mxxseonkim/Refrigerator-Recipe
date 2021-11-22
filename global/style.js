@@ -114,14 +114,9 @@ const style = StyleSheet.create({
     paddingVertical: 15,
   },
   itemImg2_RefrigeratorScreen: {
-    width: 65,
-    height: 65,
-
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: 'salmon',
+    width: 70,
+    height: 70,
     resizeMode: 'cover',
-    backgroundColor: 'white',
   },
   itemImg3_RefrigeratorScreen: {
     width: 30,
@@ -135,6 +130,11 @@ const style = StyleSheet.create({
     fontWeight: 'bold',
   },
   itemMsg_RefrigeratorScreen: {
+    paddingRight: 15,
+    height: 30,
+    fontSize: 14,
+  },
+  itemDate_RefrigeratorScreen: {
     height: 30,
     fontSize: 14,
   },
@@ -155,38 +155,67 @@ const style = StyleSheet.create({
   root_RecipeList: {
     flex: 1,
     padding: 5,
+    backgroundColor: 'white',
   },
   itemView_RecipeList: {
     flex: 1,
+    height: 60,
     flexDirection: 'row',
-    marginLeft: 25,
+    marginLeft: 18,
     marginRight: 25,
-    marginTop: 20,
+    marginTop: 25,
   },
   itemName_RecipeList: {
     fontSize: 17,
     fontWeight: 'bold',
   },
+  itemIntro_RecipeList: {
+    marginTop: 7,
+    fontSize: 12.5,
+    color: 'grey',
+  },
   itemSimilarity_RecipeList: {
     textAlign: 'right',
-    fontSize: 17,
+    fontSize: 24,
     fontWeight: 'bold',
     color: '#FA8072',
+  },
+  itemImage_RecipeList: {
+    height: 60,
+    width: 110,
+    resizeMode: 'contain',
+    borderColor: '#f5f5f5',
+    borderWidth: 3,
+    marginRight: 15,
   },
   //RecipeInfo-----------------------------------
   root_RecipeInfo: {
     flex: 1,
     padding: 20,
+    backgroundColor: 'white',
   },
   subheading_RecipeInfo: {
     flex: 1,
     marginTop: 30,
+    marginBottom: 10,
     fontSize: 18,
     fontWeight: 'bold',
+    color: 'black',
   },
-  content_RecipeInfo: {
-    flex: 1,
-    marginTop: 20,
+  ingre_RecipeInfo: {
+    marginLeft: 20,
+    marginRight: 5,
+    fontSize: 16,
+    lineHeight: 30,
+    fontWeight: 'bold',
+  },
+  vol_RecipeInfo: {
+    marginLeft: 10,
+    fontSize: 15,
+    lineHeight: 30,
+    color: '#404040',
+  },
+  recipe_RecipeInfo: {
     marginLeft: 20,
     marginRight: 20,
     fontSize: 16,
@@ -200,20 +229,30 @@ const style = StyleSheet.create({
     padding: 30,
     paddingTop: 40,
   },
-  pic_ClientScreen: {
-    height: 140,
-    width: 140,
+  img_ClientScreen: {
+    height: 120,
+    width: 120,
     marginRight: 20,
     borderRadius: 100,
     backgroundColor: 'white',
   },
-  nickname_ClientScreen: {
-    fontSize: 20,
+  pic_ClientScreen: {
+    height: 100,
+    width: 100,
+    marginRight: 20,
+    borderRadius: 100,
+    backgroundColor: 'white',
+  },
+  name_ClientScreen: {
+    fontSize: 23,
     fontWeight: 'bold',
     marginBottom: 10,
+    marginTop: 30,
+    marginLeft: 10,
   },
   text_ClientScreen: {
-    fontSize: 14,
+    marginLeft: 10,
+    fontSize: 18,
   },
   menuItem_ClientScreen: {
     flex: 1,
@@ -256,8 +295,10 @@ const style = StyleSheet.create({
     paddingBottom: hp(2),
   },
   Text_LoginScreen: {
-    fontSize: wp('4%'),
+    fontSize: wp('4.3%'),
     paddingLeft: wp(1),
+    marginTop: 10,
+    marginBottom: 20,
   },
   formArea_LoginScreen: {
     justifyContent: 'center',
@@ -276,6 +317,8 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: hp(1.5),
+    marginTop: 10,
+    marginBottom: 10,
   },
   btn_LoginScreen: {
     flex: 1,
@@ -443,7 +486,7 @@ const style = StyleSheet.create({
   },
   //SplashScreen---------------------------------
   img_SplashScreen: {
-    width: wp(55),
+    width: wp(40),
     height: hp(40),
     resizeMode: 'contain',
     margin: 30,

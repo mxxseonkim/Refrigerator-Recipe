@@ -3,7 +3,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import ManageTabRouter from './ManageTabRouter';
 import MenuButton from '../components/MenuButton';
-import BookMark from '../components/BookMark';
+import BookMarkInfo from '../components/BookMarkInfo';
+import BookMarkList from '../components/BookMarkList';
 import RecipeList from '../screens/RecipeList';
 import RecipeInfo from '../screens/RecipeInfo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -114,7 +115,18 @@ const RecipeStackScreen = ({navigation, Chk}) => {
   // mark, setMark 정의 / null로 초기화
   // mark 값이 이 컴포넌트까지 끌어올려져서 값이 변경 됨
   // 그리고 자동으로 바뀐 값을 prop로 전달
-  const [mark, setMark] = useState(null);
+
+  const [listMark, setListMark] = useState(false);
+  const [infoMark, setInfoMark] = useState(null);
+  const [bookmarkList, setBookmarkList] = useState([]);
+
+  const onSetListMark = () => {
+    setListMark(pre => !pre);
+  };
+
+  const onSetBookmarkList = (newList) => {
+    setBookmarkList(newList);
+  };
 
   return (
     // RecipeList, RecipeInfo 컴포넌트 스크린 등록
@@ -136,19 +148,31 @@ const RecipeStackScreen = ({navigation, Chk}) => {
       <RecipeStack.Screen
         name="RecipeList"
         children={({navigation}) => (
-          <RecipeList navigation={navigation} Chk={Chk} />
+          <RecipeList
+            navigation={navigation}
+            chk={Chk}
+            mark={listMark}
+            bookmarkList={bookmarkList}
+            setBookmarkList={onSetBookmarkList}
+          />
         )}
         options={{
           title: '레시피',
           //header 왼쪽에 MenuButton 컴포넌트 등록
           headerLeft: () => <MenuButton />,
+          headerRight: () => (
+            <BookMarkList
+              mark={listMark}
+              setMark={onSetListMark}
+            />
+          )
         }}
       />
       <RecipeStack.Screen
         name="RecipeInfo"
         children={({route}) => (
           //mark와 data를 props로 전달
-          <RecipeInfo mark={mark} data={route.params.data} />
+          <RecipeInfo data={route.params.data} />
         )}
         options={({route}) => ({
           // RecipeList에서 받아온 data.name으로 title 등록
@@ -156,13 +180,14 @@ const RecipeStackScreen = ({navigation, Chk}) => {
           //header 왼쪽에 MenuButton 오른쪽에 BookMark 컴포넌트 등록
           headerLeft: () => <MenuButton />,
           headerRight: () => (
-            <BookMark
-              //mark, setMark, recipeId를 props로 전달
+            <BookMarkInfo
               recipeId={route.params.data.recipe_id}
-              mark={mark}
-              setMark={setMark}
+              mark={infoMark}
+              setMark={setInfoMark}
+              bookmarkList={bookmarkList}
+              setBookmarkList={onSetBookmarkList}
             />
-          ),
+          )
         })}
       />
     </RecipeStack.Navigator>

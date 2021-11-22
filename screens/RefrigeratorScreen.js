@@ -296,7 +296,6 @@ export default function RefrigeratorScreen({
                 </View>
                 <View
                   style={{
-                    marginLeft: 10,
                     marginRight: 65,
                     alignItems: 'stretch',
                     justifyContent: 'center',
@@ -385,7 +384,6 @@ export default function RefrigeratorScreen({
                 </View>
                 <View
                   style={{
-                    marginLeft: 10,
                     marginRight: 20,
                     alignItems: 'stretch',
                     justifyContent: 'center',
@@ -489,7 +487,12 @@ export default function RefrigeratorScreen({
                         </View>
                       </View>
                     </View>
-                    <View style={{width: '30%'}}>
+                    <View
+                      style={{
+                        width: '30%',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
                       <Image
                         style={[style.itemImg2_RefrigeratorScreen]}
                         source={{

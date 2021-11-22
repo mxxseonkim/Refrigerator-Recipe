@@ -28,7 +28,7 @@ export default function SplashScreen({navigation}) {
   return (
     <View style={style.container_SplashScreen}>
       <Image
-        source={{uri: 'http://54.180.126.3/img/logout.jpg'}}
+        source={require('../imgpath/logo.gif')}
         style={style.img_SplashScreen}
       />
       <ActivityIndicator
