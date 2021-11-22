@@ -167,7 +167,7 @@ export default function RecipeList({navigation, chk, mark, bookmarkList, setBook
         search={search}
         setSearch={setSearch}
         filterData={filterData}
-        ph="궁금한 레시피를 검색해보셈"
+        ph="궁금한 레시피를 검색해보세요"
       />
       {isLoading ? (
         <View style={style.ActivityIndicatorView_RefrigeratorScreen}>
