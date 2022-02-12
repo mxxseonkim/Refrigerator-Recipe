@@ -178,6 +178,21 @@ const labelDetection = async imgPath => {
 ``` 
 + 실시간으로 재료 사진을 찍어 사물을 인식하기 위해선 텍스트 추출과 다른 머신러닝 모델을 사용해야했습니다. Google Vision에서 제공하는 라벨 인식 모델을 불러와 재료를 사물 인식이 가능토록 했습니다.
 
+### 2-1) Google Vision을 사용하며 겪은 문제
+이미지 링크 오류 때문에 잠시 애를 먹었습니다. base64형태로 이미지 링크를 넘겨줘야 Google Vision이 인식하여 제대로 돌아가는데, 개발자는 이를 모르고 로컬 링크를 계속 보내었습니다. 그래서 CameraRender에서 로컬 링크를 base64 형태로 바꾸어 이미지 링크를 사용하였습니다.
+```sh
+ let tmp_detectionArr = await DataSet.labelDetection(imagePath);
+    let tmp2_detectionArr = [];
+    for (let i = 0; i < tmp_detectionArr.length; i++) {
+      tmp2_detectionArr.push({
+        ingredient: tmp_detectionArr[i].description,
+        prob: tmp_detectionArr[i].score,
+      });
+    }
+    //imagePath = base64 형태의 이미지 링크
+``` 
+
+
 ## 😀 DB 구성
 
 ![냉장고 DB ERD](https://user-images.githubusercontent.com/78461009/139594880-cbe2a043-2cc3-4905-8c04-d98724a56326.png)
