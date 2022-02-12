@@ -31,7 +31,8 @@
 사용자가 앱을 실행하면 가장 먼저 보이는 화면은 로그인 화면입니다. 
 
 ![](https://user-images.githubusercontent.com/78461009/153704357-7eac0cc3-c9eb-4af1-bb73-de3384118b11.png)
-
++ 아이디 및 비밀번호가 있을 시, 최초 로그인 이후에 로그인이 계속 유지되도록 코드를 구성하였습니다. 
++ 서버(DB)에 저장된 아이디와 사용자가 입력한 아이디가 같으면 0을, 다르면 1을 **result** 변수에 저장합니다.
 ```sh
     //로그인 체크 쿼리
     let login_check = {
@@ -47,10 +48,8 @@
     // DB 연결 후 loading 해제
     setLoading(false);
 ``` 
-+ 아이디 및 비밀번호가 있을 시, 최초 로그인 이후에 로그인이 계속 유지되도록 코드를 구성하였습니다. 
-+ 서버(DB)에 저장된 아이디와 사용자가 입력한 아이디가 같으면 0을, 다르면 1을 **result** 변수에 저장합니다.
-
 ```sh
++ result가 1이면 전역변수 userID에 아이디를 저장합니다. result가 0이면 경고창을 띄웁니다.
 if (Number(result)) {
       // 로그인 성공
       //global 모듈에 id 등록 -> 냉장고 테이블
@@ -64,13 +63,11 @@ if (Number(result)) {
       Alert.alert('경고', '아이디 및 비밀번호를 다시 확인해주세요.');
     }
 ``` 
-+ result가 1이면 전역변수 userID에 아이디를 저장합니다. result가 0이면 경고창을 띄웁니다.
-
 ### 2) 영수증 인식 및 사물 인식
 Google Vision API를 사용하여 영수증에 적힌 글자들을 인식하고 머신러닝 모델로 재료를 인식하여 자동으로 냉장고에 재료 정보가 추가되도록 하였습니다.
 
 ![](https://user-images.githubusercontent.com/78461009/153704110-67840d4d-98ed-4567-b100-c3253e475e25.gif)
-
++ Google Vision API를 사용하기 위해 구글에서 고유 넘버를 받아서 이를 React Native와 연결해주었습니다.
 ```sh
 {
     "googleTranslation": {
@@ -87,7 +84,7 @@ Google Vision API를 사용하여 영수증에 적힌 글자들을 인식하고 
     }
   }
 ``` 
-+ Google Vision API를 사용하기 위해 구글에서 고유 넘버를 받아서 이를 React Native와 연결해주었습니다.
++ Google Vision과 React Native가 연결되면 구글에 사용자가 카메라로 찍은 이미지를 전송하여 텍스트를 추출합니다. 추출된 정보는 JSON 형태로 받아와서 필요한 정보만 파싱하여 사용합니다. 최종적으로 추출된 정보는 result 변수에 저장하여 값을 넘겨줍니다.
 ```sh
 const textDetection = async imgPath => {
   let url =
@@ -113,7 +110,7 @@ const textDetection = async imgPath => {
   return result;
 };
 ``` 
-+ Google Vision과 React Native가 연결되면 구글에 사용자가 카메라로 찍은 이미지를 전송하여 텍스트를 추출합니다. 추출된 정보는 JSON 형태로 받아와서 필요한 정보만 파싱하여 사용합니다. 최종적으로 추출된 정보는 result 변수에 저장하여 값을 넘겨줍니다.
++ Google Vision의 단점은 사물 인식을 진행했을 시, 결과가 영어로 출력되는 것입니다. 이를 해결하기 위해 Google Vision에서 제공하는 번역 API를 사용하였습니다. 영어를 한글로 번역하여 텍스트 추출을 보다 용이하도록 하였습니다.
 ```sh
 const textTranslation = async textArr => {
   let result = [];
@@ -148,7 +145,7 @@ const textTranslation = async textArr => {
   return result;
 };
 ``` 
-+ Google Vision의 단점은 사물 인식을 진행했을 시, 결과가 영어로 출력되는 것입니다. 이를 해결하기 위해 Google Vision에서 제공하는 번역 API를 사용하였습니다. 영어를 한글로 번역하여 텍스트 추출을 보다 용이하도록 하였습니다.
++ 실시간으로 재료 사진을 찍어 사물을 인식하기 위해선 텍스트 추출과 다른 머신러닝 모델을 사용해야했습니다. Google Vision에서 제공하는 라벨 인식 모델을 불러와 재료를 사물 인식이 가능토록 했습니다.
 ```sh
 const labelDetection = async imgPath => {
   let url =
@@ -176,8 +173,6 @@ const labelDetection = async imgPath => {
   return tmp;
 };
 ``` 
-+ 실시간으로 재료 사진을 찍어 사물을 인식하기 위해선 텍스트 추출과 다른 머신러닝 모델을 사용해야했습니다. Google Vision에서 제공하는 라벨 인식 모델을 불러와 재료를 사물 인식이 가능토록 했습니다.
-
 ### 2-1) Google Vision을 사용하며 겪은 문제
 이미지 링크 오류 때문에 잠시 애를 먹었습니다. base64형태로 이미지 링크를 넘겨줘야 Google Vision이 인식하여 제대로 돌아가는데, 개발자는 이를 모르고 로컬 링크를 계속 보내었습니다. 그래서 CameraRender에서 로컬 링크를 base64 형태로 바꾸어 이미지 링크를 사용하였습니다.
 ```sh
