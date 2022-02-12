@@ -7,15 +7,24 @@
 4. 레시피 추천
 ![](../header.png)
 
-## 😀 서비스 설명
+## 😀 1. 서비스 설명
 
-### 개발 동기
+### 1) 개발 동기
 1. 상대적으로 금전적 여유가 적은 자취생들을 위해 냉장고 식재료 관리 및 레시피 추천 서비스 제공
 2. 레시피 추천과 식재료 유통기한 관리를 통해 냉장고에 방치되는 식재료 부패 방지
 
-### 시스템 구성
+### 2) 시스템 구성
 ![](https://user-images.githubusercontent.com/78461009/153702809-55db6723-f538-44f0-afbd-67b78b2a79a6.png)
 
+- Youtube : 레시피 추천 시, 사용자가 레시피를 쉽게 이해할 수 있도록 유튜브 API를 통해 해당 레시피 조리 영상을 제공
+- Google Cloud Vision API : 영수증 인식 및 사물 인식을 위해 사용되는 API
+- Python : 레시피 정보를 저장하기 위해 파이썬 웹크롤링 사용
+- Amazon webservices : 서버 구축
+
+### 3) 서비스 화면
+
+![](https://user-images.githubusercontent.com/78461009/153703102-70aff28f-0642-4ce4-879d-9c4aec50fde1.png)
+![](https://user-images.githubusercontent.com/78461009/153703121-ddaeebba-24b6-4c5b-ba4c-0e7583d611c4.png)
 
 ## 😀 DB 구성
 
