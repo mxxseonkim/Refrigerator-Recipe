@@ -26,6 +26,29 @@
 ![](https://user-images.githubusercontent.com/78461009/153703102-70aff28f-0642-4ce4-879d-9c4aec50fde1.png)
 ![](https://user-images.githubusercontent.com/78461009/153703121-ddaeebba-24b6-4c5b-ba4c-0e7583d611c4.png)
 
+## 😀 2. 냉장고를 부탁해
+![](../header.png)
+### 1) 화면 설명
+사용자가 앱을 실행하면 가장 먼저 보이는 화면은 로그인 화면입니다. 
+아이디 및 비밀번호가 있을 시, 최초 로그인 이후에 로그인이 계속 유지되도록 코드를 구성하였습니다. 
+
+```sh
+    //로그인 체크 쿼리
+    let login_check = {
+      qry:
+        "SELECT * FROM `member` WHERE user_id = '" +
+        userId +
+        "' and user_pw = '" +
+        userPassword +
+        "'",
+    };
+    let result = await DataSet.overlabCheck(login_check);
+
+    // DB 연결 후 loading 해제
+    setLoading(false);
+``` 
+
+
 ## 😀 DB 구성
 
 ![냉장고 DB ERD](https://user-images.githubusercontent.com/78461009/139594880-cbe2a043-2cc3-4905-8c04-d98724a56326.png)
@@ -76,13 +99,9 @@
 ``` 
 
 
-## 😀 어플 전개도
-
-(UI 전개도 사진 들어갈 부분)
 
 
 
 ## 😀 업데이트 내용
 
-* 2021.03.01 ~ ing
-    * 작업진행중
+* 2021.03.01 ~ 2021.12.03
