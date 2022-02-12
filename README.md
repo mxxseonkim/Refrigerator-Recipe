@@ -71,6 +71,112 @@ Google Vision API를 사용하여 영수증에 적힌 글자들을 인식하고 
 
 ![](https://user-images.githubusercontent.com/78461009/153704110-67840d4d-98ed-4567-b100-c3253e475e25.gif)
 
+```sh
+{
+    "googleTranslation": {
+      "api": "https://translation.googleapis.com/language/translate/v2?key=",
+      "apiKey": "(비공개)"
+    }
+  }
+``` 
+```sh
+{
+    "googleCloud": {
+      "api": "https://vision.googleapis.com/v1/images:annotate?key=",
+      "apiKey": "(비공개)"
+    }
+  }
+``` 
++ Google Vision API를 사용하기 위해 구글에서 고유 넘버를 받아서 이를 React Native와 연결해주었습니다.
+```sh
+const textDetection = async imgPath => {
+  let url =
+    googleVisionKey.googleCloud.api + googleVisionKey.googleCloud.apiKey;
+  let tmp = '';
+  const response = await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify({
+      requests: [
+        {
+          image: {
+            content: imgPath,
+          },
+          features: [{type: 'TEXT_DETECTION', maxResults: 5}],
+        },
+      ],
+    }),
+  });
+  const res = await response.json();
+  tmp = res.responses[0].fullTextAnnotation.text;
+  let result = tmp.split('\n');
+  console.log(result);
+  return result;
+};
+``` 
++ Google Vision과 React Native가 연결되면 구글에 사용자가 카메라로 찍은 이미지를 전송하여 텍스트를 추출합니다. 추출된 정보는 JSON 형태로 받아와서 필요한 정보만 파싱하여 사용합니다. 최종적으로 추출된 정보는 result 변수에 저장하여 값을 넘겨줍니다.
+```sh
+const textTranslation = async textArr => {
+  let result = [];
+  let url =
+    googleTranslationKey.googleTranslation.api +
+    googleTranslationKey.googleTranslation.apiKey;
+  let fromLang = 'en';
+  let toLang = 'kor';
+
+  for (let i = 0; i < textArr.length; i++) {
+    let text = textArr[i].ingredient;
+    url += '&q=' + encodeURI(text);
+    url += `&source=${fromLang}`;
+    url += `&target=${toLang}`;
+    await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(response => {
+        let name = response.data.translations[i].translatedText;
+        let prob = textArr[i].prob;
+        result.push({ingredient: name, prob: prob});
+      })
+      .catch(error => {
+        console.log('There was an error with the translation request: ', error);
+      });
+  }
+  return result;
+};
+``` 
++ Google Vision의 단점은 사물 인식을 진행했을 시, 결과가 영어로 출력되는 것입니다. 이를 해결하기 위해 Google Vision에서 제공하는 번역 API를 사용하였습니다. 영어를 한글로 번역하여 텍스트 추출을 보다 용이하도록 하였습니다.
+```sh
+const labelDetection = async imgPath => {
+  let url =
+    googleVisionKey.googleCloud.api + googleVisionKey.googleCloud.apiKey;
+  let tmp = '';
+  await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify({
+      requests: [
+        {
+          image: {
+            content: imgPath,
+          },
+          features: [{type: 'LABEL_DETECTION', maxResults: 10}],
+        },
+      ],
+    }),
+  })
+    .then(res => res.json())
+    .then(data => {
+      tmp = data.responses[0].labelAnnotations;
+    })
+    .catch(err => console.log('error : ', err));
+
+  return tmp;
+};
+``` 
++ 실시간으로 재료 사진을 찍어 사물을 인식하기 위해선 텍스트 추출과 다른 머신러닝 모델을 사용해야했습니다. Google Vision에서 제공하는 라벨 인식 모델을 불러와 재료를 사물 인식이 가능토록 했습니다.
 
 ## 😀 DB 구성
 
