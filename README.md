@@ -30,7 +30,7 @@
 ### 1) 화면 설명
 사용자가 앱을 실행하면 가장 먼저 보이는 화면은 로그인 화면입니다. 
 
-![](https://user-images.githubusercontent.com/78461009/153703622-5f9696a0-5a05-4ae0-b5ae-b59df3b0b7b2.png)
+![](https://user-images.githubusercontent.com/78461009/153704357-7eac0cc3-c9eb-4af1-bb73-de3384118b11.png)
 
 ```sh
     //로그인 체크 쿼리
