@@ -189,7 +189,7 @@ const labelDetection = async imgPath => {
         prob: tmp_detectionArr[i].score,
       });
     }
-    //imagePath = base64 형태의 이미지 링크
+    //imagePath == base64 형태의 이미지 링크
 ``` 
 
 
