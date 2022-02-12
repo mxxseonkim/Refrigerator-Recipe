@@ -174,7 +174,7 @@ const labelDetection = async imgPath => {
 };
 ``` 
 ### 2-1) Google Vision을 사용하며 겪은 문제
-이미지 링크 오류 때문에 잠시 애를 먹었습니다. base64형태로 이미지 링크를 넘겨줘야 Google Vision이 인식하여 제대로 돌아가는데, 개발자는 이를 모르고 로컬 링크를 계속 보내었습니다. 그래서 CameraRender에서 로컬 링크를 base64 형태로 바꾸어 이미지 링크를 사용하였습니다.
+이미지 링크 오류 때문에 잠시 애를 먹었습니다. base64형태로 이미지 링크를 넘겨줘야 Google Vision이 인식하여 제대로 돌아가는데, 개발자는 이를 모르고 로컬 링크를 계속 보내었습니다. 그래서 로컬 링크를 base64 형태로 바꾸어 오류를 해결했습니다.
 ```sh
  let tmp_detectionArr = await DataSet.labelDetection(imagePath);
     let tmp2_detectionArr = [];
