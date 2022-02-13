@@ -198,7 +198,7 @@ navigation.navigate('CameraResult', {detectionArr: result});
 
 
 <!-- pseudo code -->
-```
+```sh
 recipe_and_refrigerator_ingredients = array[]
 
 FOR recipe_ingredient ← recipe_ingredients DO
