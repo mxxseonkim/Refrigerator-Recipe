@@ -223,9 +223,11 @@ RETURN match_rate, recipe_and_refrigerator_ingredients
 
 ![](https://user-images.githubusercontent.com/78461009/153780224-ce9936d7-9824-4861-989a-7f0cf00e22a6.png)
 
+
 + ```developer_ingredient``` : 식재료에 대한 정보를 저장하는 데이터 베이스 테이블입니다.
 + ```d_ingredientName``` : 식재료명
 + ```d_ingredientUnit``` : 식재료 단위
+
 
 >```developer_ingredient``` 테이블에 개발자가 직접 (식재료명, 단위) 데이터를 추가했습니다. <br><br> 식재료명은 문자 비교가 용이하도록 최대한 간단하게, 단위는 일반적으로 많이 쓰이는 ‘개’, ‘kg’ 등으로 제한하였습니다.<br><br>또한 사용자가 식재료를 추가할 시, ```developer_ingredient```를 참조하여 DB에 존재하는 식재료만 추가할 수 있도록 사용자의 자유도를 낮췄습니다. 단위도 식재료마다 정해진 단위만 사용할 수 있도록 알고리즘을 짰습니다.
 
