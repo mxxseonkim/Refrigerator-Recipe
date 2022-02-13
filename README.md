@@ -49,8 +49,8 @@
     // DB 연결 후 loading 해제
     setLoading(false);
 ``` 
-```sh
 + result가 1이면 전역변수 userID에 아이디를 저장합니다. result가 0이면 경고창을 띄웁니다.
+```sh
 if (Number(result)) {
       // 로그인 성공
       //global 모듈에 id 등록 -> 냉장고 테이블
