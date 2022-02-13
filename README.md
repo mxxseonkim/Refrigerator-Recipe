@@ -64,7 +64,7 @@ if (Number(result)) {
       Alert.alert('경고', '아이디 및 비밀번호를 다시 확인해주세요.');
     }
 ``` 
-## 3. 영수증 인식 및 사물 인식
+## 😀 3. 영수증 인식 및 사물 인식
 Google Vision API를 사용하여 영수증에 적힌 글자들을 인식하고 머신러닝 모델로 재료를 인식하여 자동으로 냉장고에 재료 정보가 추가되도록 하였습니다.
 
 ![](https://user-images.githubusercontent.com/78461009/153704110-67840d4d-98ed-4567-b100-c3253e475e25.gif)
@@ -192,7 +192,7 @@ const imagePath = await ImagePicker.openCamera({
 let result = await filterArr(imagePath.data);
 navigation.navigate('CameraResult', {detectionArr: result});
 ``` 
-## 4. 레시피 추천
+## 😀 4. 레시피 추천
 ### 4-1)
 
 
