@@ -233,7 +233,8 @@ RETURN match_rate, recipe_and_refrigerator_ingredients
 
 ![](https://user-images.githubusercontent.com/78461009/153780842-362ace04-3533-40a4-8f39-f3e9281f49c6.png)
 
-+ 또한 레시피 재료 데이터도 통일해줘야 했습니다. 레시피 테이블(```recipe```)에 **식재료명을 통일한 재료 정보(```recipe_developerArea```) 요소를 추가**했습니다. <br><br>식재료명을 통일하는 과정은 레시피 재료 정보(```recipe_ingredient```)를 기반으로 <br><br>① 사용자가 냉장고에 추가하지 않았을 것 같은 기본적인 재료(예. 물, 얼음, 식용유 등) 배제 <br><br>② ```developer_ingredient```의 식재료명으로 수정 <br><br>③ ```developer_ingredient```의 단위로 양 변환 순으로 진행되었습니다.
++ 또한 레시피 재료 데이터도 통일해줘야 했습니다. 레시피 테이블(```recipe```)에 **식재료명을 통일한 재료 정보(```recipe_developerArea```) 요소를 추가**했습니다. 
++ <br><br>식재료명을 통일하는 과정 : <br><br>① 레시피 재료 정보(```recipe_ingredient```)를 기반으로 사용자가 냉장고에 추가하지 않았을 것 같은 기본적인 재료(예. 물, 얼음, 식용유 등) 배제 <br><br>② ```developer_ingredient```의 식재료명으로 수정 <br><br>③ ```developer_ingredient```의 단위로 양 변환
 
 
 ### 4-3) 알고리즘의 한계 및 해결방안
