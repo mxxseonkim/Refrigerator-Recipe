@@ -227,14 +227,14 @@ RETURN match_rate, recipe_and_refrigerator_ingredients
 + ```developer_ingredient``` : 식재료에 대한 정보를 저장하는 데이터 베이스 테이블입니다.
 + ```d_ingredientName``` : 식재료명
 + ```d_ingredientUnit``` : 식재료 단위
-
-
+<br>
+<br>
 >```developer_ingredient``` 테이블에 개발자가 직접 (식재료명, 단위) 데이터를 추가했습니다. <br><br> 식재료명은 문자 비교가 용이하도록 최대한 간단하게, 단위는 일반적으로 많이 쓰이는 ‘개’, ‘kg’ 등으로 제한하였습니다.<br><br>또한 사용자가 식재료를 추가할 시, ```developer_ingredient```를 참조하여 DB에 존재하는 식재료만 추가할 수 있도록 사용자의 자유도를 낮췄습니다. 단위도 식재료마다 정해진 단위만 사용할 수 있도록 알고리즘을 짰습니다.
 
 ![](https://user-images.githubusercontent.com/78461009/153780842-362ace04-3533-40a4-8f39-f3e9281f49c6.png)
 
 + 또한 레시피 재료 데이터도 통일해줘야 했습니다. 레시피 테이블(```recipe```)에 **식재료명을 통일한 재료 정보(```recipe_developerArea```) 요소를 추가**했습니다. 
-+ <br><br>식재료명을 통일하는 과정 : <br><br>① 레시피 재료 정보(```recipe_ingredient```)를 기반으로 사용자가 냉장고에 추가하지 않았을 것 같은 기본적인 재료(예. 물, 얼음, 식용유 등) 배제 <br><br>② ```developer_ingredient```의 식재료명으로 수정 <br><br>③ ```developer_ingredient```의 단위로 양 변환
++ 식재료명을 통일하는 과정 : <br><br>① 레시피 재료 정보(```recipe_ingredient```)를 기반으로 사용자가 냉장고에 추가하지 않았을 것 같은 기본적인 재료(예. 물, 얼음, 식용유 등) 배제 <br><br>② ```developer_ingredient```의 식재료명으로 수정 <br><br>③ ```developer_ingredient```의 단위로 양 변환
 
 
 ### 4-3) 알고리즘의 한계 및 해결방안
