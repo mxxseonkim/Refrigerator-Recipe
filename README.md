@@ -174,7 +174,9 @@ const labelDetection = async imgPath => {
 };
 ``` 
 ### 2-1) Google Vision을 사용하며 겪은 문제
-이미지 링크 오류 때문에 잠시 애를 먹었습니다. base64형태로 이미지 링크를 넘겨줘야 Google Vision이 인식하여 제대로 돌아가는데, 개발자는 이를 모르고 로컬 링크를 계속 보내었습니다. 그래서 로컬 링크를 base64 형태로 바꾸어 오류를 해결했습니다.
+휴대폰 카메라로 찍은 사진을 Google Vision OCR API로 넘겨 인식을 진행해야하는데, 계속 이미지 링크로 인한 오류가 발생했습니다. 이유가 무엇인지 Google vision docs를 읽다가 해결하였습니다.
+![](https://user-images.githubusercontent.com/78461009/153738966-4f4e9963-4c71-4202-b42e-4867f62dd63f.png)
+Google Vision OCR API를 사용하려면 로컬 이미지 링크가 아닌 base64 형태로 이미지 링크를 넘겨줘야 합니다. 따라서 휴대폰 카메라로 사진을 찍고 링크를 textDetection 및 labelDetection에 넘겨줄 때, 로컬 링크가 아닌 base64로 인코딩하여 함수 인자를 전달하였습니다. 
 ```sh
  let tmp_detectionArr = await DataSet.labelDetection(imagePath);
     let tmp2_detectionArr = [];
