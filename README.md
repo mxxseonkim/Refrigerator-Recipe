@@ -192,12 +192,49 @@ const imagePath = await ImagePicker.openCamera({
 let result = await filterArr(imagePath.data);
 navigation.navigate('CameraResult', {detectionArr: result});
 ``` 
-## 😀 4. 레시피 추천
+## 😀 4. 레시피 일치율
+
+레시피에 필요한 재료가 얼마나 충족되었는지 사용자에게 직관적으로 보여주기 위해, 레시피 재료와 사용자의 식재료를 비교하여 일치율을 제공합니다.
+
+
+<!-- pseudo code -->
+```
+recipe_and_refrigerator_ingredients = array[]
+
+FOR recipe_ingredient ← recipe_ingredients DO
+  IF (refrigerator_ingredients['name'] INCLUDES recipe_ingredient['name']) AND
+     (refrigerator_ingredient['vol'] >= recipe_ingredient['vol'])
+        THEN recipe_and_refrigerator_ingredients.push(recipe_ingredient)
+  ENDIF
+ENDFOR
+
+match_rate = number(recipe_and_refrigerator_ingredients) /
+             number(recipe_ingredients)
+
+RETURN match_rate, recipe_and_refrigerator_ingredients
+```
+
 ### 4-1)
 
 
-### 4-2) 레시피 추천 알고리즘을 구현하며 겪은 문제
+### 4-2) 레시피 일치율 알고리즘을 구현하며 겪은 문제
 
+냉장고 및 레시피 식재료명 및 단위 통일
+
+**문제 상황**  
+기존의 시스템에서는 사용자가 식재료를 추가할 때 식재료명을 직접 입력하도록 했다. 일치율 계산을 위해서 냉장고의 식재료명과 레시피 재료의 식재료명의 비교하려고 했으나 식재료명 다 달라서 비교할 수 없었다. 따라서, 사용자의 냉장고 식재료명과 레시피 재료의 식재료명의 통일이 필요하다. 또한, 일치율 계산 시 사용자가 가진 식재료 양과 레시피에 필요한 재료의 양도 비교해야 하기 때문에 각 식재료의 단위도 통일하기로 하였다.
+
+**해결 방안**  
+식재료에 대한 정보를 저장하는 데이터베이스 테이블(```developer_ingredient```)을 생성했다. 이 테이블은 식재료명(```d_ingredientName```)과 단위(```d_ingredientUnit```) 요소를 가진다.  ```developer_ingredient``` 테이블에 일반적인 식재료의 (식재료명, 단위) 데이터를 추가했다. 단위는 일반적으로 많이 쓰이는 '개', 'kg'로 제한하였다.<br>
+**사용자가 식재료 추가 시, ```developer_ingredient```를 참조**하여 존재하는 식재료만 추가할 수 있도록, 자유도를 제한하였다. 또한 단위도 해당 식재료의 단위로 제시하여 사용자가 양을 맞춰 넣을 수 있도록 했다.<br>
+**레시피 재료 데이터** 또한 통일된 식재료명이 아니었기 때문에, ```developer_ingredient```에 맞춰 레시피 재료 데이터를 수정해야 했다. 레시피 테이블(```recipe```)에 **식재료명을 통일한 재료 정보(```recipe_developerArea```) 요소를 추가**했다. 식재료명을 통일하는 과정은 레시피 재료 정보(```recipe_ingredient```)를 기반으로 ① 사용자가 냉장고에 추가하지 않았을 것 같은 기본적인 재료(예. 물, 얼음, 식용유 등) 배제 ② ```developer_ingredient```의 식재료명으로 수정 ③ ```developer_ingredient```의 단위로 양 변환 순으로 진행됐다.
+
+**한계와 향후 계획**  
+위 해결 방안은 개발자가 직접 개입하여 수정한 것이다. 당시 마감기한이 있었고, 레시피 데이터 양이 적었기 때문에 확장성보다는 당장의 문제 해결에 적합한 해결 방안을 선택했다. 하지만 이 시스템에서 레시피 데이터의 양은 서비스 품질과 밀접하기 때문에 확장성에 더 집중하여 생산적인 해결 방안을 필요로 한다.<br>
+레시피 재료 데이터의 수정 과정에서 개발자의 개입을 최소화하기 위해 수정 과정을 데이터화하여, 이후 등장하는 동일한 상황에서는 개입 대신 데이터 기반으로 변환하는 방안을 생각 중이다. 기본 재료로 고려되어 수정 시 삭제되는 식재료(물, 얼음, 식용유 등)에 대한 데이터셋, 통일 식재료명으로 변환되기 전의 식재료명에 대한 데이터셋을 생성한다. 하지만 이 또한 새로운 식재료의 등장 등의 예외가 존재하기 때문에 사람의 더블 체크와 데이터셋의 꾸준한 관리가 필수적이다.<br>
+수정 전 기존 식재료명과 통일 식재료명의 데이터셋이 커진다면 다중 분류(multi classification) 기법을 활용할 수 있다. 새로운 식재료가 입력될 경우, 해당 식재료(Data)의 통일 식재료명(Label)를 유추할 수 있지 않을까 생각 중이다. 이 경우도 서비스의 정확도를 위해 더블 체크가 필요하다. 하지만 이 업무에서 사람의 개입은 어쩔 수 없이 필요하고, 이를 최소한으로 줄이는 것이 중요하다.
+
+<br>
 
 ## 😀 DB 구성
 
