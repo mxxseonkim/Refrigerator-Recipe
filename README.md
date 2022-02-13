@@ -192,6 +192,12 @@ const imagePath = await ImagePicker.openCamera({
 let result = await filterArr(imagePath.data);
 navigation.navigate('CameraResult', {detectionArr: result});
 ``` 
+## 4. 레시피 추천
+### 4-1)
+<br>
+<br>
+<br>
+### 4-2) 레시피 추천 알고리즘을 구현하며 겪은 문제
 
 
 ## 😀 DB 구성
