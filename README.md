@@ -174,7 +174,7 @@ const labelDetection = async imgPath => {
   return tmp;
 };
 ``` 
-### 2-1) Google Vision을 사용하며 겪은 문제
+### 3-1) Google Vision을 사용하며 겪은 문제
 휴대폰 카메라로 찍은 사진을 Google Vision OCR API로 넘겨 인식을 진행해야하는데, 계속 이미지 링크로 인한 오류가 발생했습니다. 이유가 무엇인지 계속 추궁하다가 Google vision docs를 읽고 해결하였습니다.
 <br>
 <br>
