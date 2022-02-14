@@ -213,7 +213,10 @@ match_rate = number(recipe_and_refrigerator_ingredients) /
 RETURN match_rate, recipe_and_refrigerator_ingredients
 ```
 
+
 > 냉장고에 들어있는 재료(```refrigerator_ingredients```)와 요리할 때 필요한 재료(```recipe_ingredient```)를 순차적으로 비교합니다. <br><br>이때 식재료명과 식재료양을 비교하는데, 냉장고에 있는 식재료 양보다 레시피가 요구하는 식재료양이 더 클 경우는 배제합니다. <br><br> 앞선 조건을 모두 만족한 식재료는 ```recipe_and_refrigerator_ingredients``` 배열에 추가하여 **_match_rate_**(recipe_and_refrigerator_ingredients의 개수 / 요리할 때 필요한 재료의 수)를 계산합니다.
+
+
 
 ### 4-1) 레시피 일치율 알고리즘을 구현하며 겪은 문제
 
