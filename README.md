@@ -193,7 +193,7 @@ navigation.navigate('CameraResult', {detectionArr: result});
 ``` 
 ## 😀 4. 레시피 일치율
 
-레시피에 필요한 재료가 얼마나 충족되었는지 사용자에게 직관적으로 보여주기 위해, 레시피 재료와 사용자의 식재료를 비교하여 일치율을 제공합니다.
+레시피에 필요한 재료가 얼마나 충족되었는지 사용자에게 직관적으로 보여주기 위해, 레시피 재료와 사용자의 식재료를 비교하여 일치율을 제공합니다.<br><br>
 
 
 <!-- pseudo code -->
@@ -213,10 +213,9 @@ match_rate = number(recipe_and_refrigerator_ingredients) /
 RETURN match_rate, recipe_and_refrigerator_ingredients
 ```
 
-### 4-1)
+> 냉장고에 들어있는 재료(```refrigerator_ingredients```)와 요리할 때 필요한 재료(```recipe_ingredient```)를 순차적으로 비교합니다. <br><br>이때 식재료명과 식재료양을 비교하는데, 냉장고에 있는 식재료 양보다 레시피가 요구하는 식재료양이 더 클 경우는 배제합니다. <br><br> 앞선 조건을 모두 만족한 식재료는 ```recipe_and_refrigerator_ingredients``` 배열에 추가하여 **_match_rate_**(recipe_and_refrigerator_ingredients의 개수 / 요리할 때 필요한 재료의 수)를 계산합니다.
 
-
-### 4-2) 레시피 일치율 알고리즘을 구현하며 겪은 문제
+### 4-1) 레시피 일치율 알고리즘을 구현하며 겪은 문제
 
 
 일치율을 계산하기 위해서 **_모든 식재료의 이름과 단위를 맞춰야_** 했습니다. <br><br>하지만 같은 식재료임에도 이름과 단위가 다양하여 통일하기가 번거로웠습니다. 그 이유는 사용자가 식재료를 추가할 때 직접 식재료명을 입력했고, 영수증을 통해 식재료를 인식했을 때 영수증마다 찍힌 식재료명과 단위가 달랐기 때문입니다. <br><br>그래서 저희는 식재료명과 단위를 직접 통일하여 데이터 베이스에 모아두었습니다.  
